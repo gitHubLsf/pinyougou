@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsf.pinyougou.dao.TbItemDao">
+
+    <resultMap type="com.lsf.pinyougou.pojo.TbItem" id="TbItemMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="sellPoint" column="sell_point" jdbcType="VARCHAR"/>
+        <result property="price" column="price" jdbcType="NUMERIC"/>
+        <result property="stockCount" column="stock_count" jdbcType="INTEGER"/>
+        <result property="num" column="num" jdbcType="INTEGER"/>
+        <result property="barcode" column="barcode" jdbcType="VARCHAR"/>
+        <result property="image" column="image" jdbcType="VARCHAR"/>
+        <result property="categoryid" column="categoryId" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="itemSn" column="item_sn" jdbcType="VARCHAR"/>
+        <result property="costPirce" column="cost_pirce" jdbcType="NUMERIC"/>
+        <result property="marketPrice" column="market_price" jdbcType="NUMERIC"/>
+        <result property="isDefault" column="is_default" jdbcType="VARCHAR"/>
+        <result property="goodsId" column="goods_id" jdbcType="INTEGER"/>
+        <result property="sellerId" column="seller_id" jdbcType="VARCHAR"/>
+        <result property="cartThumbnail" column="cart_thumbnail" jdbcType="VARCHAR"/>
+        <result property="category" column="category" jdbcType="VARCHAR"/>
+        <result property="brand" column="brand" jdbcType="VARCHAR"/>
+        <result property="spec" column="spec" jdbcType="VARCHAR"/>
+        <result property="seller" column="seller" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TbItemMap">
+        select
+          id, title, sell_point, price, stock_count, num, barcode, image, categoryId, status, create_time, update_time, item_sn, cost_pirce, market_price, is_default, goods_id, seller_id, cart_thumbnail, category, brand, spec, seller
+        from pinyougoudb.tb_item
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TbItemMap">
+        select
+          id, title, sell_point, price, stock_count, num, barcode, image, categoryId, status, create_time, update_time, item_sn, cost_pirce, market_price, is_default, goods_id, seller_id, cart_thumbnail, category, brand, spec, seller
+        from pinyougoudb.tb_item
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TbItemMap">
+        select
+          id, title, sell_point, price, stock_count, num, barcode, image, categoryId, status, create_time, update_time, item_sn, cost_pirce, market_price, is_default, goods_id, seller_id, cart_thumbnail, category, brand, spec, seller
+        from pinyougoudb.tb_item
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="title != null and title != ''">
+                and title = #{title}
+            </if>
+            <if test="sellPoint != null and sellPoint != ''">
+                and sell_point = #{sellPoint}
+            </if>
+            <if test="price != null">
+                and price = #{price}
+            </if>
+            <if test="stockCount != null">
+                and stock_count = #{stockCount}
+            </if>
+            <if test="num != null">
+                and num = #{num}
+            </if>
+            <if test="barcode != null and barcode != ''">
+                and barcode = #{barcode}
+            </if>
+            <if test="image != null and image != ''">
+                and image = #{image}
+            </if>
+            <if test="categoryid != null">
+                and categoryId = #{categoryid}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="itemSn != null and itemSn != ''">
+                and item_sn = #{itemSn}
+            </if>
+            <if test="costPirce != null">
+                and cost_pirce = #{costPirce}
+            </if>
+            <if test="marketPrice != null">
+                and market_price = #{marketPrice}
+            </if>
+            <if test="isDefault != null and isDefault != ''">
+                and is_default = #{isDefault}
+            </if>
+            <if test="goodsId != null">
+                and goods_id = #{goodsId}
+            </if>
+            <if test="sellerId != null and sellerId != ''">
+                and seller_id = #{sellerId}
+            </if>
+            <if test="cartThumbnail != null and cartThumbnail != ''">
+                and cart_thumbnail = #{cartThumbnail}
+            </if>
+            <if test="category != null and category != ''">
+                and category = #{category}
+            </if>
+            <if test="brand != null and brand != ''">
+                and brand = #{brand}
+            </if>
+            <if test="spec != null and spec != ''">
+                and spec = #{spec}
+            </if>
+            <if test="seller != null and seller != ''">
+                and seller = #{seller}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into pinyougoudb.tb_item(title, sell_point, price, stock_count, num, barcode, image, categoryId, status, create_time, update_time, item_sn, cost_pirce, market_price, is_default, goods_id, seller_id, cart_thumbnail, category, brand, spec, seller)
+        values (#{title}, #{sellPoint}, #{price}, #{stockCount}, #{num}, #{barcode}, #{image}, #{categoryid}, #{status}, #{createTime}, #{updateTime}, #{itemSn}, #{costPirce}, #{marketPrice}, #{isDefault}, #{goodsId}, #{sellerId}, #{cartThumbnail}, #{category}, #{brand}, #{spec}, #{seller})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update pinyougoudb.tb_item
+        <set>
+            <if test="title != null and title != ''">
+                title = #{title},
+            </if>
+            <if test="sellPoint != null and sellPoint != ''">
+                sell_point = #{sellPoint},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="stockCount != null">
+                stock_count = #{stockCount},
+            </if>
+            <if test="num != null">
+                num = #{num},
+            </if>
+            <if test="barcode != null and barcode != ''">
+                barcode = #{barcode},
+            </if>
+            <if test="image != null and image != ''">
+                image = #{image},
+            </if>
+            <if test="categoryid != null">
+                categoryId = #{categoryid},
+            </if>
+            <if test="status != null and status != ''">
+                status = #{status},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="itemSn != null and itemSn != ''">
+                item_sn = #{itemSn},
+            </if>
+            <if test="costPirce != null">
+                cost_pirce = #{costPirce},
+            </if>
+            <if test="marketPrice != null">
+                market_price = #{marketPrice},
+            </if>
+            <if test="isDefault != null and isDefault != ''">
+                is_default = #{isDefault},
+            </if>
+            <if test="goodsId != null">
+                goods_id = #{goodsId},
+            </if>
+            <if test="sellerId != null and sellerId != ''">
+                seller_id = #{sellerId},
+            </if>
+            <if test="cartThumbnail != null and cartThumbnail != ''">
+                cart_thumbnail = #{cartThumbnail},
+            </if>
+            <if test="category != null and category != ''">
+                category = #{category},
+            </if>
+            <if test="brand != null and brand != ''">
+                brand = #{brand},
+            </if>
+            <if test="spec != null and spec != ''">
+                spec = #{spec},
+            </if>
+            <if test="seller != null and seller != ''">
+                seller = #{seller},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from pinyougoudb.tb_item where id = #{id}
+    </delete>
+
+</mapper>

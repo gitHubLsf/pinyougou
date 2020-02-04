@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsf.pinyougou.dao.TbSpecificationOptionDao">
+
+    <resultMap type="com.lsf.pinyougou.pojo.TbSpecificationOption" id="TbSpecificationOptionMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="optionName" column="option_name" jdbcType="VARCHAR"/>
+        <result property="specId" column="spec_id" jdbcType="INTEGER"/>
+        <result property="orders" column="orders" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TbSpecificationOptionMap">
+        select
+          id, option_name, spec_id, orders
+        from pinyougoudb.tb_specification_option
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TbSpecificationOptionMap">
+        select
+          id, option_name, spec_id, orders
+        from pinyougoudb.tb_specification_option
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TbSpecificationOptionMap">
+        select
+          id, option_name, spec_id, orders
+        from pinyougoudb.tb_specification_option
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="optionName != null and optionName != ''">
+                and option_name = #{optionName}
+            </if>
+            <if test="specId != null">
+                and spec_id = #{specId}
+            </if>
+            <if test="orders != null">
+                and orders = #{orders}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into pinyougoudb.tb_specification_option(option_name, spec_id, orders)
+        values (#{optionName}, #{specId}, #{orders})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update pinyougoudb.tb_specification_option
+        <set>
+            <if test="optionName != null and optionName != ''">
+                option_name = #{optionName},
+            </if>
+            <if test="specId != null">
+                spec_id = #{specId},
+            </if>
+            <if test="orders != null">
+                orders = #{orders},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from pinyougoudb.tb_specification_option where id = #{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsf.pinyougou.dao.TbAddressDao">
+
+    <resultMap type="com.lsf.pinyougou.pojo.TbAddress" id="TbAddressMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="provinceId" column="province_id" jdbcType="VARCHAR"/>
+        <result property="cityId" column="city_id" jdbcType="VARCHAR"/>
+        <result property="townId" column="town_id" jdbcType="VARCHAR"/>
+        <result property="mobile" column="mobile" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="contact" column="contact" jdbcType="VARCHAR"/>
+        <result property="isDefault" column="is_default" jdbcType="VARCHAR"/>
+        <result property="notes" column="notes" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+        <result property="alias" column="alias" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TbAddressMap">
+        select
+          id, user_id, province_id, city_id, town_id, mobile, address, contact, is_default, notes, create_date, alias
+        from pinyougoudb.tb_address
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TbAddressMap">
+        select
+          id, user_id, province_id, city_id, town_id, mobile, address, contact, is_default, notes, create_date, alias
+        from pinyougoudb.tb_address
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TbAddressMap">
+        select
+          id, user_id, province_id, city_id, town_id, mobile, address, contact, is_default, notes, create_date, alias
+        from pinyougoudb.tb_address
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="userId != null and userId != ''">
+                and user_id = #{userId}
+            </if>
+            <if test="provinceId != null and provinceId != ''">
+                and province_id = #{provinceId}
+            </if>
+            <if test="cityId != null and cityId != ''">
+                and city_id = #{cityId}
+            </if>
+            <if test="townId != null and townId != ''">
+                and town_id = #{townId}
+            </if>
+            <if test="mobile != null and mobile != ''">
+                and mobile = #{mobile}
+            </if>
+            <if test="address != null and address != ''">
+                and address = #{address}
+            </if>
+            <if test="contact != null and contact != ''">
+                and contact = #{contact}
+            </if>
+            <if test="isDefault != null and isDefault != ''">
+                and is_default = #{isDefault}
+            </if>
+            <if test="notes != null and notes != ''">
+                and notes = #{notes}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate}
+            </if>
+            <if test="alias != null and alias != ''">
+                and alias = #{alias}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into pinyougoudb.tb_address(user_id, province_id, city_id, town_id, mobile, address, contact, is_default, notes, create_date, alias)
+        values (#{userId}, #{provinceId}, #{cityId}, #{townId}, #{mobile}, #{address}, #{contact}, #{isDefault}, #{notes}, #{createDate}, #{alias})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update pinyougoudb.tb_address
+        <set>
+            <if test="userId != null and userId != ''">
+                user_id = #{userId},
+            </if>
+            <if test="provinceId != null and provinceId != ''">
+                province_id = #{provinceId},
+            </if>
+            <if test="cityId != null and cityId != ''">
+                city_id = #{cityId},
+            </if>
+            <if test="townId != null and townId != ''">
+                town_id = #{townId},
+            </if>
+            <if test="mobile != null and mobile != ''">
+                mobile = #{mobile},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+            <if test="contact != null and contact != ''">
+                contact = #{contact},
+            </if>
+            <if test="isDefault != null and isDefault != ''">
+                is_default = #{isDefault},
+            </if>
+            <if test="notes != null and notes != ''">
+                notes = #{notes},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="alias != null and alias != ''">
+                alias = #{alias},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from pinyougoudb.tb_address where id = #{id}
+    </delete>
+
+</mapper>

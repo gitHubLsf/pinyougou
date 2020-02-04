@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsf.pinyougou.dao.TbOrderItemDao">
+
+    <resultMap type="com.lsf.pinyougou.pojo.TbOrderItem" id="TbOrderItemMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="itemId" column="item_id" jdbcType="INTEGER"/>
+        <result property="goodsId" column="goods_id" jdbcType="INTEGER"/>
+        <result property="orderId" column="order_id" jdbcType="INTEGER"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="price" column="price" jdbcType="NUMERIC"/>
+        <result property="num" column="num" jdbcType="INTEGER"/>
+        <result property="totalFee" column="total_fee" jdbcType="NUMERIC"/>
+        <result property="picPath" column="pic_path" jdbcType="VARCHAR"/>
+        <result property="sellerId" column="seller_id" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TbOrderItemMap">
+        select
+          id, item_id, goods_id, order_id, title, price, num, total_fee, pic_path, seller_id
+        from pinyougoudb.tb_order_item
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TbOrderItemMap">
+        select
+          id, item_id, goods_id, order_id, title, price, num, total_fee, pic_path, seller_id
+        from pinyougoudb.tb_order_item
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TbOrderItemMap">
+        select
+          id, item_id, goods_id, order_id, title, price, num, total_fee, pic_path, seller_id
+        from pinyougoudb.tb_order_item
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="itemId != null">
+                and item_id = #{itemId}
+            </if>
+            <if test="goodsId != null">
+                and goods_id = #{goodsId}
+            </if>
+            <if test="orderId != null">
+                and order_id = #{orderId}
+            </if>
+            <if test="title != null and title != ''">
+                and title = #{title}
+            </if>
+            <if test="price != null">
+                and price = #{price}
+            </if>
+            <if test="num != null">
+                and num = #{num}
+            </if>
+            <if test="totalFee != null">
+                and total_fee = #{totalFee}
+            </if>
+            <if test="picPath != null and picPath != ''">
+                and pic_path = #{picPath}
+            </if>
+            <if test="sellerId != null and sellerId != ''">
+                and seller_id = #{sellerId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into pinyougoudb.tb_order_item(item_id, goods_id, order_id, title, price, num, total_fee, pic_path, seller_id)
+        values (#{itemId}, #{goodsId}, #{orderId}, #{title}, #{price}, #{num}, #{totalFee}, #{picPath}, #{sellerId})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update pinyougoudb.tb_order_item
+        <set>
+            <if test="itemId != null">
+                item_id = #{itemId},
+            </if>
+            <if test="goodsId != null">
+                goods_id = #{goodsId},
+            </if>
+            <if test="orderId != null">
+                order_id = #{orderId},
+            </if>
+            <if test="title != null and title != ''">
+                title = #{title},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="num != null">
+                num = #{num},
+            </if>
+            <if test="totalFee != null">
+                total_fee = #{totalFee},
+            </if>
+            <if test="picPath != null and picPath != ''">
+                pic_path = #{picPath},
+            </if>
+            <if test="sellerId != null and sellerId != ''">
+                seller_id = #{sellerId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from pinyougoudb.tb_order_item where id = #{id}
+    </delete>
+
+</mapper>

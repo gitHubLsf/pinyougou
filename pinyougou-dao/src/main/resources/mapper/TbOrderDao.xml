@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsf.pinyougou.dao.TbOrderDao">
+
+    <resultMap type="com.lsf.pinyougou.pojo.TbOrder" id="TbOrderMap">
+        <result property="orderId" column="order_id" jdbcType="INTEGER"/>
+        <result property="payment" column="payment" jdbcType="NUMERIC"/>
+        <result property="paymentType" column="payment_type" jdbcType="VARCHAR"/>
+        <result property="postFee" column="post_fee" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="paymentTime" column="payment_time" jdbcType="TIMESTAMP"/>
+        <result property="consignTime" column="consign_time" jdbcType="TIMESTAMP"/>
+        <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
+        <result property="closeTime" column="close_time" jdbcType="TIMESTAMP"/>
+        <result property="shippingName" column="shipping_name" jdbcType="VARCHAR"/>
+        <result property="shippingCode" column="shipping_code" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="buyerMessage" column="buyer_message" jdbcType="VARCHAR"/>
+        <result property="buyerNick" column="buyer_nick" jdbcType="VARCHAR"/>
+        <result property="buyerRate" column="buyer_rate" jdbcType="VARCHAR"/>
+        <result property="receiverAreaName" column="receiver_area_name" jdbcType="VARCHAR"/>
+        <result property="receiverMobile" column="receiver_mobile" jdbcType="VARCHAR"/>
+        <result property="receiverZipCode" column="receiver_zip_code" jdbcType="VARCHAR"/>
+        <result property="receiver" column="receiver" jdbcType="VARCHAR"/>
+        <result property="expire" column="expire" jdbcType="TIMESTAMP"/>
+        <result property="invoiceType" column="invoice_type" jdbcType="VARCHAR"/>
+        <result property="sourceType" column="source_type" jdbcType="VARCHAR"/>
+        <result property="sellerId" column="seller_id" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TbOrderMap">
+        select
+          order_id, payment, payment_type, post_fee, status, create_time, update_time, payment_time, consign_time, end_time, close_time, shipping_name, shipping_code, user_id, buyer_message, buyer_nick, buyer_rate, receiver_area_name, receiver_mobile, receiver_zip_code, receiver, expire, invoice_type, source_type, seller_id
+        from pinyougoudb.tb_order
+        where order_id = #{orderId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TbOrderMap">
+        select
+          order_id, payment, payment_type, post_fee, status, create_time, update_time, payment_time, consign_time, end_time, close_time, shipping_name, shipping_code, user_id, buyer_message, buyer_nick, buyer_rate, receiver_area_name, receiver_mobile, receiver_zip_code, receiver, expire, invoice_type, source_type, seller_id
+        from pinyougoudb.tb_order
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TbOrderMap">
+        select
+          order_id, payment, payment_type, post_fee, status, create_time, update_time, payment_time, consign_time, end_time, close_time, shipping_name, shipping_code, user_id, buyer_message, buyer_nick, buyer_rate, receiver_area_name, receiver_mobile, receiver_zip_code, receiver, expire, invoice_type, source_type, seller_id
+        from pinyougoudb.tb_order
+        <where>
+            <if test="orderId != null">
+                and order_id = #{orderId}
+            </if>
+            <if test="payment != null">
+                and payment = #{payment}
+            </if>
+            <if test="paymentType != null and paymentType != ''">
+                and payment_type = #{paymentType}
+            </if>
+            <if test="postFee != null and postFee != ''">
+                and post_fee = #{postFee}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="paymentTime != null">
+                and payment_time = #{paymentTime}
+            </if>
+            <if test="consignTime != null">
+                and consign_time = #{consignTime}
+            </if>
+            <if test="endTime != null">
+                and end_time = #{endTime}
+            </if>
+            <if test="closeTime != null">
+                and close_time = #{closeTime}
+            </if>
+            <if test="shippingName != null and shippingName != ''">
+                and shipping_name = #{shippingName}
+            </if>
+            <if test="shippingCode != null and shippingCode != ''">
+                and shipping_code = #{shippingCode}
+            </if>
+            <if test="userId != null and userId != ''">
+                and user_id = #{userId}
+            </if>
+            <if test="buyerMessage != null and buyerMessage != ''">
+                and buyer_message = #{buyerMessage}
+            </if>
+            <if test="buyerNick != null and buyerNick != ''">
+                and buyer_nick = #{buyerNick}
+            </if>
+            <if test="buyerRate != null and buyerRate != ''">
+                and buyer_rate = #{buyerRate}
+            </if>
+            <if test="receiverAreaName != null and receiverAreaName != ''">
+                and receiver_area_name = #{receiverAreaName}
+            </if>
+            <if test="receiverMobile != null and receiverMobile != ''">
+                and receiver_mobile = #{receiverMobile}
+            </if>
+            <if test="receiverZipCode != null and receiverZipCode != ''">
+                and receiver_zip_code = #{receiverZipCode}
+            </if>
+            <if test="receiver != null and receiver != ''">
+                and receiver = #{receiver}
+            </if>
+            <if test="expire != null">
+                and expire = #{expire}
+            </if>
+            <if test="invoiceType != null and invoiceType != ''">
+                and invoice_type = #{invoiceType}
+            </if>
+            <if test="sourceType != null and sourceType != ''">
+                and source_type = #{sourceType}
+            </if>
+            <if test="sellerId != null and sellerId != ''">
+                and seller_id = #{sellerId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="orderId" useGeneratedKeys="true">
+        insert into pinyougoudb.tb_order(payment, payment_type, post_fee, status, create_time, update_time, payment_time, consign_time, end_time, close_time, shipping_name, shipping_code, user_id, buyer_message, buyer_nick, buyer_rate, receiver_area_name, receiver_mobile, receiver_zip_code, receiver, expire, invoice_type, source_type, seller_id)
+        values (#{payment}, #{paymentType}, #{postFee}, #{status}, #{createTime}, #{updateTime}, #{paymentTime}, #{consignTime}, #{endTime}, #{closeTime}, #{shippingName}, #{shippingCode}, #{userId}, #{buyerMessage}, #{buyerNick}, #{buyerRate}, #{receiverAreaName}, #{receiverMobile}, #{receiverZipCode}, #{receiver}, #{expire}, #{invoiceType}, #{sourceType}, #{sellerId})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update pinyougoudb.tb_order
+        <set>
+            <if test="payment != null">
+                payment = #{payment},
+            </if>
+            <if test="paymentType != null and paymentType != ''">
+                payment_type = #{paymentType},
+            </if>
+            <if test="postFee != null and postFee != ''">
+                post_fee = #{postFee},
+            </if>
+            <if test="status != null and status != ''">
+                status = #{status},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="paymentTime != null">
+                payment_time = #{paymentTime},
+            </if>
+            <if test="consignTime != null">
+                consign_time = #{consignTime},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime},
+            </if>
+            <if test="closeTime != null">
+                close_time = #{closeTime},
+            </if>
+            <if test="shippingName != null and shippingName != ''">
+                shipping_name = #{shippingName},
+            </if>
+            <if test="shippingCode != null and shippingCode != ''">
+                shipping_code = #{shippingCode},
+            </if>
+            <if test="userId != null and userId != ''">
+                user_id = #{userId},
+            </if>
+            <if test="buyerMessage != null and buyerMessage != ''">
+                buyer_message = #{buyerMessage},
+            </if>
+            <if test="buyerNick != null and buyerNick != ''">
+                buyer_nick = #{buyerNick},
+            </if>
+            <if test="buyerRate != null and buyerRate != ''">
+                buyer_rate = #{buyerRate},
+            </if>
+            <if test="receiverAreaName != null and receiverAreaName != ''">
+                receiver_area_name = #{receiverAreaName},
+            </if>
+            <if test="receiverMobile != null and receiverMobile != ''">
+                receiver_mobile = #{receiverMobile},
+            </if>
+            <if test="receiverZipCode != null and receiverZipCode != ''">
+                receiver_zip_code = #{receiverZipCode},
+            </if>
+            <if test="receiver != null and receiver != ''">
+                receiver = #{receiver},
+            </if>
+            <if test="expire != null">
+                expire = #{expire},
+            </if>
+            <if test="invoiceType != null and invoiceType != ''">
+                invoice_type = #{invoiceType},
+            </if>
+            <if test="sourceType != null and sourceType != ''">
+                source_type = #{sourceType},
+            </if>
+            <if test="sellerId != null and sellerId != ''">
+                seller_id = #{sellerId},
+            </if>
+        </set>
+        where order_id = #{orderId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from pinyougoudb.tb_order where order_id = #{orderId}
+    </delete>
+
+</mapper>

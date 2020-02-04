@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsf.pinyougou.dao.TbSellerDao">
+
+    <resultMap type="com.lsf.pinyougou.pojo.TbSeller" id="TbSellerMap">
+        <result property="sellerId" column="seller_id" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="mobile" column="mobile" jdbcType="VARCHAR"/>
+        <result property="telephone" column="telephone" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="addressDetail" column="address_detail" jdbcType="VARCHAR"/>
+        <result property="linkmanName" column="linkman_name" jdbcType="VARCHAR"/>
+        <result property="linkmanQq" column="linkman_qq" jdbcType="VARCHAR"/>
+        <result property="linkmanMobile" column="linkman_mobile" jdbcType="VARCHAR"/>
+        <result property="linkmanEmail" column="linkman_email" jdbcType="VARCHAR"/>
+        <result property="licenseNumber" column="license_number" jdbcType="VARCHAR"/>
+        <result property="taxNumber" column="tax_number" jdbcType="VARCHAR"/>
+        <result property="orgNumber" column="org_number" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="INTEGER"/>
+        <result property="logoPic" column="logo_pic" jdbcType="VARCHAR"/>
+        <result property="brief" column="brief" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="legalPerson" column="legal_person" jdbcType="VARCHAR"/>
+        <result property="legalPersonCardId" column="legal_person_card_id" jdbcType="VARCHAR"/>
+        <result property="bankUser" column="bank_user" jdbcType="VARCHAR"/>
+        <result property="bankName" column="bank_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TbSellerMap">
+        select
+          seller_id, name, nick_name, password, email, mobile, telephone, status, address_detail, linkman_name, linkman_qq, linkman_mobile, linkman_email, license_number, tax_number, org_number, address, logo_pic, brief, create_time, legal_person, legal_person_card_id, bank_user, bank_name
+        from pinyougoudb.tb_seller
+        where seller_id = #{sellerId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TbSellerMap">
+        select
+          seller_id, name, nick_name, password, email, mobile, telephone, status, address_detail, linkman_name, linkman_qq, linkman_mobile, linkman_email, license_number, tax_number, org_number, address, logo_pic, brief, create_time, legal_person, legal_person_card_id, bank_user, bank_name
+        from pinyougoudb.tb_seller
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TbSellerMap">
+        select
+          seller_id, name, nick_name, password, email, mobile, telephone, status, address_detail, linkman_name, linkman_qq, linkman_mobile, linkman_email, license_number, tax_number, org_number, address, logo_pic, brief, create_time, legal_person, legal_person_card_id, bank_user, bank_name
+        from pinyougoudb.tb_seller
+        <where>
+            <if test="sellerId != null and sellerId != ''">
+                and seller_id = #{sellerId}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="nickName != null and nickName != ''">
+                and nick_name = #{nickName}
+            </if>
+            <if test="password != null and password != ''">
+                and password = #{password}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="mobile != null and mobile != ''">
+                and mobile = #{mobile}
+            </if>
+            <if test="telephone != null and telephone != ''">
+                and telephone = #{telephone}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="addressDetail != null and addressDetail != ''">
+                and address_detail = #{addressDetail}
+            </if>
+            <if test="linkmanName != null and linkmanName != ''">
+                and linkman_name = #{linkmanName}
+            </if>
+            <if test="linkmanQq != null and linkmanQq != ''">
+                and linkman_qq = #{linkmanQq}
+            </if>
+            <if test="linkmanMobile != null and linkmanMobile != ''">
+                and linkman_mobile = #{linkmanMobile}
+            </if>
+            <if test="linkmanEmail != null and linkmanEmail != ''">
+                and linkman_email = #{linkmanEmail}
+            </if>
+            <if test="licenseNumber != null and licenseNumber != ''">
+                and license_number = #{licenseNumber}
+            </if>
+            <if test="taxNumber != null and taxNumber != ''">
+                and tax_number = #{taxNumber}
+            </if>
+            <if test="orgNumber != null and orgNumber != ''">
+                and org_number = #{orgNumber}
+            </if>
+            <if test="address != null">
+                and address = #{address}
+            </if>
+            <if test="logoPic != null and logoPic != ''">
+                and logo_pic = #{logoPic}
+            </if>
+            <if test="brief != null and brief != ''">
+                and brief = #{brief}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="legalPerson != null and legalPerson != ''">
+                and legal_person = #{legalPerson}
+            </if>
+            <if test="legalPersonCardId != null and legalPersonCardId != ''">
+                and legal_person_card_id = #{legalPersonCardId}
+            </if>
+            <if test="bankUser != null and bankUser != ''">
+                and bank_user = #{bankUser}
+            </if>
+            <if test="bankName != null and bankName != ''">
+                and bank_name = #{bankName}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="sellerId" useGeneratedKeys="true">
+        insert into pinyougoudb.tb_seller(name, nick_name, password, email, mobile, telephone, status, address_detail, linkman_name, linkman_qq, linkman_mobile, linkman_email, license_number, tax_number, org_number, address, logo_pic, brief, create_time, legal_person, legal_person_card_id, bank_user, bank_name)
+        values (#{name}, #{nickName}, #{password}, #{email}, #{mobile}, #{telephone}, #{status}, #{addressDetail}, #{linkmanName}, #{linkmanQq}, #{linkmanMobile}, #{linkmanEmail}, #{licenseNumber}, #{taxNumber}, #{orgNumber}, #{address}, #{logoPic}, #{brief}, #{createTime}, #{legalPerson}, #{legalPersonCardId}, #{bankUser}, #{bankName})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update pinyougoudb.tb_seller
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="nickName != null and nickName != ''">
+                nick_name = #{nickName},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="mobile != null and mobile != ''">
+                mobile = #{mobile},
+            </if>
+            <if test="telephone != null and telephone != ''">
+                telephone = #{telephone},
+            </if>
+            <if test="status != null and status != ''">
+                status = #{status},
+            </if>
+            <if test="addressDetail != null and addressDetail != ''">
+                address_detail = #{addressDetail},
+            </if>
+            <if test="linkmanName != null and linkmanName != ''">
+                linkman_name = #{linkmanName},
+            </if>
+            <if test="linkmanQq != null and linkmanQq != ''">
+                linkman_qq = #{linkmanQq},
+            </if>
+            <if test="linkmanMobile != null and linkmanMobile != ''">
+                linkman_mobile = #{linkmanMobile},
+            </if>
+            <if test="linkmanEmail != null and linkmanEmail != ''">
+                linkman_email = #{linkmanEmail},
+            </if>
+            <if test="licenseNumber != null and licenseNumber != ''">
+                license_number = #{licenseNumber},
+            </if>
+            <if test="taxNumber != null and taxNumber != ''">
+                tax_number = #{taxNumber},
+            </if>
+            <if test="orgNumber != null and orgNumber != ''">
+                org_number = #{orgNumber},
+            </if>
+            <if test="address != null">
+                address = #{address},
+            </if>
+            <if test="logoPic != null and logoPic != ''">
+                logo_pic = #{logoPic},
+            </if>
+            <if test="brief != null and brief != ''">
+                brief = #{brief},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="legalPerson != null and legalPerson != ''">
+                legal_person = #{legalPerson},
+            </if>
+            <if test="legalPersonCardId != null and legalPersonCardId != ''">
+                legal_person_card_id = #{legalPersonCardId},
+            </if>
+            <if test="bankUser != null and bankUser != ''">
+                bank_user = #{bankUser},
+            </if>
+            <if test="bankName != null and bankName != ''">
+                bank_name = #{bankName},
+            </if>
+        </set>
+        where seller_id = #{sellerId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from pinyougoudb.tb_seller where seller_id = #{sellerId}
+    </delete>
+
+</mapper>

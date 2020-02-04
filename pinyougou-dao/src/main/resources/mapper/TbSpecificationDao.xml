@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsf.pinyougou.dao.TbSpecificationDao">
+
+    <resultMap type="com.lsf.pinyougou.pojo.TbSpecification" id="TbSpecificationMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="specName" column="spec_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TbSpecificationMap">
+        select
+          id, spec_name
+        from pinyougoudb.tb_specification
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TbSpecificationMap">
+        select
+          id, spec_name
+        from pinyougoudb.tb_specification
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TbSpecificationMap">
+        select
+          id, spec_name
+        from pinyougoudb.tb_specification
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="specName != null and specName != ''">
+                and spec_name = #{specName}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into pinyougoudb.tb_specification(spec_name)
+        values (#{specName})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update pinyougoudb.tb_specification
+        <set>
+            <if test="specName != null and specName != ''">
+                spec_name = #{specName},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from pinyougoudb.tb_specification where id = #{id}
+    </delete>
+
+</mapper>

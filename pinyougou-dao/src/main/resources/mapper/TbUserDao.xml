@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsf.pinyougou.dao.TbUserDao">
+
+    <resultMap type="com.lsf.pinyougou.pojo.TbUser" id="TbUserMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="created" column="created" jdbcType="TIMESTAMP"/>
+        <result property="updated" column="updated" jdbcType="TIMESTAMP"/>
+        <result property="sourceType" column="source_type" jdbcType="VARCHAR"/>
+        <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="headPic" column="head_pic" jdbcType="VARCHAR"/>
+        <result property="qq" column="qq" jdbcType="VARCHAR"/>
+        <result property="accountBalance" column="account_balance" jdbcType="NUMERIC"/>
+        <result property="isMobileCheck" column="is_mobile_check" jdbcType="VARCHAR"/>
+        <result property="isEmailCheck" column="is_email_check" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="VARCHAR"/>
+        <result property="userLevel" column="user_level" jdbcType="INTEGER"/>
+        <result property="points" column="points" jdbcType="INTEGER"/>
+        <result property="experienceValue" column="experience_value" jdbcType="INTEGER"/>
+        <result property="birthday" column="birthday" jdbcType="TIMESTAMP"/>
+        <result property="lastLoginTime" column="last_login_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TbUserMap">
+        select
+          id, username, password, phone, email, created, updated, source_type, nick_name, name, status, head_pic, qq, account_balance, is_mobile_check, is_email_check, sex, user_level, points, experience_value, birthday, last_login_time
+        from pinyougoudb.tb_user
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TbUserMap">
+        select
+          id, username, password, phone, email, created, updated, source_type, nick_name, name, status, head_pic, qq, account_balance, is_mobile_check, is_email_check, sex, user_level, points, experience_value, birthday, last_login_time
+        from pinyougoudb.tb_user
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TbUserMap">
+        select
+          id, username, password, phone, email, created, updated, source_type, nick_name, name, status, head_pic, qq, account_balance, is_mobile_check, is_email_check, sex, user_level, points, experience_value, birthday, last_login_time
+        from pinyougoudb.tb_user
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="username != null and username != ''">
+                and username = #{username}
+            </if>
+            <if test="password != null and password != ''">
+                and password = #{password}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="created != null">
+                and created = #{created}
+            </if>
+            <if test="updated != null">
+                and updated = #{updated}
+            </if>
+            <if test="sourceType != null and sourceType != ''">
+                and source_type = #{sourceType}
+            </if>
+            <if test="nickName != null and nickName != ''">
+                and nick_name = #{nickName}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="headPic != null and headPic != ''">
+                and head_pic = #{headPic}
+            </if>
+            <if test="qq != null and qq != ''">
+                and qq = #{qq}
+            </if>
+            <if test="accountBalance != null">
+                and account_balance = #{accountBalance}
+            </if>
+            <if test="isMobileCheck != null and isMobileCheck != ''">
+                and is_mobile_check = #{isMobileCheck}
+            </if>
+            <if test="isEmailCheck != null and isEmailCheck != ''">
+                and is_email_check = #{isEmailCheck}
+            </if>
+            <if test="sex != null and sex != ''">
+                and sex = #{sex}
+            </if>
+            <if test="userLevel != null">
+                and user_level = #{userLevel}
+            </if>
+            <if test="points != null">
+                and points = #{points}
+            </if>
+            <if test="experienceValue != null">
+                and experience_value = #{experienceValue}
+            </if>
+            <if test="birthday != null">
+                and birthday = #{birthday}
+            </if>
+            <if test="lastLoginTime != null">
+                and last_login_time = #{lastLoginTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into pinyougoudb.tb_user(username, password, phone, email, created, updated, source_type, nick_name, name, status, head_pic, qq, account_balance, is_mobile_check, is_email_check, sex, user_level, points, experience_value, birthday, last_login_time)
+        values (#{username}, #{password}, #{phone}, #{email}, #{created}, #{updated}, #{sourceType}, #{nickName}, #{name}, #{status}, #{headPic}, #{qq}, #{accountBalance}, #{isMobileCheck}, #{isEmailCheck}, #{sex}, #{userLevel}, #{points}, #{experienceValue}, #{birthday}, #{lastLoginTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update pinyougoudb.tb_user
+        <set>
+            <if test="username != null and username != ''">
+                username = #{username},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="created != null">
+                created = #{created},
+            </if>
+            <if test="updated != null">
+                updated = #{updated},
+            </if>
+            <if test="sourceType != null and sourceType != ''">
+                source_type = #{sourceType},
+            </if>
+            <if test="nickName != null and nickName != ''">
+                nick_name = #{nickName},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="status != null and status != ''">
+                status = #{status},
+            </if>
+            <if test="headPic != null and headPic != ''">
+                head_pic = #{headPic},
+            </if>
+            <if test="qq != null and qq != ''">
+                qq = #{qq},
+            </if>
+            <if test="accountBalance != null">
+                account_balance = #{accountBalance},
+            </if>
+            <if test="isMobileCheck != null and isMobileCheck != ''">
+                is_mobile_check = #{isMobileCheck},
+            </if>
+            <if test="isEmailCheck != null and isEmailCheck != ''">
+                is_email_check = #{isEmailCheck},
+            </if>
+            <if test="sex != null and sex != ''">
+                sex = #{sex},
+            </if>
+            <if test="userLevel != null">
+                user_level = #{userLevel},
+            </if>
+            <if test="points != null">
+                points = #{points},
+            </if>
+            <if test="experienceValue != null">
+                experience_value = #{experienceValue},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday},
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time = #{lastLoginTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from pinyougoudb.tb_user where id = #{id}
+    </delete>
+
+</mapper>

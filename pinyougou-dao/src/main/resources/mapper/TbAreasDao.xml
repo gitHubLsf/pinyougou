@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsf.pinyougou.dao.TbAreasDao">
+
+    <resultMap type="com.lsf.pinyougou.pojo.TbAreas" id="TbAreasMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="areaid" column="areaid" jdbcType="VARCHAR"/>
+        <result property="area" column="area" jdbcType="VARCHAR"/>
+        <result property="cityid" column="cityid" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TbAreasMap">
+        select
+          id, areaid, area, cityid
+        from pinyougoudb.tb_areas
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TbAreasMap">
+        select
+          id, areaid, area, cityid
+        from pinyougoudb.tb_areas
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TbAreasMap">
+        select
+          id, areaid, area, cityid
+        from pinyougoudb.tb_areas
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="areaid != null and areaid != ''">
+                and areaid = #{areaid}
+            </if>
+            <if test="area != null and area != ''">
+                and area = #{area}
+            </if>
+            <if test="cityid != null and cityid != ''">
+                and cityid = #{cityid}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into pinyougoudb.tb_areas(areaid, area, cityid)
+        values (#{areaid}, #{area}, #{cityid})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update pinyougoudb.tb_areas
+        <set>
+            <if test="areaid != null and areaid != ''">
+                areaid = #{areaid},
+            </if>
+            <if test="area != null and area != ''">
+                area = #{area},
+            </if>
+            <if test="cityid != null and cityid != ''">
+                cityid = #{cityid},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from pinyougoudb.tb_areas where id = #{id}
+    </delete>
+
+</mapper>

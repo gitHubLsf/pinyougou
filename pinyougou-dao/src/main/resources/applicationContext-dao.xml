@@ -52,6 +52,6 @@
     <!-- 开启 mapper 中的 xml 文件的扫描功能 -->
     <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.lsf.pinyougou.dao"/>
-        <property name="sqlSessionFactoryBeanName" value="sessionFactory" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
     </bean>
 </beans>

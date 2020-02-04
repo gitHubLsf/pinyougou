@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsf.pinyougou.dao.TbProvincesDao">
+
+    <resultMap type="com.lsf.pinyougou.pojo.TbProvinces" id="TbProvincesMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="provinceid" column="provinceid" jdbcType="VARCHAR"/>
+        <result property="province" column="province" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TbProvincesMap">
+        select
+          id, provinceid, province
+        from pinyougoudb.tb_provinces
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TbProvincesMap">
+        select
+          id, provinceid, province
+        from pinyougoudb.tb_provinces
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TbProvincesMap">
+        select
+          id, provinceid, province
+        from pinyougoudb.tb_provinces
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="provinceid != null and provinceid != ''">
+                and provinceid = #{provinceid}
+            </if>
+            <if test="province != null and province != ''">
+                and province = #{province}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into pinyougoudb.tb_provinces(provinceid, province)
+        values (#{provinceid}, #{province})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update pinyougoudb.tb_provinces
+        <set>
+            <if test="provinceid != null and provinceid != ''">
+                provinceid = #{provinceid},
+            </if>
+            <if test="province != null and province != ''">
+                province = #{province},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from pinyougoudb.tb_provinces where id = #{id}
+    </delete>
+
+</mapper>

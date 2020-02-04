@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsf.pinyougou.dao.TbFreightTemplateDao">
+
+    <resultMap type="com.lsf.pinyougou.pojo.TbFreightTemplate" id="TbFreightTemplateMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="sellerId" column="seller_id" jdbcType="VARCHAR"/>
+        <result property="isDefault" column="is_default" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="sendTimeType" column="send_time_type" jdbcType="VARCHAR"/>
+        <result property="price" column="price" jdbcType="NUMERIC"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TbFreightTemplateMap">
+        select
+          id, seller_id, is_default, name, send_time_type, price, create_time
+        from pinyougoudb.tb_freight_template
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TbFreightTemplateMap">
+        select
+          id, seller_id, is_default, name, send_time_type, price, create_time
+        from pinyougoudb.tb_freight_template
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TbFreightTemplateMap">
+        select
+          id, seller_id, is_default, name, send_time_type, price, create_time
+        from pinyougoudb.tb_freight_template
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="sellerId != null and sellerId != ''">
+                and seller_id = #{sellerId}
+            </if>
+            <if test="isDefault != null and isDefault != ''">
+                and is_default = #{isDefault}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="sendTimeType != null and sendTimeType != ''">
+                and send_time_type = #{sendTimeType}
+            </if>
+            <if test="price != null">
+                and price = #{price}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into pinyougoudb.tb_freight_template(seller_id, is_default, name, send_time_type, price, create_time)
+        values (#{sellerId}, #{isDefault}, #{name}, #{sendTimeType}, #{price}, #{createTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update pinyougoudb.tb_freight_template
+        <set>
+            <if test="sellerId != null and sellerId != ''">
+                seller_id = #{sellerId},
+            </if>
+            <if test="isDefault != null and isDefault != ''">
+                is_default = #{isDefault},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="sendTimeType != null and sendTimeType != ''">
+                send_time_type = #{sendTimeType},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from pinyougoudb.tb_freight_template where id = #{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsf.pinyougou.dao.TbGoodsDescDao">
+
+    <resultMap type="com.lsf.pinyougou.pojo.TbGoodsDesc" id="TbGoodsDescMap">
+        <result property="goodsId" column="goods_id" jdbcType="INTEGER"/>
+        <result property="introduction" column="introduction" jdbcType="VARCHAR"/>
+        <result property="specificationItems" column="specification_items" jdbcType="VARCHAR"/>
+        <result property="customAttributeItems" column="custom_attribute_items" jdbcType="VARCHAR"/>
+        <result property="itemImages" column="item_images" jdbcType="VARCHAR"/>
+        <result property="packageList" column="package_list" jdbcType="VARCHAR"/>
+        <result property="saleService" column="sale_service" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TbGoodsDescMap">
+        select
+          goods_id, introduction, specification_items, custom_attribute_items, item_images, package_list, sale_service
+        from pinyougoudb.tb_goods_desc
+        where goods_id = #{goodsId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TbGoodsDescMap">
+        select
+          goods_id, introduction, specification_items, custom_attribute_items, item_images, package_list, sale_service
+        from pinyougoudb.tb_goods_desc
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TbGoodsDescMap">
+        select
+          goods_id, introduction, specification_items, custom_attribute_items, item_images, package_list, sale_service
+        from pinyougoudb.tb_goods_desc
+        <where>
+            <if test="goodsId != null">
+                and goods_id = #{goodsId}
+            </if>
+            <if test="introduction != null and introduction != ''">
+                and introduction = #{introduction}
+            </if>
+            <if test="specificationItems != null and specificationItems != ''">
+                and specification_items = #{specificationItems}
+            </if>
+            <if test="customAttributeItems != null and customAttributeItems != ''">
+                and custom_attribute_items = #{customAttributeItems}
+            </if>
+            <if test="itemImages != null and itemImages != ''">
+                and item_images = #{itemImages}
+            </if>
+            <if test="packageList != null and packageList != ''">
+                and package_list = #{packageList}
+            </if>
+            <if test="saleService != null and saleService != ''">
+                and sale_service = #{saleService}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="goodsId" useGeneratedKeys="true">
+        insert into pinyougoudb.tb_goods_desc(introduction, specification_items, custom_attribute_items, item_images, package_list, sale_service)
+        values (#{introduction}, #{specificationItems}, #{customAttributeItems}, #{itemImages}, #{packageList}, #{saleService})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update pinyougoudb.tb_goods_desc
+        <set>
+            <if test="introduction != null and introduction != ''">
+                introduction = #{introduction},
+            </if>
+            <if test="specificationItems != null and specificationItems != ''">
+                specification_items = #{specificationItems},
+            </if>
+            <if test="customAttributeItems != null and customAttributeItems != ''">
+                custom_attribute_items = #{customAttributeItems},
+            </if>
+            <if test="itemImages != null and itemImages != ''">
+                item_images = #{itemImages},
+            </if>
+            <if test="packageList != null and packageList != ''">
+                package_list = #{packageList},
+            </if>
+            <if test="saleService != null and saleService != ''">
+                sale_service = #{saleService},
+            </if>
+        </set>
+        where goods_id = #{goodsId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from pinyougoudb.tb_goods_desc where goods_id = #{goodsId}
+    </delete>
+
+</mapper>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsf.pinyougou.dao.TbGoodsDao">
+
+    <resultMap type="com.lsf.pinyougou.pojo.TbGoods" id="TbGoodsMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="sellerId" column="seller_id" jdbcType="VARCHAR"/>
+        <result property="goodsName" column="goods_name" jdbcType="VARCHAR"/>
+        <result property="defaultItemId" column="default_item_id" jdbcType="INTEGER"/>
+        <result property="auditStatus" column="audit_status" jdbcType="VARCHAR"/>
+        <result property="isMarketable" column="is_marketable" jdbcType="VARCHAR"/>
+        <result property="brandId" column="brand_id" jdbcType="INTEGER"/>
+        <result property="caption" column="caption" jdbcType="VARCHAR"/>
+        <result property="category1Id" column="category1_id" jdbcType="INTEGER"/>
+        <result property="category2Id" column="category2_id" jdbcType="INTEGER"/>
+        <result property="category3Id" column="category3_id" jdbcType="INTEGER"/>
+        <result property="smallPic" column="small_pic" jdbcType="VARCHAR"/>
+        <result property="price" column="price" jdbcType="NUMERIC"/>
+        <result property="typeTemplateId" column="type_template_id" jdbcType="INTEGER"/>
+        <result property="isEnableSpec" column="is_enable_spec" jdbcType="VARCHAR"/>
+        <result property="isDelete" column="is_delete" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TbGoodsMap">
+        select
+          id, seller_id, goods_name, default_item_id, audit_status, is_marketable, brand_id, caption, category1_id, category2_id, category3_id, small_pic, price, type_template_id, is_enable_spec, is_delete
+        from pinyougoudb.tb_goods
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TbGoodsMap">
+        select
+          id, seller_id, goods_name, default_item_id, audit_status, is_marketable, brand_id, caption, category1_id, category2_id, category3_id, small_pic, price, type_template_id, is_enable_spec, is_delete
+        from pinyougoudb.tb_goods
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TbGoodsMap">
+        select
+          id, seller_id, goods_name, default_item_id, audit_status, is_marketable, brand_id, caption, category1_id, category2_id, category3_id, small_pic, price, type_template_id, is_enable_spec, is_delete
+        from pinyougoudb.tb_goods
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="sellerId != null and sellerId != ''">
+                and seller_id = #{sellerId}
+            </if>
+            <if test="goodsName != null and goodsName != ''">
+                and goods_name = #{goodsName}
+            </if>
+            <if test="defaultItemId != null">
+                and default_item_id = #{defaultItemId}
+            </if>
+            <if test="auditStatus != null and auditStatus != ''">
+                and audit_status = #{auditStatus}
+            </if>
+            <if test="isMarketable != null and isMarketable != ''">
+                and is_marketable = #{isMarketable}
+            </if>
+            <if test="brandId != null">
+                and brand_id = #{brandId}
+            </if>
+            <if test="caption != null and caption != ''">
+                and caption = #{caption}
+            </if>
+            <if test="category1Id != null">
+                and category1_id = #{category1Id}
+            </if>
+            <if test="category2Id != null">
+                and category2_id = #{category2Id}
+            </if>
+            <if test="category3Id != null">
+                and category3_id = #{category3Id}
+            </if>
+            <if test="smallPic != null and smallPic != ''">
+                and small_pic = #{smallPic}
+            </if>
+            <if test="price != null">
+                and price = #{price}
+            </if>
+            <if test="typeTemplateId != null">
+                and type_template_id = #{typeTemplateId}
+            </if>
+            <if test="isEnableSpec != null and isEnableSpec != ''">
+                and is_enable_spec = #{isEnableSpec}
+            </if>
+            <if test="isDelete != null and isDelete != ''">
+                and is_delete = #{isDelete}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into pinyougoudb.tb_goods(seller_id, goods_name, default_item_id, audit_status, is_marketable, brand_id, caption, category1_id, category2_id, category3_id, small_pic, price, type_template_id, is_enable_spec, is_delete)
+        values (#{sellerId}, #{goodsName}, #{defaultItemId}, #{auditStatus}, #{isMarketable}, #{brandId}, #{caption}, #{category1Id}, #{category2Id}, #{category3Id}, #{smallPic}, #{price}, #{typeTemplateId}, #{isEnableSpec}, #{isDelete})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update pinyougoudb.tb_goods
+        <set>
+            <if test="sellerId != null and sellerId != ''">
+                seller_id = #{sellerId},
+            </if>
+            <if test="goodsName != null and goodsName != ''">
+                goods_name = #{goodsName},
+            </if>
+            <if test="defaultItemId != null">
+                default_item_id = #{defaultItemId},
+            </if>
+            <if test="auditStatus != null and auditStatus != ''">
+                audit_status = #{auditStatus},
+            </if>
+            <if test="isMarketable != null and isMarketable != ''">
+                is_marketable = #{isMarketable},
+            </if>
+            <if test="brandId != null">
+                brand_id = #{brandId},
+            </if>
+            <if test="caption != null and caption != ''">
+                caption = #{caption},
+            </if>
+            <if test="category1Id != null">
+                category1_id = #{category1Id},
+            </if>
+            <if test="category2Id != null">
+                category2_id = #{category2Id},
+            </if>
+            <if test="category3Id != null">
+                category3_id = #{category3Id},
+            </if>
+            <if test="smallPic != null and smallPic != ''">
+                small_pic = #{smallPic},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="typeTemplateId != null">
+                type_template_id = #{typeTemplateId},
+            </if>
+            <if test="isEnableSpec != null and isEnableSpec != ''">
+                is_enable_spec = #{isEnableSpec},
+            </if>
+            <if test="isDelete != null and isDelete != ''">
+                is_delete = #{isDelete},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from pinyougoudb.tb_goods where id = #{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsf.pinyougou.dao.TbSeckillOrderDao">
+
+    <resultMap type="com.lsf.pinyougou.pojo.TbSeckillOrder" id="TbSeckillOrderMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="seckillId" column="seckill_id" jdbcType="INTEGER"/>
+        <result property="money" column="money" jdbcType="NUMERIC"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="sellerId" column="seller_id" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="payTime" column="pay_time" jdbcType="TIMESTAMP"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="receiverAddress" column="receiver_address" jdbcType="VARCHAR"/>
+        <result property="receiverMobile" column="receiver_mobile" jdbcType="VARCHAR"/>
+        <result property="receiver" column="receiver" jdbcType="VARCHAR"/>
+        <result property="transactionId" column="transaction_id" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TbSeckillOrderMap">
+        select
+          id, seckill_id, money, user_id, seller_id, create_time, pay_time, status, receiver_address, receiver_mobile, receiver, transaction_id
+        from pinyougoudb.tb_seckill_order
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TbSeckillOrderMap">
+        select
+          id, seckill_id, money, user_id, seller_id, create_time, pay_time, status, receiver_address, receiver_mobile, receiver, transaction_id
+        from pinyougoudb.tb_seckill_order
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TbSeckillOrderMap">
+        select
+          id, seckill_id, money, user_id, seller_id, create_time, pay_time, status, receiver_address, receiver_mobile, receiver, transaction_id
+        from pinyougoudb.tb_seckill_order
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="seckillId != null">
+                and seckill_id = #{seckillId}
+            </if>
+            <if test="money != null">
+                and money = #{money}
+            </if>
+            <if test="userId != null and userId != ''">
+                and user_id = #{userId}
+            </if>
+            <if test="sellerId != null and sellerId != ''">
+                and seller_id = #{sellerId}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="payTime != null">
+                and pay_time = #{payTime}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="receiverAddress != null and receiverAddress != ''">
+                and receiver_address = #{receiverAddress}
+            </if>
+            <if test="receiverMobile != null and receiverMobile != ''">
+                and receiver_mobile = #{receiverMobile}
+            </if>
+            <if test="receiver != null and receiver != ''">
+                and receiver = #{receiver}
+            </if>
+            <if test="transactionId != null and transactionId != ''">
+                and transaction_id = #{transactionId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into pinyougoudb.tb_seckill_order(seckill_id, money, user_id, seller_id, create_time, pay_time, status, receiver_address, receiver_mobile, receiver, transaction_id)
+        values (#{seckillId}, #{money}, #{userId}, #{sellerId}, #{createTime}, #{payTime}, #{status}, #{receiverAddress}, #{receiverMobile}, #{receiver}, #{transactionId})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update pinyougoudb.tb_seckill_order
+        <set>
+            <if test="seckillId != null">
+                seckill_id = #{seckillId},
+            </if>
+            <if test="money != null">
+                money = #{money},
+            </if>
+            <if test="userId != null and userId != ''">
+                user_id = #{userId},
+            </if>
+            <if test="sellerId != null and sellerId != ''">
+                seller_id = #{sellerId},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="payTime != null">
+                pay_time = #{payTime},
+            </if>
+            <if test="status != null and status != ''">
+                status = #{status},
+            </if>
+            <if test="receiverAddress != null and receiverAddress != ''">
+                receiver_address = #{receiverAddress},
+            </if>
+            <if test="receiverMobile != null and receiverMobile != ''">
+                receiver_mobile = #{receiverMobile},
+            </if>
+            <if test="receiver != null and receiver != ''">
+                receiver = #{receiver},
+            </if>
+            <if test="transactionId != null and transactionId != ''">
+                transaction_id = #{transactionId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from pinyougoudb.tb_seckill_order where id = #{id}
+    </delete>
+
+</mapper>

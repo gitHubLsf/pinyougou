@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsf.pinyougou.dao.TbPayLogDao">
+
+    <resultMap type="com.lsf.pinyougou.pojo.TbPayLog" id="TbPayLogMap">
+        <result property="outTradeNo" column="out_trade_no" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="payTime" column="pay_time" jdbcType="TIMESTAMP"/>
+        <result property="totalFee" column="total_fee" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="transactionId" column="transaction_id" jdbcType="VARCHAR"/>
+        <result property="tradeState" column="trade_state" jdbcType="VARCHAR"/>
+        <result property="orderList" column="order_list" jdbcType="VARCHAR"/>
+        <result property="payType" column="pay_type" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TbPayLogMap">
+        select
+          out_trade_no, create_time, pay_time, total_fee, user_id, transaction_id, trade_state, order_list, pay_type
+        from pinyougoudb.tb_pay_log
+        where out_trade_no = #{outTradeNo}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TbPayLogMap">
+        select
+          out_trade_no, create_time, pay_time, total_fee, user_id, transaction_id, trade_state, order_list, pay_type
+        from pinyougoudb.tb_pay_log
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TbPayLogMap">
+        select
+          out_trade_no, create_time, pay_time, total_fee, user_id, transaction_id, trade_state, order_list, pay_type
+        from pinyougoudb.tb_pay_log
+        <where>
+            <if test="outTradeNo != null and outTradeNo != ''">
+                and out_trade_no = #{outTradeNo}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="payTime != null">
+                and pay_time = #{payTime}
+            </if>
+            <if test="totalFee != null">
+                and total_fee = #{totalFee}
+            </if>
+            <if test="userId != null and userId != ''">
+                and user_id = #{userId}
+            </if>
+            <if test="transactionId != null and transactionId != ''">
+                and transaction_id = #{transactionId}
+            </if>
+            <if test="tradeState != null and tradeState != ''">
+                and trade_state = #{tradeState}
+            </if>
+            <if test="orderList != null and orderList != ''">
+                and order_list = #{orderList}
+            </if>
+            <if test="payType != null and payType != ''">
+                and pay_type = #{payType}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="outTradeNo" useGeneratedKeys="true">
+        insert into pinyougoudb.tb_pay_log(create_time, pay_time, total_fee, user_id, transaction_id, trade_state, order_list, pay_type)
+        values (#{createTime}, #{payTime}, #{totalFee}, #{userId}, #{transactionId}, #{tradeState}, #{orderList}, #{payType})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update pinyougoudb.tb_pay_log
+        <set>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="payTime != null">
+                pay_time = #{payTime},
+            </if>
+            <if test="totalFee != null">
+                total_fee = #{totalFee},
+            </if>
+            <if test="userId != null and userId != ''">
+                user_id = #{userId},
+            </if>
+            <if test="transactionId != null and transactionId != ''">
+                transaction_id = #{transactionId},
+            </if>
+            <if test="tradeState != null and tradeState != ''">
+                trade_state = #{tradeState},
+            </if>
+            <if test="orderList != null and orderList != ''">
+                order_list = #{orderList},
+            </if>
+            <if test="payType != null and payType != ''">
+                pay_type = #{payType},
+            </if>
+        </set>
+        where out_trade_no = #{outTradeNo}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from pinyougoudb.tb_pay_log where out_trade_no = #{outTradeNo}
+    </delete>
+
+</mapper>
