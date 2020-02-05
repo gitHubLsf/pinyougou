@@ -86,4 +86,17 @@ public class BrandServiceImpl implements BrandService {
     public void update(TbBrand brand) {
         tbBrandDao.update(brand);
     }
+
+
+    /**
+     * 批量删除品牌
+     *
+     * @param ids
+     */
+    @Override
+    public void batchDelete(Long[] ids) {
+        for (Long id : ids) {
+            tbBrandDao.deleteById(id);
+        }
+    }
 }

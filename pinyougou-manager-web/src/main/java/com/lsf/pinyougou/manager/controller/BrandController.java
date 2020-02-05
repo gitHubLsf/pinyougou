@@ -97,4 +97,20 @@ public class BrandController {
             return new Result(false, "修改失败");
         }
     }
+
+
+    /**
+     * 批量删除品牌
+     *
+     * @return
+     */
+    @RequestMapping("/batchDelete.do")
+    public Result batchDelete(Long[] ids) {
+        try {
+            brandService.batchDelete(ids);
+            return new Result(true, "删除成功");
+        } catch (Exception e) {
+            return new Result(false, "删除失败");
+        }
+    }
 }

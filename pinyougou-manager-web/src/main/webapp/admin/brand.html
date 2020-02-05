@@ -21,7 +21,7 @@
 
     <script type="text/javascript">
         // 创建自定义模块 pinyougou
-		// 由于当前模块需要使用分页功能,故引入 pagination 模块
+        // 由于当前模块需要使用分页功能,故引入 pagination 模块
         var pyg = angular.module('pinyougou', ['pagination']);
 
         // 在模块中添加品牌列表管理控制器 brandController
@@ -38,35 +38,35 @@
                 );
             };
 
-			// 分页控件配置
-			// currentPage：当前页,初始为第 1 页,当用户切换页面时,这个值自动改变
-			// totalItems：总记录数
-			// itemsPerPage：每页显示的记录数,前端可随时修改
-			// perPageOptions：提供给用户选择的每页记录数窗口
-			// onChange：当用户切换页面时,自动调用 onChange 指定的方法
-			$scope.paginationConf = {
-				currentPage: 1,
-				totalItems: 10,
-				itemsPerPage: 5,
-				perPageOptions: [5, 10, 15, 20, 25],
-				onChange: function(){
-					$scope.reloadList(); // 刷新品牌列表
-				}
-			};
+            // 分页控件配置
+            // currentPage：当前页,初始为第 1 页,当用户切换页面时,这个值自动改变
+            // totalItems：总记录数
+            // itemsPerPage：每页显示的记录数,前端可随时修改
+            // perPageOptions：提供给用户选择的每页记录数窗口
+            // onChange：当用户切换页面时,自动调用 onChange 指定的方法
+            $scope.paginationConf = {
+                currentPage: 1,
+                totalItems: 10,
+                itemsPerPage: 5,
+                perPageOptions: [5, 10, 15, 20, 25],
+                onChange: function () {
+                    $scope.reloadList(); // 刷新品牌列表
+                }
+            };
 
-			// 刷新品牌列表
-			$scope.reloadList = function() {
-				$scope.findPage($scope.paginationConf.currentPage, $scope.paginationConf.itemsPerPage);
-			};
+            // 刷新品牌列表
+            $scope.reloadList = function () {
+                $scope.findPage($scope.paginationConf.currentPage, $scope.paginationConf.itemsPerPage);
+            };
 
-			// 添加品牌分页查询的方法
+            // 添加品牌分页查询的方法
             $scope.findPage = function (page, size) {
                 $http.get('../brand/findPage.do?page=' + page + '&size=' + size).success(
                     function (response) {
                         // 修改当前页数据
                         $scope.brandList = response.rows;
                         // 修改总记录数
-						$scope.paginationConf.totalItems = response.total;
+                        $scope.paginationConf.totalItems = response.total;
                     }
                 );
             };
@@ -102,6 +102,45 @@
                     }
                 );
             };
+
+            // 批量删除品牌
+            // 创建集合，保存用户勾选的要删除的品牌的 ID
+            $scope.selectedList = [];
+            // 监听用户勾选
+            $scope.updateSelected = function ($event, id) {
+                if ($event.target.checked) {
+                    // 用户将复选框从无勾成有，表示要删除
+                    $scope.selectedList.push(id);
+                } else {
+                    // 用户将复选框从有勾成无，表示不想删除了
+                    // 查找到这个元素，将其下标保存在 index 中
+                    var index = $scope.selectedList.indexOf(id);
+                    // 在集合中找到下标为 index 的位置,从这个位置开始,删除 1 个元素
+                    $scope.selectedList.splice(index, 1);
+                }
+            };
+
+            // 监听删除按钮
+            $scope.batchDelete = function () {
+                if ($scope.selectedList.length === 0) {
+                    alert("请选择要删除的内容");
+                } else {
+                    $http.get('../brand/batchDelete.do?ids=' + $scope.selectedList).success(
+                        function (response) {
+                            if (response.success) {
+                                // 删除成功
+                                // 刷新当前页
+                                $scope.reloadList();
+                            } else {
+                                // 删除失败
+                                alert(response.message);
+                            }
+                        });
+
+                    // 删除成功后，要清空集合
+                    $scope.selectedList = [];
+                }
+            };
         });
     </script>
 
@@ -124,7 +163,9 @@
                     <button type="button" class="btn btn-default" title="新建" data-toggle="modal"
                             data-target="#editModal" ng-click="brandEntity={}"><i class="fa fa-file-o"></i> 新建
                     </button>
-                    <button type="button" class="btn btn-default" title="删除"><i class="fa fa-trash-o"></i> 删除</button>
+                    <button type="button" class="btn btn-default" title="删除" ng-click="batchDelete()"><i
+                            class="fa fa-trash-o"></i> 删除
+                    </button>
                     <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i
                             class="fa fa-refresh"></i> 刷新
                     </button>
@@ -153,7 +194,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="brandItem in brandList">
-                <td><input type="checkbox"></td>
+                <td><input type="checkbox" ng-click="updateSelected($event,brandItem.id)"></td>
                 <td>{{ brandItem.id }}</td>
                 <td>{{ brandItem.name }}</td>
                 <td>{{ brandItem.firstChar }}</td>
