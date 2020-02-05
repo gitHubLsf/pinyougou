@@ -4,9 +4,11 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.container.page.Page;
 import com.lsf.pinyougou.pojo.TbBrand;
 import com.lsf.pinyougou.sellergoods.service.BrandService;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vo.PageResult;
+import vo.Result;
 
 import java.util.List;
 
@@ -50,6 +52,23 @@ public class BrandController {
     @RequestMapping("/findPage")
     public PageResult findPage(int page, int size) {
         return brandService.findPage(page, size);
+    }
+
+
+    /**
+     * 添加品牌
+     *
+     * @param brand 前端传递的封装对象,需要使用 @RequestBody 注解标记
+     * @return  Result 是给前端的响应体
+     */
+    @RequestMapping("/add.do")
+    public Result add(@RequestBody TbBrand brand) {
+        try {
+            brandService.add(brand);
+            return new Result(true, "添加成功");
+        } catch (Exception e) {
+            return new Result(false, "添加失败");
+        }
     }
 
 }

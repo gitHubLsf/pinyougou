@@ -54,4 +54,14 @@ public class BrandServiceImpl implements BrandService {
         // 返回分页结果类对象
         return new PageResult(pageInfo.getTotal(), pageInfo.getList());
     }
+
+    /**
+     * 添加品牌
+     *
+     * @param brand
+     */
+    @Override
+    public void add(TbBrand brand) {
+        tbBrandDao.insert(brand);
+    }
 }

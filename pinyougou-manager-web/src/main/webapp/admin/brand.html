@@ -70,6 +70,23 @@
                     }
                 );
             };
+
+            // 添加品牌
+            $scope.add = function () {
+                $http.post('../brand/add.do', $scope.brandAdd).success(
+                    function (response) {
+                        if (response.success) {
+                            // 添加成功
+
+                            // 刷新当前页
+                            $scope.reloadList();
+                        } else {
+                            // 添加失败, 提示错误信息
+                            alert(response.message);
+                        }
+                    }
+                );
+            };
         });
     </script>
 
@@ -90,7 +107,7 @@
             <div class="form-group form-inline">
                 <div class="btn-group">
                     <button type="button" class="btn btn-default" title="新建" data-toggle="modal"
-                            data-target="#editModal"><i class="fa fa-file-o"></i> 新建
+                            data-target="#editModal" ng-click="brandAdd={}"><i class="fa fa-file-o"></i> 新建
                     </button>
                     <button type="button" class="btn btn-default" title="删除"><i class="fa fa-trash-o"></i> 删除</button>
                     <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i
@@ -157,16 +174,16 @@
                 <table class="table table-bordered table-striped" width="800px">
                     <tr>
                         <td>品牌名称</td>
-                        <td><input class="form-control" placeholder="品牌名称"></td>
+                        <td><input class="form-control" placeholder="品牌名称" ng-model="brandAdd.name"></td>
                     </tr>
                     <tr>
                         <td>首字母</td>
-                        <td><input class="form-control" placeholder="首字母"></td>
+                        <td><input class="form-control" placeholder="首字母" ng-model="brandAdd.firstChar"></td>
                     </tr>
                 </table>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-success" data-dismiss="modal" aria-hidden="true">保存</button>
+                <button class="btn btn-success" data-dismiss="modal" aria-hidden="true" ng-click="add()">保存</button>
                 <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
             </div>
         </div>
