@@ -64,4 +64,26 @@ public class BrandServiceImpl implements BrandService {
     public void add(TbBrand brand) {
         tbBrandDao.insert(brand);
     }
+
+
+    /**
+     * 根据品牌 ID 查询品牌信息
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public TbBrand findOne(long id) {
+        return tbBrandDao.queryById(id);
+    }
+
+
+    /**
+     * 修改品牌信息
+     * @param brand
+     */
+    @Override
+    public void update(TbBrand brand) {
+        tbBrandDao.update(brand);
+    }
 }

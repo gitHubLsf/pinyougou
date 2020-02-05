@@ -71,4 +71,30 @@ public class BrandController {
         }
     }
 
+
+    /**
+     * 根据品牌 ID 查询品牌信息
+     * @return
+     */
+    @RequestMapping("/findOne.do")
+    public TbBrand findOne(long id) {
+        return brandService.findOne(id);
+    }
+
+
+    /**
+     * 修改品牌信息
+     *
+     * @param brand
+     * @return
+     */
+    @RequestMapping("/update.do")
+    public Result update(@RequestBody TbBrand brand) {
+        try {
+            brandService.update(brand);
+            return new Result(true, "修改成功");
+        } catch (Exception e) {
+            return new Result(false, "修改失败");
+        }
+    }
 }
