@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>品牌管理</title>
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="../plugins/angularjs/angular.min.js"></script>
+
+    <!-- 分页组件开始 -->
+    <script src="../plugins/angularjs/pagination.js"></script>
+    <link rel="stylesheet" href="../plugins/angularjs/pagination.css">
+    <!-- 分页组件结束 -->
+
+    <script type="text/javascript">
+        // 创建自定义模块 pinyougou
+		// 由于当前模块需要使用分页功能,故引入 pagination 模块
+        var pyg = angular.module('pinyougou', ['pagination']);
+
+        // 在模块中添加品牌列表管理控制器 brandController
+        pyg.controller('brandController', function ($scope, $http) {
+
+            // 在控制器中添加查询所有品牌列表的方法
+            $scope.findAll = function () {
+                // 使用内置服务 $http 去后端查询数据
+                $http.get('../brand/findAll.do').success(
+                    function (response) {
+                        // response 就是后台返回的 json 格式存储的品牌列表数据
+                        $scope.brandList = response;
+                    }
+                );
+            };
+
+			// 分页控件配置
+			// currentPage：当前页,初始为第 1 页,当用户切换页面时,这个值自动改变
+			// totalItems：总记录数
+			// itemsPerPage：每页显示的记录数,前端可随时修改
+			// perPageOptions：提供给用户选择的每页记录数窗口
+			// onChange：当用户切换页面时,自动调用 onChange 指定的方法
+			$scope.paginationConf = {
+				currentPage: 1,
+				totalItems: 10,
+				itemsPerPage: 5,
+				perPageOptions: [5, 10, 15, 20, 25],
+				onChange: function(){
+					$scope.reloadList(); // 刷新品牌列表
+				}
+			};
+
+			// 刷新品牌列表
+			$scope.reloadList = function() {
+				$scope.findPage($scope.paginationConf.currentPage, $scope.paginationConf.itemsPerPage);
+			};
+
+			// 添加品牌分页查询的方法
+            $scope.findPage = function (page, size) {
+                $http.get('../brand/findPage.do?page=' + page + '&size=' + size).success(
+                    function (response) {
+                        // 修改当前页数据
+                        $scope.brandList = response.rows;
+                        // 修改总记录数
+						$scope.paginationConf.totalItems = response.total;
+                    }
+                );
+            };
+        });
+    </script>
+
+</head>
+<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="brandController">
+<!-- .box-body -->
+<div class="box-header with-border">
+    <h3 class="box-title">品牌管理</h3>
+</div>
+
+<div class="box-body">
+
+    <!-- 数据表格 -->
+    <div class="table-box">
+
+        <!--工具栏-->
+        <div class="pull-left">
+            <div class="form-group form-inline">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default" title="新建" data-toggle="modal"
+                            data-target="#editModal"><i class="fa fa-file-o"></i> 新建
+                    </button>
+                    <button type="button" class="btn btn-default" title="删除"><i class="fa fa-trash-o"></i> 删除</button>
+                    <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i
+                            class="fa fa-refresh"></i> 刷新
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="box-tools pull-right">
+            <div class="has-feedback">
+
+            </div>
+        </div>
+        <!--工具栏/-->
+
+        <!--数据列表-->
+        <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
+            <thead>
+            <tr>
+                <th class="" style="padding-right:0px">
+                    <input id="selall" type="checkbox" class="icheckbox_square-blue">
+                </th>
+                <th class="sorting_asc">品牌ID</th>
+                <th class="sorting">品牌名称</th>
+                <th class="sorting">品牌首字母</th>
+                <th class="text-center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="brandItem in brandList">
+                <td><input type="checkbox"></td>
+                <td>{{ brandItem.id }}</td>
+                <td>{{ brandItem.name }}</td>
+                <td>{{ brandItem.firstChar }}</td>
+                <td class="text-center">
+                    <button type="button" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#editModal">修改
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <!--数据列表/-->
+
+        <!-- 分页 -->
+        <tm-pagination conf="paginationConf"></tm-pagination>
+
+
+    </div>
+    <!-- 数据表格 /-->
+
+
+</div>
+<!-- /.box-body -->
+
+<!-- 编辑窗口 -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">品牌编辑</h3>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-striped" width="800px">
+                    <tr>
+                        <td>品牌名称</td>
+                        <td><input class="form-control" placeholder="品牌名称"></td>
+                    </tr>
+                    <tr>
+                        <td>首字母</td>
+                        <td><input class="form-control" placeholder="首字母"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" data-dismiss="modal" aria-hidden="true">保存</button>
+                <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
