@@ -56,7 +56,7 @@
 
             // 刷新品牌列表
             $scope.reloadList = function () {
-                $scope.findPage($scope.paginationConf.currentPage, $scope.paginationConf.itemsPerPage);
+                $scope.search($scope.paginationConf.currentPage, $scope.paginationConf.itemsPerPage);
             };
 
             // 添加品牌分页查询的方法
@@ -65,6 +65,22 @@
                     function (response) {
                         // 修改当前页数据
                         $scope.brandList = response.rows;
+                        // 修改总记录数
+                        $scope.paginationConf.totalItems = response.total;
+                    }
+                );
+            };
+
+            $scope.searchEntity = {};
+
+            // 多条件品牌分页查询
+            $scope.search = function(page, size) {
+                $http.post('../brand/search.do?page=' + page + '&size=' + size, $scope.searchEntity).success(
+                    function (response) {
+                        // 修改当前页数据
+                        $scope.brandList = response.rows;
+                        // 修改页码
+                        $scope.paginationConf.currentPage = page;
                         // 修改总记录数
                         $scope.paginationConf.totalItems = response.total;
                     }
@@ -174,7 +190,7 @@
         </div>
         <div class="box-tools pull-right">
             <div class="has-feedback">
-
+                品牌名称:<input ng-model="searchEntity.name"> 品牌首字母:<input ng-model="searchEntity.firstChar"> <button class="btn btn-default" ng-click="search(1,paginationConf.itemsPerPage)">查询</button>
             </div>
         </div>
         <!--工具栏/-->

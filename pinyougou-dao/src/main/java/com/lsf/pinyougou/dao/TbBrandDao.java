@@ -40,6 +40,15 @@ public interface TbBrandDao {
      */
     List<TbBrand> queryAll(TbBrand tbBrand);
 
+
+    /**
+     * 多添件品牌分页查询
+     *
+     * @param tbBrand 实例对象
+     * @return 对象列表
+     */
+    List<TbBrand> queryAllLimit(TbBrand tbBrand);
+
     /**
      * 新增数据
      *

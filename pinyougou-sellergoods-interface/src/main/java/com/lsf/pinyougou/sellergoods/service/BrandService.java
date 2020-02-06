@@ -31,6 +31,17 @@ public interface BrandService {
 
 
     /**
+     * 多条件品牌分页查询
+     *
+     * @param brand
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    PageResult findPageLimit(TbBrand brand, int pageNum, int pageSize);
+
+
+    /**
      * 添加品牌
      *
      * @param brand

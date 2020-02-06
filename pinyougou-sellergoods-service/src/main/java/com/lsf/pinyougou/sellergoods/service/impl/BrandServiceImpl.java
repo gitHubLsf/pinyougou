@@ -55,6 +55,27 @@ public class BrandServiceImpl implements BrandService {
         return new PageResult(pageInfo.getTotal(), pageInfo.getList());
     }
 
+
+    /**
+     * 多条件品牌分页查询
+     *
+     * @param brand
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public PageResult findPageLimit(TbBrand brand, int pageNum, int pageSize) {
+        // 开启分页
+        PageHelper.startPage(pageNum, pageSize);
+        // 查询所有数据
+        List<TbBrand> list = tbBrandDao.queryAllLimit(brand);
+        // 获取分页结果
+        PageInfo<TbBrand> pageInfo = new PageInfo<>(list);
+        // 返回分页结果类对象
+        return new PageResult(pageInfo.getTotal(), pageInfo.getList());
+    }
+
     /**
      * 添加品牌
      *

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import vo.PageResult;
 import vo.Result;
 
+import javax.swing.plaf.PanelUI;
 import java.util.List;
 
 /**
@@ -36,7 +37,7 @@ public class BrandController {
      * 此处返回的集合会被 springMVC 管理的 fastJSON 转换器转换为 json 数据传给 Web 消费方
      * @return
      */
-    @RequestMapping("/findAll")
+    @RequestMapping("/findAll.do")
     public List<TbBrand> findAll() {
         return brandService.findAll();
     }
@@ -49,9 +50,23 @@ public class BrandController {
      * @param size  每页记录数
      * @return
      */
-    @RequestMapping("/findPage")
+    @RequestMapping("/findPage.do")
     public PageResult findPage(int page, int size) {
         return brandService.findPage(page, size);
+    }
+
+
+    /**
+     * 多条件品牌分页查询
+     *
+     * @param brand
+     * @param page
+     * @param size
+     * @return
+     */
+    @RequestMapping("/search.do")
+    public PageResult findPageLimit(@RequestBody TbBrand brand, int page, int size) {
+        return brandService.findPageLimit(brand, page, size);
     }
 
 
