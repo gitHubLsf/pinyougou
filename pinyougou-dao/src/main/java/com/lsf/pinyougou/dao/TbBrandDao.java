@@ -42,7 +42,7 @@ public interface TbBrandDao {
 
 
     /**
-     * 多添件品牌分页查询
+     * 多条件品牌分页查询
      *
      * @param tbBrand 实例对象
      * @return 对象列表
