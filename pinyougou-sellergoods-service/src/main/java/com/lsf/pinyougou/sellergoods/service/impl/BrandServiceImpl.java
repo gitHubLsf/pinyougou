@@ -76,6 +76,7 @@ public class BrandServiceImpl implements BrandService {
         return new PageResult(pageInfo.getTotal(), pageInfo.getList());
     }
 
+
     /**
      * 添加品牌
      *
