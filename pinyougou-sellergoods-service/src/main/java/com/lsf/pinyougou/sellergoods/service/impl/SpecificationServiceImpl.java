@@ -3,6 +3,9 @@ package com.lsf.pinyougou.sellergoods.service.impl;
 import java.util.List;
 
 import com.github.pagehelper.PageInfo;
+import com.lsf.pinyougou.dao.TbSpecificationOptionDao;
+import com.lsf.pinyougou.pojo.TbSpecificationOption;
+import com.lsf.pinyougou.pojogroup.Specification;
 import com.lsf.pinyougou.sellergoods.service.SpecificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.dubbo.config.annotation.Service;
@@ -25,6 +28,9 @@ public class SpecificationServiceImpl implements SpecificationService {
      */
     @Autowired
     private TbSpecificationDao tbSpecificationDao;
+
+    @Autowired
+    private TbSpecificationOptionDao tbSpecificationOptionDao;
 
 
     /**
@@ -54,18 +60,26 @@ public class SpecificationServiceImpl implements SpecificationService {
     @Override
     public PageResult findPageLimit(TbSpecification specification, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<TbSpecification> list = tbSpecificationDao.queryAll(specification);
+        List<TbSpecification> list = tbSpecificationDao.queryAllLimit(specification);
         PageInfo<TbSpecification> pageInfo = new PageInfo<>(list);
         return new PageResult(pageInfo.getTotal(), pageInfo.getList());
     }
 
 
     /**
-     * 添加
+     * 添加规格
      */
     @Override
-    public void add(TbSpecification specification) {
-        tbSpecificationDao.insert(specification);
+    public void add(Specification specification) {
+        // 添加规格
+        TbSpecification tbspecification = specification.getSpecification();
+        tbSpecificationDao.insert(tbspecification);
+        // 添加规格选项
+        List<TbSpecificationOption> specificationOptionList = specification.getSpecificationOptionList();
+        for (TbSpecificationOption to : specificationOptionList) {
+            to.setSpecId(tbspecification.getId());
+            tbSpecificationOptionDao.insert(to);
+        }
     }
 
 
@@ -79,14 +93,19 @@ public class SpecificationServiceImpl implements SpecificationService {
 
 
     /**
-     * 根据 ID 获取实体
+     * 根据 ID 获取某种规格的信息
      *
      * @param id
      * @return
      */
     @Override
-    public TbSpecification findOne(long id) {
-        return tbSpecificationDao.queryById(id);
+    public Specification findOne(long id) {
+        // 查询规格
+        TbSpecification tbSpecification = tbSpecificationDao.queryById(id);
+        // 查询规格选项
+        List<TbSpecificationOption> tbSpecificationOptionsList = tbSpecificationOptionDao.queryBySpecId(id);
+        // 返回规格组合类实体
+        return new Specification(tbSpecification, tbSpecificationOptionsList);
     }
 
 

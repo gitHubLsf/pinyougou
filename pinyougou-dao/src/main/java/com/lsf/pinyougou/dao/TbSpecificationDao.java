@@ -63,4 +63,14 @@ public interface TbSpecificationDao {
      */
     int deleteById(Long id);
 
+
+    /**
+     * 多条件分页查询规格数据
+     *
+     * @param specification
+     * @return
+     */
+    List<TbSpecification> queryAllLimit(TbSpecification specification);
+
+
 }

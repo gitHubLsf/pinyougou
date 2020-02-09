@@ -2,6 +2,7 @@ package com.lsf.pinyougou.manager.controller;
 
 import java.util.List;
 
+import com.lsf.pinyougou.pojogroup.Specification;
 import com.lsf.pinyougou.sellergoods.service.SpecificationService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +15,7 @@ import vo.Result;
 
 
 /**
- * controller
+ * 规格列表控制器
  */
 @RestController
 @RequestMapping("/specification")
@@ -25,7 +26,7 @@ public class SpecificationController {
 
 
     /**
-     * 返回全部列表
+     * 返回全部规格数据
      *
      * @return
      */
@@ -36,27 +37,27 @@ public class SpecificationController {
 
 
     /**
-     * 无条件分页查询
+     * 无条件分页查询全部规格
      *
      * @return
      */
     @RequestMapping("/findPage.do")
-    public PageResult findPage(int page, int rows) {
-        return specificationService.findPage(page, rows);
+    public PageResult findPage(int page, int size) {
+        return specificationService.findPage(page, size);
     }
 
 
     /**
-     * 多条件分页查询
+     * 多条件分页查询规格数据
      *
      * @param specification
      * @param page
-     * @param rows
+     * @param size
      * @return
      */
     @RequestMapping("/search.do")
-    public PageResult findPageLimit(@RequestBody TbSpecification specification, int page, int rows) {
-        return specificationService.findPageLimit(specification, page, rows);
+    public PageResult findPageLimit(@RequestBody TbSpecification specification, int page, int size) {
+        return specificationService.findPageLimit(specification, page, size);
     }
 
 
@@ -67,7 +68,7 @@ public class SpecificationController {
      * @return
      */
     @RequestMapping("/add.do")
-    public Result add(@RequestBody TbSpecification specification) {
+    public Result add(@RequestBody Specification specification) {
         try {
             specificationService.add(specification);
             return new Result(true, "添加成功");
@@ -95,13 +96,13 @@ public class SpecificationController {
 
 
     /**
-     * 根据 ID 获取实体
+     * 根据 ID 获取某种规格的信息
      *
      * @param id
      * @return
      */
     @RequestMapping("/findOne.do")
-    public TbSpecification findOne(long id) {
+    public Specification findOne(long id) {
         return specificationService.findOne(id);
     }
 

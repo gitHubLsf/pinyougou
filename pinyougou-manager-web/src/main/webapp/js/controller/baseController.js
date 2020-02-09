@@ -21,6 +21,7 @@ pyg.controller('baseController', function ($scope) {
     // 刷新品牌列表
     $scope.reloadList = function () {
         $scope.search($scope.paginationConf.currentPage, $scope.paginationConf.itemsPerPage);
+        //$scope.findPage($scope.paginationConf.currentPage, $scope.paginationConf.itemsPerPage);
     };
 
 

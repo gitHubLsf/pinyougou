@@ -3,6 +3,7 @@ package com.lsf.pinyougou.sellergoods.service;
 import java.util.List;
 
 import com.lsf.pinyougou.pojo.TbSpecification;
+import com.lsf.pinyougou.pojogroup.Specification;
 import vo.PageResult;
 
 
@@ -28,7 +29,7 @@ public interface SpecificationService {
 
 
     /**
-     * 多条件分页查询
+     * 多条件分页查询规格数据
      *
      * @param pageNum  当前页
      * @param pageSize 每页记录数
@@ -38,9 +39,9 @@ public interface SpecificationService {
 
 
     /**
-     * 添加
+     * 添加规格
      */
-    void add(TbSpecification specification);
+    void add(Specification specification);
 
 
     /**
@@ -50,12 +51,12 @@ public interface SpecificationService {
 
 
     /**
-     * 根据 ID 获取实体
+     * 根据 ID 获取某种规格的信息
      *
      * @param id
      * @return
      */
-    TbSpecification findOne(long id);
+    Specification findOne(long id);
 
 
     /**

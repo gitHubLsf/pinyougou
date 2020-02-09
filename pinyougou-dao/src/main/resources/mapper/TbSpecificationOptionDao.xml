@@ -46,6 +46,13 @@
         </where>
     </select>
 
+    <select id="queryBySpecId" resultMap="TbSpecificationOptionMap">
+        select
+        id, option_name, spec_id, orders
+        from pinyougoudb.tb_specification_option
+        where spec_id = #{id}
+    </select>
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into pinyougoudb.tb_specification_option(option_name, spec_id, orders)

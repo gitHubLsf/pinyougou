@@ -1,12 +1,12 @@
-// 服务层
+// 规格服务层
 pyg.service('specificationService', function ($http) {
 
-    // 查询所有数据
+    // 查询所有规格数据
     this.findAll = function () {
         return $http.get('../specification/findAll.do');
     };
 
-    // 无条件分页查询
+    // 无条件分页查询所有规格数据
     this.findPage = function (page, size) {
         return $http.get('../specification/findPage.do?page=' + page + '&size=' + size);
     };
@@ -28,10 +28,10 @@ pyg.service('specificationService', function ($http) {
 
     // 批量删除
     this.batchDelete = function (selectedList) {
-        return $http.get('../specification/batcheDelete.do?ids=' + selectedList);
+        return $http.get('../specification/batchDelete.do?ids=' + selectedList);
     };
 
-    // 多条件分页查询
+    // 多条件分页查询规格数据
     this.findPageLimit = function (page, size, searchEntity) {
         return $http.post('../specification/search.do?page=' + page + "&size=" + size, searchEntity);
     };

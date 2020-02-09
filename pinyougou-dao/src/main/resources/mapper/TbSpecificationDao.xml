@@ -38,8 +38,27 @@
         </where>
     </select>
 
+
+<!--    多条件分页查询规格数据-->
+    <select id="queryAllLimit" resultMap="TbSpecificationMap">
+        select
+        id, spec_name
+        from pinyougoudb.tb_specification
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="specName != null and specName != ''">
+                and spec_name like CONCAT('%', #{specName}, '%')
+            </if>
+        </where>
+    </select>
+
     <!--新增所有列-->
-    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+    <insert id="insert">
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
         insert into pinyougoudb.tb_specification(spec_name)
         values (#{specName})
     </insert>
