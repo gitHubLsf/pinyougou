@@ -68,8 +68,8 @@ pyg.controller('specificationController', function ($scope, $controller, specifi
                 function (response) {
                     if (response.success) {
                         // 删除成功
-                        // 刷新当前页
-                        $scope.reloadList();
+                        // 刷新到第一页
+                        $scope.search(1, $scope.paginationConf.itemsPerPage);
                     } else {
                         // 删除失败
                         alert(response.message);

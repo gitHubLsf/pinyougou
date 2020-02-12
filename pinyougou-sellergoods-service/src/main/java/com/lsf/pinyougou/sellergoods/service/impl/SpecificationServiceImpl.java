@@ -74,6 +74,7 @@ public class SpecificationServiceImpl implements SpecificationService {
         // 添加规格
         TbSpecification tbspecification = specification.getSpecification();
         tbSpecificationDao.insert(tbspecification);
+
         // 添加规格选项
         List<TbSpecificationOption> specificationOptionList = specification.getSpecificationOptionList();
         for (TbSpecificationOption to : specificationOptionList) {
@@ -84,11 +85,21 @@ public class SpecificationServiceImpl implements SpecificationService {
 
 
     /**
-     * 修改
+     * 修改规格
      */
     @Override
-    public void update(TbSpecification specification) {
-        tbSpecificationDao.update(specification);
+    public void update(Specification specification) {
+        // 修改规格名称
+        tbSpecificationDao.update(specification.getSpecification());
+
+        // 删除旧的规格选项
+        tbSpecificationOptionDao.deleteBySpecId(specification.getSpecification().getId());
+        // 添加新的规格选项
+        List<TbSpecificationOption> specificationOptionList = specification.getSpecificationOptionList();
+        for (TbSpecificationOption to : specificationOptionList) {
+            to.setSpecId(specification.getSpecification().getId());
+            tbSpecificationOptionDao.insert(to);
+        }
     }
 
 
@@ -115,7 +126,10 @@ public class SpecificationServiceImpl implements SpecificationService {
     @Override
     public void batchDelete(Long[] ids) {
         for (Long id : ids) {
+            // 删除某种规格
             tbSpecificationDao.deleteById(id);
+            // 删除某种规格对应的规格选项
+            tbSpecificationOptionDao.deleteBySpecId(id);
         }
     }
 

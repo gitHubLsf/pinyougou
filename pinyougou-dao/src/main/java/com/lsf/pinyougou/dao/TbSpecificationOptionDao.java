@@ -72,4 +72,10 @@ public interface TbSpecificationOptionDao {
      */
     List<TbSpecificationOption> queryBySpecId(Long id);
 
+
+    /**
+     * 根据规格 ID 删除规格选项
+     * @param id
+     */
+    void deleteBySpecId(Long id);
 }

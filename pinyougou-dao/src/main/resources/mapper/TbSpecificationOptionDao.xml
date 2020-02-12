@@ -81,4 +81,10 @@
         delete from pinyougoudb.tb_specification_option where id = #{id}
     </delete>
 
+
+<!--    根据规格 ID 删除规格选项-->
+    <delete id="deleteBySpecId">
+        delete from pinyougoudb.tb_specification_option where spec_id = #{id}
+    </delete>
+
 </mapper>

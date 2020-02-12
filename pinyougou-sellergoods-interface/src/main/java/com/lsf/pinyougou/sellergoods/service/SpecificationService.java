@@ -45,9 +45,9 @@ public interface SpecificationService {
 
 
     /**
-     * 修改
+     * 修改规格
      */
-    void update(TbSpecification specification);
+    void update(Specification specification);
 
 
     /**

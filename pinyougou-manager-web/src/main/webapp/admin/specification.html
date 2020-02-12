@@ -44,7 +44,7 @@
                     <button type="button" class="btn btn-default" title="新建" data-toggle="modal"
                             data-target="#editModal" ng-click="specEntity={specification:{},specificationOptionList:[]}"><i class="fa fa-file-o"></i> 新建
                     </button>
-                    <button type="button" class="btn btn-default" title="删除"><i class="fa fa-trash-o"></i> 删除</button>
+                    <button type="button" class="btn btn-default" title="删除" ng-click="batchDelete()"><i class="fa fa-trash-o"></i> 删除</button>
 
                     <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i
                             class="fa fa-refresh"></i> 刷新
@@ -75,7 +75,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="spec in specList">
-                <td><input type="checkbox"></td>
+                <td><input type="checkbox" ng-click="updateSelected($event,spec.id)"></td>
                 <td>{{ spec.id }}</td>
                 <td>{{ spec.specName }}</td>
                 <td class="text-center">
@@ -131,7 +131,6 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="specOpt in specEntity.specificationOptionList">
-
                         <td>
                             <input class="form-control" placeholder="规格选项" ng-model="specOpt.optionName">
                         </td>
@@ -139,7 +138,8 @@
                             <input class="form-control" placeholder="排序" ng-model="specOpt.orders">
                         </td>
                         <td>
-                            <button type="button" class="btn btn-default" title="删除" ng-click="deleteTableRow($index)"><i class="fa fa-trash-o"></i> 删除
+                            <button type="button" class="btn btn-default" title="删除" ng-click="deleteTableRow($index)">
+                                <i class="fa fa-trash-o"></i> 删除
                             </button>
                         </td>
                     </tr>
