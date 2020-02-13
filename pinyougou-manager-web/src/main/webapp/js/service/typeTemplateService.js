@@ -28,7 +28,7 @@ pyg.service('typeTemplateService', function ($http) {
 
     // 批量删除
     this.batchDelete = function (selectedList) {
-        return $http.get('../typeTemplate/batcheDelete.do?ids=' + selectedList);
+        return $http.get('../typeTemplate/batchDelete.do?ids=' + selectedList);
     };
 
     // 多条件分页查询

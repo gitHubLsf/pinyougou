@@ -5,6 +5,7 @@ import com.lsf.pinyougou.pojo.TbBrand;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * (TbBrand)表数据库访问层
@@ -72,5 +73,13 @@ public interface TbBrandDao {
      * @return 影响行数
      */
     int deleteById(Long id);
+
+
+    /**
+     * 查询所有品牌下拉列表
+     *
+     * @return
+     */
+    List<Map> selectBrandList();
 
 }

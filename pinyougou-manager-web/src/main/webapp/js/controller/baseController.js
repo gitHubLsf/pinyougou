@@ -41,6 +41,19 @@ pyg.controller('baseController', function ($scope) {
             $scope.selectedList.splice(index, 1);
         }
     };
+
+    // 将字符串转换为 json 对象
+    $scope.jsonToString = function (jsonString, key) {
+        var json = JSON.parse(jsonString);
+        var value = '';
+        for (var i = 0; i < json.length; i++) {
+            if (i > 0) {
+                value += ',';
+            }
+            value += json[i][key];
+        }
+        return value;
+    }
 });
 
 

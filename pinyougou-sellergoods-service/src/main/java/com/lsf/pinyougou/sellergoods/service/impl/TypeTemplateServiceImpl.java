@@ -54,7 +54,7 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
     @Override
     public PageResult findPageLimit(TbTypeTemplate typeTemplate, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<TbTypeTemplate> list = tbTypeTemplateDao.queryAll(typeTemplate);
+        List<TbTypeTemplate> list = tbTypeTemplateDao.queryAllLimit(typeTemplate);
         PageInfo<TbTypeTemplate> pageInfo = new PageInfo<>(list);
         return new PageResult(pageInfo.getTotal(), pageInfo.getList());
     }

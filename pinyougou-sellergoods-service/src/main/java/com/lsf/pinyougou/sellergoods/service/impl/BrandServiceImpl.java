@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import vo.PageResult;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 品牌列表服务实现
@@ -120,5 +121,16 @@ public class BrandServiceImpl implements BrandService {
         for (Long id : ids) {
             tbBrandDao.deleteById(id);
         }
+    }
+
+
+    /**
+     * 查询所有品牌下拉列表
+     *
+     * @return
+     */
+    @Override
+    public List<Map> selectBrandList() {
+        return tbBrandDao.selectBrandList();
     }
 }

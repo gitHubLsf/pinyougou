@@ -12,6 +12,7 @@ import vo.Result;
 
 import javax.swing.plaf.PanelUI;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 运营商管理后台-品牌列表控制器
@@ -126,6 +127,21 @@ public class BrandController {
             return new Result(true, "删除成功");
         } catch (Exception e) {
             return new Result(false, "删除失败");
+        }
+    }
+
+
+    /**
+     * 查询所有品牌的列表
+     *
+     * @return
+     */
+    @RequestMapping("/selectBrandList.do")
+    public List<Map> selectBrandList() {
+        try {
+            return brandService.selectBrandList();
+        } catch (Exception e) {
+            return null;
         }
     }
 }

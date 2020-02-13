@@ -1,6 +1,7 @@
 package com.lsf.pinyougou.sellergoods.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import com.github.pagehelper.PageInfo;
 import com.lsf.pinyougou.dao.TbSpecificationOptionDao;
@@ -131,6 +132,17 @@ public class SpecificationServiceImpl implements SpecificationService {
             // 删除某种规格对应的规格选项
             tbSpecificationOptionDao.deleteBySpecId(id);
         }
+    }
+
+
+    /**
+     * 查询所有规格下拉列表
+     *
+     * @return
+     */
+    @Override
+    public List<Map> selectSpecList() {
+        return tbSpecificationDao.selectSpecList();
     }
 
 }

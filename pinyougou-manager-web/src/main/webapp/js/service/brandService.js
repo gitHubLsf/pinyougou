@@ -34,4 +34,9 @@ pyg.service('brandService', function ($http) {
     this.batchDelete = function (selectedList) {
         return $http.get('../brand/batchDelete.do?ids=' + selectedList);
     };
+
+    // 查询所有品牌的下拉列表
+    this.selectBrandList = function () {
+        return $http.get('../brand/selectBrandList.do');
+    }
 });

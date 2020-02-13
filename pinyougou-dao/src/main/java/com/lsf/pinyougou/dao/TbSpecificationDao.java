@@ -4,6 +4,7 @@ import com.lsf.pinyougou.pojo.TbSpecification;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * (TbSpecification)表数据库访问层
@@ -71,6 +72,14 @@ public interface TbSpecificationDao {
      * @return
      */
     List<TbSpecification> queryAllLimit(TbSpecification specification);
+
+
+    /**
+     * 查询所有规格下拉列表
+     *
+     * @return
+     */
+    List<Map> selectSpecList();
 
 
 }

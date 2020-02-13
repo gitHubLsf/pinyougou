@@ -50,6 +50,30 @@
         </where>
     </select>
 
+<!--    多条件分页查询模板数据-->
+    <select id="queryAllLimit" resultMap="TbTypeTemplateMap">
+        select
+        id, name, spec_ids, brand_ids, custom_attribute_items
+        from pinyougoudb.tb_type_template
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name like CONCAT('%', #{name}, '%')
+            </if>
+            <if test="specIds != null and specIds != ''">
+                and spec_ids = #{specIds}
+            </if>
+            <if test="brandIds != null and brandIds != ''">
+                and brand_ids = #{brandIds}
+            </if>
+            <if test="customAttributeItems != null and customAttributeItems != ''">
+                and custom_attribute_items like CONCAT('%', #{customAttributeItems}, '%')
+            </if>
+        </where>
+    </select>
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into pinyougoudb.tb_type_template(name, spec_ids, brand_ids, custom_attribute_items)

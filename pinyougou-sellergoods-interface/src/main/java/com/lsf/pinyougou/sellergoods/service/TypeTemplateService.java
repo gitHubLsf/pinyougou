@@ -28,7 +28,7 @@ public interface TypeTemplateService {
 
 
     /**
-     * 多条件分页查询
+     * 多条件分页查询模板数据
      *
      * @param pageNum  当前页
      * @param pageSize 每页记录数

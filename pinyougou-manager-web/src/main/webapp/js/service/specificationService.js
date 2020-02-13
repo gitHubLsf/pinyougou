@@ -35,4 +35,9 @@ pyg.service('specificationService', function ($http) {
     this.findPageLimit = function (page, size, searchEntity) {
         return $http.post('../specification/search.do?page=' + page + "&size=" + size, searchEntity);
     };
+
+    // 查询所有规格的下拉列表
+    this.selectSpecList= function () {
+        return $http.get('../specification/selectSpecList.do');
+    }
 });

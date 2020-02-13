@@ -4,6 +4,7 @@ import com.lsf.pinyougou.pojo.TbBrand;
 import vo.PageResult;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 品牌列表服务接口
@@ -71,4 +72,12 @@ public interface BrandService {
      * @param ids
      */
     void batchDelete(Long[] ids);
+
+
+    /**
+     * 查询所有品牌下拉列表
+     *
+     * @return
+     */
+    List<Map> selectBrandList();
 }

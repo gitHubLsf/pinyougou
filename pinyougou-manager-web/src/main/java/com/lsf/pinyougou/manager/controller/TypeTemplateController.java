@@ -47,16 +47,16 @@ public class TypeTemplateController {
 
 
     /**
-     * 多条件分页查询
+     * 多条件分页查询模板数据
      *
      * @param typeTemplate
      * @param page
-     * @param rows
+     * @param size
      * @return
      */
     @RequestMapping("/search.do")
-    public PageResult findPageLimit(@RequestBody TbTypeTemplate typeTemplate, int page, int rows) {
-        return typeTemplateService.findPageLimit(typeTemplate, page, rows);
+    public PageResult findPageLimit(@RequestBody TbTypeTemplate typeTemplate, int page, int size) {
+        return typeTemplateService.findPageLimit(typeTemplate, page, size);
     }
 
 
@@ -78,7 +78,7 @@ public class TypeTemplateController {
 
 
     /**
-     * 修改
+     * 修改模板数据
      *
      * @param typeTemplate
      * @return

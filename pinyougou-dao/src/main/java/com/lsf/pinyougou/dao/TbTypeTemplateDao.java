@@ -64,4 +64,12 @@ public interface TbTypeTemplateDao {
      */
     int deleteById(Long id);
 
+
+    /**
+     * 多条件分页查询模板数据
+     *
+     * @param typeTemplate
+     * @return
+     */
+    List<TbTypeTemplate> queryAllLimit(TbTypeTemplate typeTemplate);
 }

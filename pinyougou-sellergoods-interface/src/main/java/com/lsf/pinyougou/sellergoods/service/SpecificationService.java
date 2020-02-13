@@ -1,6 +1,7 @@
 package com.lsf.pinyougou.sellergoods.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.lsf.pinyougou.pojo.TbSpecification;
 import com.lsf.pinyougou.pojogroup.Specification;
@@ -65,5 +66,13 @@ public interface SpecificationService {
      * @param ids
      */
     void batchDelete(Long[] ids);
+
+
+    /**
+     * 查询所有规格下拉列表
+     *
+     * @return
+     */
+    List<Map> selectSpecList();
 
 }

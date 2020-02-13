@@ -9,7 +9,7 @@
  * <input select2 ng-model="a" select2-model="b" config="default" query="member" type="text" placeholder="占位符" />
  * <select select2 ng-model="b" class="form-control"></select>
  */
-app.directive('select2', function () {
+pyg.directive('select2', function () {
     return {
         restrict: 'A',
         scope: {

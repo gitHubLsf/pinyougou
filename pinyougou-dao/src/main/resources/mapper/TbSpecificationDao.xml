@@ -54,6 +54,14 @@
         </where>
     </select>
 
+<!--    查询所有规格下拉列表-->
+    <select id="selectSpecList" resultType="java.util.Map">
+        select
+            id, spec_name as text
+        from
+            pinyougoudb.tb_specification
+    </select>
+
     <!--新增所有列-->
     <insert id="insert">
         <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">

@@ -61,6 +61,14 @@
         </where>
     </select>
 
+<!--    查询所有品牌下拉列表-->
+    <select id="selectBrandList" resultType="java.util.Map">
+        select
+            id, name as text
+        from
+            pinyougoudb.tb_brand
+    </select>
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into pinyougoudb.tb_brand(name, first_char)

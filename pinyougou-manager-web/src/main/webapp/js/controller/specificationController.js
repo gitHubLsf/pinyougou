@@ -114,4 +114,6 @@ pyg.controller('specificationController', function ($scope, $controller, specifi
         $scope.specEntity.specificationOptionList.splice(index, 1);
     };
 
+
+
 });	

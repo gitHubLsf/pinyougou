@@ -1,5 +1,5 @@
 // 控制层 
-pyg.controller('typeTemplateController', function ($scope, $controller, typeTemplateService) {
+pyg.controller('typeTemplateController', function ($scope, $controller, typeTemplateService, brandService, specificationService) {
 
     // 继承父类控制器 baseController
     $controller('baseController', {$scope: $scope});
@@ -28,12 +28,17 @@ pyg.controller('typeTemplateController', function ($scope, $controller, typeTemp
     };
 
 
-    // 根据 ID 查询实体
+    // 根据 ID 查询模板数据
     $scope.findOne = function (id) {
         typeTemplateService.findOne(id).success(
             function (response) {
                 // 将查询到的数据显示在修改框中
-                $scope.entity = response;
+                $scope.templateEntity = response;
+                // 注意：此处返回的 response 对象中的 brandIds 和 specIds 和 customAttributeItems 都是
+                // 以字符串形式保存的集合，我们需要使用原生 JS 自带的转换器将字符串转换为 JSON 格式的对象
+                $scope.templateEntity.brandIds = JSON.parse($scope.templateEntity.brandIds);
+                $scope.templateEntity.specIds = JSON.parse($scope.templateEntity.specIds);
+                $scope.templateEntity.customAttributeItems = JSON.parse($scope.templateEntity.customAttributeItems);
             }
         );
     };
@@ -41,10 +46,10 @@ pyg.controller('typeTemplateController', function ($scope, $controller, typeTemp
     //保存
     $scope.save = function () {
         var serviceObject;//服务层对象
-        if ($scope.entity.id != null) {//如果有ID
-            serviceObject = typeTemplateService.update($scope.entity); //修改
+        if ($scope.templateEntity.id != null) {//如果有ID
+            serviceObject = typeTemplateService.update($scope.templateEntity); //修改
         } else {
-            serviceObject = typeTemplateService.add($scope.entity);//增加
+            serviceObject = typeTemplateService.add($scope.templateEntity);//增加
         }
         serviceObject.success(
             function (response) {
@@ -69,7 +74,7 @@ pyg.controller('typeTemplateController', function ($scope, $controller, typeTemp
                     if (response.success) {
                         // 删除成功
                         // 刷新当前页
-                        $scope.reloadList();
+                        $scope.search(1, $scope.paginationConf.itemsPerPage);
                     } else {
                         // 删除失败
                         alert(response.message);
@@ -89,7 +94,7 @@ pyg.controller('typeTemplateController', function ($scope, $controller, typeTemp
         typeTemplateService.findPageLimit(page, size, $scope.searchEntity).success(
             function (response) {
                 // 修改当前页数据
-                $scope.list = response.rows;
+                $scope.templateList = response.rows;
                 // 修改页码
                 $scope.paginationConf.currentPage = page;
                 // 修改总记录数
@@ -97,5 +102,46 @@ pyg.controller('typeTemplateController', function ($scope, $controller, typeTemp
             }
         );
     };
+
+    // 添加模板时，展示给用户选择的品牌列表数据
+    // 1.静态模拟
+    //  $scope.brandList = {
+    //      data: [{id: 1, text: '联想'}, {id: 2, text: '中兴'}, {id: 3, text: '华为'}, {id: 4, text: '小米'}]
+    //  };
+
+    // 2.后端数据支撑
+    $scope.brandList = {
+        data: []
+    };
+    // 后端查询所有品牌下拉列表
+    $scope.selectBrandList = function () {
+        brandService.selectBrandList().success(
+            function (response) {
+                $scope.brandList = {data: response};
+            }
+        );
+    };
+
+    // 添加模板时，展示给用户选择的规格下拉列表数据
+    $scope.specList = { data:[] };
+    $scope.selectSpecList = function () {
+        specificationService.selectSpecList().success(
+            function (response) {
+                $scope.specList = { data:response };
+            }
+        );
+    };
+
+    // 添加模板时，添加一行扩展属性
+    $scope.addTableRow = function () {
+        $scope.templateEntity.customAttributeItems.push({});
+    };
+
+    // 添加模板时，删除一行扩展属性
+    $scope.deleteTableRow = function (index) {
+        $scope.templateEntity.customAttributeItems.splice(index, 1);
+    };
+
+
 
 });	

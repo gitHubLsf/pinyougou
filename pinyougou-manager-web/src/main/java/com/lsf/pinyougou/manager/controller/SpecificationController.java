@@ -1,6 +1,7 @@
 package com.lsf.pinyougou.manager.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import com.lsf.pinyougou.pojogroup.Specification;
 import com.lsf.pinyougou.sellergoods.service.SpecificationService;
@@ -120,6 +121,21 @@ public class SpecificationController {
             return new Result(true, "删除成功");
         } catch (Exception e) {
             return new Result(false, "删除失败");
+        }
+    }
+
+
+    /**
+     * 查询所有规格的下拉列表
+     *
+     * @return
+     */
+    @RequestMapping("/selectSpecList.do")
+    public List<Map> selectSpecList() {
+        try {
+            return specificationService.selectSpecList();
+        } catch (Exception e) {
+            return null;
         }
     }
 
