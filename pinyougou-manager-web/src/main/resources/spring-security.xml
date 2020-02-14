@@ -25,6 +25,7 @@
         <headers>
             <frame-options policy="SAMEORIGIN"/>
         </headers>
+        <logout/>
     </http>
 
     <!-- 认证管理器 -->
