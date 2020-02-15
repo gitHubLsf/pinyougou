@@ -44,18 +44,18 @@ public interface SellerService {
 
 
     /**
-     * 修改
+     * 修改商家的审核状态
      */
     void update(TbSeller seller);
 
 
     /**
-     * 根据 ID 获取实体
+     * 根据 ID 查询某个未审核商家的全部信息
      *
      * @param id
      * @return
      */
-    TbSeller findOne(long id);
+    TbSeller findOne(String id);
 
 
     /**

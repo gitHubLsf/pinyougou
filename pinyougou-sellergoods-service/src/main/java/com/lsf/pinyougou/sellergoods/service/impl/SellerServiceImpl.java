@@ -55,7 +55,7 @@ public class SellerServiceImpl implements SellerService {
     @Override
     public PageResult findPageLimit(TbSeller seller, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<TbSeller> list = tbSellerDao.queryAll(seller);
+        List<TbSeller> list = tbSellerDao.queryAllLimit(seller);
         PageInfo<TbSeller> pageInfo = new PageInfo<>(list);
         return new PageResult(pageInfo.getTotal(), pageInfo.getList());
     }
@@ -76,7 +76,7 @@ public class SellerServiceImpl implements SellerService {
 
 
     /**
-     * 修改
+     * 修改商家的审核状态
      */
     @Override
     public void update(TbSeller seller) {
@@ -85,14 +85,14 @@ public class SellerServiceImpl implements SellerService {
 
 
     /**
-     * 根据 ID 获取实体
+     * 根据 ID 查询某个未审核商家的全部信息
      *
      * @param id
      * @return
      */
     @Override
-    public TbSeller findOne(long id) {
-        return tbSellerDao.queryById(id + "");
+    public TbSeller findOne(String id) {
+        return tbSellerDao.queryById(id);
     }
 
 

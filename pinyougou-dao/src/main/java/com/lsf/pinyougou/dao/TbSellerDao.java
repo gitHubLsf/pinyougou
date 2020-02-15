@@ -14,7 +14,7 @@ import java.util.List;
 public interface TbSellerDao {
 
     /**
-     * 通过ID查询单条数据
+     * 通过 ID 查询某个未审核商家的全部信息
      *
      * @param sellerId 主键
      * @return 实例对象
@@ -48,7 +48,7 @@ public interface TbSellerDao {
     int insert(TbSeller tbSeller);
 
     /**
-     * 修改数据
+     * 修改商家的审核状态
      *
      * @param tbSeller 实例对象
      * @return 影响行数
@@ -63,4 +63,12 @@ public interface TbSellerDao {
      */
     int deleteById(String sellerId);
 
+
+    /**
+     * 多条件分页查询未审核商家列表
+     *
+     * @param seller
+     * @return
+     */
+    List<TbSeller> queryAllLimit(TbSeller seller);
 }

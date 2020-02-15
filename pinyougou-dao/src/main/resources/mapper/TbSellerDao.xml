@@ -29,7 +29,7 @@
         <result property="bankName" column="bank_name" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <!--查询单个-->
+    <!--根据 ID 查询某个未审核商家的全部信息 -->
     <select id="queryById" resultMap="TbSellerMap">
         select
           seller_id, name, nick_name, password, email, mobile, telephone, status, address_detail, linkman_name, linkman_qq, linkman_mobile, linkman_email, license_number, tax_number, org_number, address, logo_pic, brief, create_time, legal_person, legal_person_card_id, bank_user, bank_name
@@ -126,6 +126,87 @@
         </where>
     </select>
 
+<!--    多条件分页查询未审核商家列表-->
+    <select id="queryAllLimit" resultMap="TbSellerMap">
+        select
+        seller_id, name, nick_name, password, email, mobile, telephone, status, address_detail, linkman_name, linkman_qq, linkman_mobile, linkman_email, license_number, tax_number, org_number, address, logo_pic, brief, create_time, legal_person, legal_person_card_id, bank_user, bank_name
+        from pinyougoudb.tb_seller
+        <where>
+            <if test="sellerId != null and sellerId != ''">
+                and seller_id = #{sellerId}
+            </if>
+            <if test="name != null and name != ''">
+                and name like CONCAT('%', #{name}, '%')
+            </if>
+            <if test="nickName != null and nickName != ''">
+                and nick_name like CONCAT('%', #{nickName}, '%')
+            </if>
+            <if test="password != null and password != ''">
+                and password = #{password}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="mobile != null and mobile != ''">
+                and mobile = #{mobile}
+            </if>
+            <if test="telephone != null and telephone != ''">
+                and telephone = #{telephone}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="addressDetail != null and addressDetail != ''">
+                and address_detail = #{addressDetail}
+            </if>
+            <if test="linkmanName != null and linkmanName != ''">
+                and linkman_name = #{linkmanName}
+            </if>
+            <if test="linkmanQq != null and linkmanQq != ''">
+                and linkman_qq = #{linkmanQq}
+            </if>
+            <if test="linkmanMobile != null and linkmanMobile != ''">
+                and linkman_mobile = #{linkmanMobile}
+            </if>
+            <if test="linkmanEmail != null and linkmanEmail != ''">
+                and linkman_email = #{linkmanEmail}
+            </if>
+            <if test="licenseNumber != null and licenseNumber != ''">
+                and license_number = #{licenseNumber}
+            </if>
+            <if test="taxNumber != null and taxNumber != ''">
+                and tax_number = #{taxNumber}
+            </if>
+            <if test="orgNumber != null and orgNumber != ''">
+                and org_number = #{orgNumber}
+            </if>
+            <if test="address != null">
+                and address = #{address}
+            </if>
+            <if test="logoPic != null and logoPic != ''">
+                and logo_pic = #{logoPic}
+            </if>
+            <if test="brief != null and brief != ''">
+                and brief = #{brief}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="legalPerson != null and legalPerson != ''">
+                and legal_person = #{legalPerson}
+            </if>
+            <if test="legalPersonCardId != null and legalPersonCardId != ''">
+                and legal_person_card_id = #{legalPersonCardId}
+            </if>
+            <if test="bankUser != null and bankUser != ''">
+                and bank_user = #{bankUser}
+            </if>
+            <if test="bankName != null and bankName != ''">
+                and bank_name = #{bankName}
+            </if>
+        </where>
+    </select>
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="sellerId" useGeneratedKeys="true">
         insert into pinyougoudb.tb_seller(
@@ -140,7 +221,7 @@
             #{legalPerson}, #{legalPersonCardId}, #{bankUser}, #{bankName})
     </insert>
 
-    <!--通过主键修改数据-->
+    <!--修改商家的审核状态-->
     <update id="update">
         update pinyougoudb.tb_seller
         <set>
