@@ -1,5 +1,6 @@
 package com.lsf.pinyougou.sellergoods.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import com.github.pagehelper.PageInfo;
@@ -61,10 +62,15 @@ public class SellerServiceImpl implements SellerService {
 
 
     /**
-     * 添加
+     * 添加，商家入驻申请
      */
     @Override
     public void add(TbSeller seller) {
+        // 新入驻的商家，默认状态为 0，表示未审核
+        seller.setStatus("0");
+        // 设置入驻申请的提交时间
+        seller.setCreateTime(new Date());
+
         tbSellerDao.insert(seller);
     }
 

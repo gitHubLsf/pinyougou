@@ -128,8 +128,16 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="sellerId" useGeneratedKeys="true">
-        insert into pinyougoudb.tb_seller(name, nick_name, password, email, mobile, telephone, status, address_detail, linkman_name, linkman_qq, linkman_mobile, linkman_email, license_number, tax_number, org_number, address, logo_pic, brief, create_time, legal_person, legal_person_card_id, bank_user, bank_name)
-        values (#{name}, #{nickName}, #{password}, #{email}, #{mobile}, #{telephone}, #{status}, #{addressDetail}, #{linkmanName}, #{linkmanQq}, #{linkmanMobile}, #{linkmanEmail}, #{licenseNumber}, #{taxNumber}, #{orgNumber}, #{address}, #{logoPic}, #{brief}, #{createTime}, #{legalPerson}, #{legalPersonCardId}, #{bankUser}, #{bankName})
+        insert into pinyougoudb.tb_seller(
+            seller_id, name, nick_name, password, email, mobile, telephone, status, address_detail,
+            linkman_name, linkman_qq, linkman_mobile, linkman_email, license_number, tax_number,
+            org_number, address, logo_pic, brief, create_time, legal_person, legal_person_card_id,
+            bank_user, bank_name)
+        values (
+            #{sellerId}, #{name}, #{nickName}, #{password}, #{email}, #{mobile}, #{telephone},
+            #{status}, #{addressDetail}, #{linkmanName}, #{linkmanQq}, #{linkmanMobile}, #{linkmanEmail},
+            #{licenseNumber}, #{taxNumber}, #{orgNumber}, #{address}, #{logoPic}, #{brief}, #{createTime},
+            #{legalPerson}, #{legalPersonCardId}, #{bankUser}, #{bankName})
     </insert>
 
     <!--通过主键修改数据-->
