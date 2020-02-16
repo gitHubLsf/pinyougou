@@ -103,7 +103,7 @@ public class SellerController {
      * @return
      */
     @RequestMapping("/findOne.do")
-    public TbSeller findOne(long id) {
+    public TbSeller findOne(String id) {
         return sellerService.findOne(id);
     }
 

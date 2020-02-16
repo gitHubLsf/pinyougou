@@ -10,6 +10,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 import com.lsf.pinyougou.dao.TbSellerDao;
 import com.lsf.pinyougou.pojo.TbSeller;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import vo.PageResult;
 
 
@@ -66,10 +67,17 @@ public class SellerServiceImpl implements SellerService {
      */
     @Override
     public void add(TbSeller seller) {
+
         // 新入驻的商家，默认状态为 0，表示未审核
         seller.setStatus("0");
+
         // 设置入驻申请的提交时间
         seller.setCreateTime(new Date());
+
+        // 密码加密,采用 BCrypt 加密算法
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        String newPassword = bCryptPasswordEncoder.encode(seller.getPassword());
+        seller.setPassword(newPassword);
 
         tbSellerDao.insert(seller);
     }
