@@ -74,6 +74,14 @@
         </where>
     </select>
 
+<!--    添加商品分类时，查询所有类型模板列表-->
+    <select id="findTypeList" resultType="java.util.Map">
+        select
+            id, name as text
+        from
+            pinyougoudb.tb_type_template
+    </select>
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into pinyougoudb.tb_type_template(name, spec_ids, brand_ids, custom_attribute_items)

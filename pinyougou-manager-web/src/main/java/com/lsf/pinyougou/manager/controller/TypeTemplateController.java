@@ -1,6 +1,7 @@
 package com.lsf.pinyougou.manager.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import com.lsf.pinyougou.sellergoods.service.TypeTemplateService;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +12,8 @@ import com.lsf.pinyougou.pojo.TbTypeTemplate;
 
 import vo.PageResult;
 import vo.Result;
+
+import javax.security.auth.login.CredentialException;
 
 
 /**
@@ -119,6 +122,21 @@ public class TypeTemplateController {
             return new Result(true, "删除成功");
         } catch (Exception e) {
             return new Result(false, "删除失败");
+        }
+    }
+
+
+    /**
+     * 添加商品分类时，查询所有类型模板列表
+     *
+     * @return
+     */
+    @RequestMapping("/findTypeList.do")
+    public List<Map> findTypeList() {
+        try {
+            return typeTemplateService.findTypeList();
+        } catch (Exception e) {
+            return null;
         }
     }
 

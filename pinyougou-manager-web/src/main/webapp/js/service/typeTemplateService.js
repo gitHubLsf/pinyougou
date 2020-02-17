@@ -35,4 +35,9 @@ pyg.service('typeTemplateService', function ($http) {
     this.findPageLimit = function (page, size, searchEntity) {
         return $http.post('../typeTemplate/search.do?page=' + page + "&size=" + size, searchEntity);
     };
+
+    // 添加商品分类时，查询所有类型模板列表
+    this.findTypeList = function () {
+        return $http.get('../typeTemplate/findTypeList.do');
+    };
 });

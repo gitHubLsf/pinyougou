@@ -1,6 +1,7 @@
 package com.lsf.pinyougou.sellergoods.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.lsf.pinyougou.pojo.TbTypeTemplate;
 import vo.PageResult;
@@ -65,4 +66,11 @@ public interface TypeTemplateService {
      */
     void batchDelete(Long[] ids);
 
+
+    /**
+     * 添加商品分类时，查询所有类型模板列表
+     *
+     * @return
+     */
+    List<Map> findTypeList();
 }

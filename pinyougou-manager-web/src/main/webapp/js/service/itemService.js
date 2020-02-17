@@ -26,9 +26,9 @@ pyg.service('itemService', function ($http) {
         return $http.post('../item/update.do', entity);
     };
 
-    // 批量删除
+    // 批量删除商品分类
     this.batchDelete = function (selectedList) {
-        return $http.get('../item/batcheDelete.do?ids=' + selectedList);
+        return $http.get('../item/batchDelete.do?ids=' + selectedList);
     };
 
     // 多条件分页查询

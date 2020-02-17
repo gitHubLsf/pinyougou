@@ -2,6 +2,7 @@ package com.lsf.pinyougou.dao;
 
 
 import com.lsf.pinyougou.pojo.TbItemCat;
+import com.lsf.pinyougou.pojogroup.TbItemCats;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public interface TbItemCatDao {
      * @param id 主键
      * @return 实例对象
      */
-    TbItemCat queryById(Long id);
+    TbItemCats queryById(Long id);
 
     /**
      * 查询指定行数据
@@ -41,7 +42,7 @@ public interface TbItemCatDao {
     List<TbItemCat> queryAll(TbItemCat tbItemCat);
 
     /**
-     * 新增数据
+     * 添加商品分类
      *
      * @param tbItemCat 实例对象
      * @return 影响行数

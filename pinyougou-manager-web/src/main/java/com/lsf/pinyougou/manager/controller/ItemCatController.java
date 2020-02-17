@@ -2,6 +2,7 @@ package com.lsf.pinyougou.manager.controller;
 
 import java.util.List;
 
+import com.lsf.pinyougou.pojogroup.TbItemCats;
 import com.lsf.pinyougou.sellergoods.service.ItemCatService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +15,7 @@ import vo.Result;
 
 
 /**
- * controller
+ * 商品分类控制层
  */
 @RestController
 @RequestMapping("/itemCat")
@@ -61,7 +62,7 @@ public class ItemCatController {
 
 
     /**
-     * 添加
+     * 添加商品分类
      *
      * @param itemCat
      * @return
@@ -95,19 +96,19 @@ public class ItemCatController {
 
 
     /**
-     * 根据 ID 获取实体
+     * 根据 ID 查询某种商品分类
      *
      * @param id
      * @return
      */
     @RequestMapping("/findOne.do")
-    public TbItemCat findOne(long id) {
+    public TbItemCats findOne(long id) {
         return itemCatService.findOne(id);
     }
 
 
     /**
-     * 批量删除
+     * 批量删除商品分类
      *
      * @param ids
      * @return
@@ -120,6 +121,18 @@ public class ItemCatController {
         } catch (Exception e) {
             return new Result(false, "删除失败");
         }
+    }
+
+
+    /**
+     * 根据上级 ID 查询商品分类
+     *
+     * @param parentId
+     * @return
+     */
+    @RequestMapping("/findByParentId.do")
+    public List<TbItemCat> findByParentId(Long parentId) {
+        return itemCatService.findByParentId(parentId);
     }
 
 }

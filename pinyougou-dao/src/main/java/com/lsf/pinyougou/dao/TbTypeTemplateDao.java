@@ -5,6 +5,7 @@ import com.lsf.pinyougou.pojo.TbTypeTemplate;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * (TbTypeTemplate)表数据库访问层
@@ -72,4 +73,12 @@ public interface TbTypeTemplateDao {
      * @return
      */
     List<TbTypeTemplate> queryAllLimit(TbTypeTemplate typeTemplate);
+
+
+    /**
+     * 添加商品分类时，查询所有类型模板列表
+     *
+     * @return
+     */
+    List<Map> findTypeList();
 }

@@ -3,11 +3,12 @@ package com.lsf.pinyougou.sellergoods.service;
 import java.util.List;
 
 import com.lsf.pinyougou.pojo.TbItemCat;
+import com.lsf.pinyougou.pojogroup.TbItemCats;
 import vo.PageResult;
 
 
 /**
- * 服务层接口
+ * 商品分类服务层接口
  */
 public interface ItemCatService {
 
@@ -38,7 +39,7 @@ public interface ItemCatService {
 
 
     /**
-     * 添加
+     * 添加商品分类
      */
     void add(TbItemCat itemCat);
 
@@ -50,12 +51,12 @@ public interface ItemCatService {
 
 
     /**
-     * 根据 ID 获取实体
+     * 根据 ID 查询某种商品分类
      *
      * @param id
      * @return
      */
-    TbItemCat findOne(long id);
+    TbItemCats findOne(long id);
 
 
     /**
@@ -63,6 +64,15 @@ public interface ItemCatService {
      *
      * @param ids
      */
-    void batchDelete(Long[] ids);
+    void batchDelete(Long[] ids) throws Exception;
+
+
+    /**
+     * 根据上级 ID 查询商品分类
+     *
+     * @param parentId
+     * @return
+     */
+    List<TbItemCat> findByParentId(Long parentId);
 
 }

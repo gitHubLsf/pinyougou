@@ -1,6 +1,7 @@
 package com.lsf.pinyougou.sellergoods.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import com.github.pagehelper.PageInfo;
 import com.lsf.pinyougou.sellergoods.service.TypeTemplateService;
@@ -98,6 +99,17 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
         for (Long id : ids) {
             tbTypeTemplateDao.deleteById(id);
         }
+    }
+
+
+    /**
+     * 添加商品分类时，查询所有类型模板列表
+     *
+     * @return
+     */
+    @Override
+    public List<Map> findTypeList() {
+        return tbTypeTemplateDao.findTypeList();
     }
 
 }
