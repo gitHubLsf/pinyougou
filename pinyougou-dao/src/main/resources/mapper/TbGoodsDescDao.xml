@@ -60,8 +60,8 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="goodsId" useGeneratedKeys="true">
-        insert into pinyougoudb.tb_goods_desc(introduction, specification_items, custom_attribute_items, item_images, package_list, sale_service)
-        values (#{introduction}, #{specificationItems}, #{customAttributeItems}, #{itemImages}, #{packageList}, #{saleService})
+        insert into pinyougoudb.tb_goods_desc(goods_id, introduction, specification_items, custom_attribute_items, item_images, package_list, sale_service)
+        values (#{goodsId}, #{introduction}, #{specificationItems}, #{customAttributeItems}, #{itemImages}, #{packageList}, #{saleService})
     </insert>
 
     <!--通过主键修改数据-->

@@ -1,5 +1,5 @@
 // 控制层 
-pyg.controller('goodsController', function ($scope, $controller, goodsService) {
+pyg.controller('goodsController', function ($scope, $controller, goodsService, uploadService) {
 
     // 继承父类控制器 baseController
     $controller('baseController', {$scope: $scope});
@@ -59,6 +59,28 @@ pyg.controller('goodsController', function ($scope, $controller, goodsService) {
     };
 
 
+    // 添加商品
+    $scope.add = function () {
+        // 获取富文本编辑器 editor 中，用户输入的商品介绍的内容
+        $scope.goodsEntity.tbGoodsDesc.introduction = editor.html();
+
+        goodsService.add($scope.goodsEntity).success(
+            function (response) {
+                if (response.success) {
+                    // 添加商品成功
+                    alert(response.message);
+                    // 清空输入框，让商家继续录入商品
+                    $scope.goodsEntity = {};
+                    // 清空富文本编辑器中的商品介绍内容
+                    editor.html('');
+                } else {
+                    alert(response.message);
+                }
+            }
+        );
+    };
+
+
     // 批量删除
     $scope.batchDelete = function () {
         if ($scope.selectedList.length === 0) {
@@ -96,6 +118,38 @@ pyg.controller('goodsController', function ($scope, $controller, goodsService) {
                 $scope.paginationConf.totalItems = response.total;
             }
         );
-    }
+    };
+
+
+    // 上传商品图片
+    $scope.uploadImg = function () {
+        uploadService.uploadImg()
+            .success(
+                function (response) {
+                    if (response.success) {
+                        // 上传成功后，修改页面中 img 标签的 src 属性
+                        $scope.imgEntity.url = response.message;
+                    } else {
+                        alert(response.message);
+                    }
+                })
+            .error(
+                function () {
+                    alert("上传发生错误");
+                }
+            );
+    };
+
+    $scope.goodsEntity = { tbGoods:{}, tbGoodsDesc:{ itemImages:[] } };
+
+    // 将图片实体添加到 goodsEntity.tbGoodsDesc.itemImages 集合中
+    $scope.addImgEntity = function () {
+        $scope.goodsEntity.tbGoodsDesc.itemImages.push($scope.imgEntity);
+    };
+
+    // 删除图片集合中的某张图片
+    $scope.deleteImgEntity = function (index) {
+        $scope.goodsEntity.tbGoodsDesc.itemImages.splice(index, 1);
+    };
 
 });	

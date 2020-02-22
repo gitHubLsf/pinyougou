@@ -2,6 +2,7 @@ package com.lsf.pinyougou.dao;
 
 
 import com.lsf.pinyougou.pojo.TbGoods;
+import com.lsf.pinyougou.pojogroup.Goods;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

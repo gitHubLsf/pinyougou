@@ -16,7 +16,7 @@ pyg.service('goodsService', function ($http) {
         return $http.get('../goods/findOne.do?id=' + id);
     };
 
-    // 增加
+    // 添加商品
     this.add = function (entity) {
         return $http.post('../goods/add.do', entity);
     };

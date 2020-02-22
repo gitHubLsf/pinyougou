@@ -68,7 +68,7 @@ public class TbGoods implements Serializable {
     */
     private String smallPic;
     /**
-    * 商城价
+    * 价格
     */
     private Double price;
     /**

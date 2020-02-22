@@ -24,7 +24,7 @@ public class TbGoodsDesc implements Serializable {
     */
     private Long goodsId;
     /**
-    * 描述
+    * 描述，商品介绍
     */
     private String introduction;
     /**

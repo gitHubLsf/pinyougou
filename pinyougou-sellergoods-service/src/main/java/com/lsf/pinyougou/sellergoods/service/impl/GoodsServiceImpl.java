@@ -3,13 +3,17 @@ package com.lsf.pinyougou.sellergoods.service.impl;
 import java.util.List;
 
 import com.github.pagehelper.PageInfo;
+import com.lsf.pinyougou.dao.TbGoodsDescDao;
 import com.lsf.pinyougou.pojo.TbGoods;
+import com.lsf.pinyougou.pojo.TbGoodsDesc;
+import com.lsf.pinyougou.pojogroup.Goods;
 import com.lsf.pinyougou.sellergoods.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 import com.lsf.pinyougou.dao.TbGoodsDao;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import vo.PageResult;
 
 
@@ -26,6 +30,13 @@ public class GoodsServiceImpl implements GoodsService {
      */
     @Autowired
     private TbGoodsDao tbGoodsDao;
+
+
+    /**
+     * 商品扩展数据访问层对象
+     */
+    @Autowired
+    private TbGoodsDescDao tbGoodsDescDao;
 
 
     /**
@@ -62,11 +73,21 @@ public class GoodsServiceImpl implements GoodsService {
 
 
     /**
-     * 添加
+     * 添加商品
      */
     @Override
-    public void add(TbGoods goods) {
-        tbGoodsDao.insert(goods);
+    public void add(Goods goods) {
+        // 设置商品的状态为 未审核
+        goods.getTbGoods().setAuditStatus("0");
+
+        // 添加商品，同时返回商品 ID
+        tbGoodsDao.insert(goods.getTbGoods());
+
+        // 设置商品扩展的 ID 为商品 ID
+        goods.getTbGoodsDesc().setGoodsId(goods.getTbGoods().getId());
+
+        // 添加商品扩展
+        tbGoodsDescDao.insert(goods.getTbGoodsDesc());
     }
 
 

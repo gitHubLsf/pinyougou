@@ -95,7 +95,10 @@
     </select>
 
     <!--新增所有列-->
-    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+    <insert id="insert">
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
         insert into pinyougoudb.tb_goods(seller_id, goods_name, default_item_id, audit_status, is_marketable, brand_id, caption, category1_id, category2_id, category3_id, small_pic, price, type_template_id, is_enable_spec, is_delete)
         values (#{sellerId}, #{goodsName}, #{defaultItemId}, #{auditStatus}, #{isMarketable}, #{brandId}, #{caption}, #{category1Id}, #{category2Id}, #{category3Id}, #{smallPic}, #{price}, #{typeTemplateId}, #{isEnableSpec}, #{isDelete})
     </insert>

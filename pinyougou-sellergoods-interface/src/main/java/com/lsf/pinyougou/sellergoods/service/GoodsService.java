@@ -3,11 +3,12 @@ package com.lsf.pinyougou.sellergoods.service;
 import java.util.List;
 
 import com.lsf.pinyougou.pojo.TbGoods;
+import com.lsf.pinyougou.pojogroup.Goods;
 import vo.PageResult;
 
 
 /**
- * 服务层接口
+ * 商品服务层接口
  */
 public interface GoodsService {
 
@@ -38,9 +39,9 @@ public interface GoodsService {
 
 
     /**
-     * 添加
+     * 添加商品
      */
-    void add(TbGoods goods);
+    void add(Goods goods);
 
 
     /**

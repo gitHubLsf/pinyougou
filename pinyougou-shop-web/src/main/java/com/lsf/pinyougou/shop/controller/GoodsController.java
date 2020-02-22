@@ -2,7 +2,9 @@ package com.lsf.pinyougou.shop.controller;
 
 import java.util.List;
 
+import com.lsf.pinyougou.pojogroup.Goods;
 import com.lsf.pinyougou.sellergoods.service.GoodsService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -61,14 +63,19 @@ public class GoodsController {
 
 
     /**
-     * 添加
+     * 添加商品
      *
      * @param goods
      * @return
      */
     @RequestMapping("/add.do")
-    public Result add(@RequestBody TbGoods goods) {
+    public Result add(@RequestBody Goods goods) {
         try {
+            // 设置商品所属的商家 ID 为当前在线商家
+            // 获取在线商家 ID
+            String sellerId = SecurityContextHolder.getContext().getAuthentication().getName();
+            goods.getTbGoods().setSellerId(sellerId);
+
             goodsService.add(goods);
             return new Result(true, "添加成功");
         } catch (Exception e) {
