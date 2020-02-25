@@ -1,5 +1,10 @@
 // 控制层 
-pyg.controller('goodsController', function ($scope, $controller, goodsService, uploadService, itemCatService) {
+pyg.controller('goodsController', function ($scope,
+                                            $controller,
+                                            goodsService,
+                                            uploadService,
+                                            itemCatService,
+                                            typeTemplateService) {
 
     // 继承父类控制器 baseController
     $controller('baseController', {$scope: $scope});
@@ -140,7 +145,7 @@ pyg.controller('goodsController', function ($scope, $controller, goodsService, u
             );
     };
 
-    $scope.goodsEntity = { tbGoods:{}, tbGoodsDesc:{ itemImages:[] } };
+    $scope.goodsEntity = {tbGoods: {}, tbGoodsDesc: {itemImages: []}};
 
     // 将图片实体添加到 goodsEntity.tbGoodsDesc.itemImages 集合中
     $scope.addImgEntity = function () {
@@ -190,10 +195,24 @@ pyg.controller('goodsController', function ($scope, $controller, goodsService, u
 
     // 监控三级分类列表绑定的变量，如果变量发生改变，则展示三级分类对象对应的模板 ID
     $scope.$watch('goodsEntity.tbGoods.category3Id', function (newValue, oldValue) {
-
         itemCatService.findOne(newValue).success(
             function (response) {
                 $scope.goodsEntity.tbGoods.typeTemplateId = response.typeId;
+            }
+        );
+    });
+
+
+    // 监控模板 ID 变量，如果它的值发生改变，就要到后台查询该模板包含的所有品牌和扩展属性
+    $scope.$watch('goodsEntity.tbGoods.typeTemplateId', function (newValue, oldValue) {
+        typeTemplateService.findOne(newValue).success(
+            function (response) {
+
+                // 当前模板对应的品牌下拉列表
+                $scope.selectBrandList = JSON.parse(response.brandIds);
+
+                // 当前模板对应的扩展属性
+                $scope.goodsEntity.tbGoodsDesc.customAttributeItems = JSON.parse(response.customAttributeItems);
             }
         );
     });

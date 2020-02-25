@@ -27,13 +27,15 @@
     <script src="../js/service/goodsService.js"></script>
     <script src="../js/service/uploadService.js"></script>
     <script src="../js/service/itemCatService.js"></script>
+    <script src="../js/service/typeTemplateService.js"></script>
     <script src="../js/controller/baseController.js"></script>
     <script src="../js/controller/goodsController.js"></script>
 
 
 </head>
 
-<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="goodsController" ng-init="selectCategory_1_List()">
+<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="goodsController"
+      ng-init="selectCategory_1_List()">
 
 <!-- 正文区域 -->
 <section class="content">
@@ -106,7 +108,10 @@
 
                         <div class="col-md-2 title">品牌</div>
                         <div class="col-md-10 data">
-                            <select class="form-control"></select>
+                            <select class="form-control"
+                                    ng-model="goodsEntity.tbGoods.brandId"
+                                    ng-options="brand.id as brand.text for brand in selectBrandList">
+                            </select>
                         </div>
 
                         <div class="col-md-2 title">副标题</div>
@@ -159,45 +164,41 @@
 
                         <table class="table table-bordered table-striped table-hover dataTable">
                             <thead>
-                                <tr>
-                                    <th class="sorting">颜色</th>
-                                    <th class="sorting">图片</th>
-                                    <th class="sorting">操作</th>
-                                </tr>
+                            <tr>
+                                <th class="sorting">颜色</th>
+                                <th class="sorting">图片</th>
+                                <th class="sorting">操作</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="imgEntity in goodsEntity.tbGoodsDesc.itemImages">
-                                    <td>
-                                        {{ imgEntity.color }}
-                                    </td>
-                                    <td>
-                                        <img alt="" src="{{ imgEntity.url }}" width="100px" height="100px">
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-default" title="删除" ng-click="deleteImgEntity($index)"><i
-                                                class="fa fa-trash-o"></i> 删除
-                                        </button>
-                                    </td>
-                                </tr>
+                            <tr ng-repeat="imgEntity in goodsEntity.tbGoodsDesc.itemImages">
+                                <td>
+                                    {{ imgEntity.color }}
+                                </td>
+                                <td>
+                                    <img alt="" src="{{ imgEntity.url }}" width="100px" height="100px">
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-default" title="删除"
+                                            ng-click="deleteImgEntity($index)"><i
+                                            class="fa fa-trash-o"></i> 删除
+                                    </button>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
 
-
                 <!--扩展属性-->
                 <div class="tab-pane" id="customAttribute">
                     <div class="row data-type">
-                        <div>
-                            <div class="col-md-2 title">扩展属性1</div>
+                        <div ng-repeat="customAttributeItems in goodsEntity.tbGoodsDesc.customAttributeItems">
+                            <div class="col-md-2 title">{{ customAttributeItems.text }}</div>
                             <div class="col-md-10 data">
-                                <input class="form-control" placeholder="扩展属性1">
-                            </div>
-                        </div>
-                        <div>
-                            <div class="col-md-2 title">扩展属性2</div>
-                            <div class="col-md-10 data">
-                                <input class="form-control" placeholder="扩展属性2">
+                                <input class="form-control"
+                                       placeholder="{{ customAttributeItems.text }}"
+                                       ng-model="customAttributeItems.value">
                             </div>
                         </div>
                     </div>
@@ -406,7 +407,8 @@
 
             </div>
             <div class="modal-footer">
-                <button class="btn btn-success" data-dismiss="modal" aria-hidden="true" ng-click="addImgEntity()">保存</button>
+                <button class="btn btn-success" data-dismiss="modal" aria-hidden="true" ng-click="addImgEntity()">保存
+                </button>
                 <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
             </div>
         </div>
