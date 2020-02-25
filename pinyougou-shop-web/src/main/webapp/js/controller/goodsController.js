@@ -1,5 +1,5 @@
 // 控制层 
-pyg.controller('goodsController', function ($scope, $controller, goodsService, uploadService) {
+pyg.controller('goodsController', function ($scope, $controller, goodsService, uploadService, itemCatService) {
 
     // 继承父类控制器 baseController
     $controller('baseController', {$scope: $scope});
@@ -151,5 +151,51 @@ pyg.controller('goodsController', function ($scope, $controller, goodsService, u
     $scope.deleteImgEntity = function (index) {
         $scope.goodsEntity.tbGoodsDesc.itemImages.splice(index, 1);
     };
+
+    // 添加商品时，查询所有一级分类列表
+    $scope.selectCategory_1_List = function () {
+        itemCatService.findByParentId(0).success(
+            function (response) {
+                // response 表示所有一级分类对象的集合
+                $scope.category_1_List = response;
+            }
+        );
+    };
+
+    // 监控一级分类列表绑定的变量，如果变量发生改变，则开始查询二级分类列表
+    $scope.$watch('goodsEntity.tbGoods.category1Id', function (newValue, oldValue) {
+        // oldValue 代表之前的值，newValue 代表变化后的值
+        // 开始查询二级列表
+        itemCatService.findByParentId(newValue).success(
+            function (response) {
+                // response 表示所有二级分类对象的集合
+                $scope.category_2_List = response;
+            }
+        );
+    });
+
+
+    // 监控二级分类列表绑定的变量，如果变量发生改变，则开始查询三级分类列表
+    $scope.$watch('goodsEntity.tbGoods.category2Id', function (newValue, oldValue) {
+        // oldValue 代表之前的值，newValue 代表变化后的值
+        // 开始查询三级列表
+        itemCatService.findByParentId(newValue).success(
+            function (response) {
+                // response 表示所有三级分类对象的集合
+                $scope.category_3_List = response;
+            }
+        );
+    });
+
+
+    // 监控三级分类列表绑定的变量，如果变量发生改变，则展示三级分类对象对应的模板 ID
+    $scope.$watch('goodsEntity.tbGoods.category3Id', function (newValue, oldValue) {
+
+        itemCatService.findOne(newValue).success(
+            function (response) {
+                $scope.goodsEntity.tbGoods.typeTemplateId = response.typeId;
+            }
+        );
+    });
 
 });	

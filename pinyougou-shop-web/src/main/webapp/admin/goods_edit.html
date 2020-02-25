@@ -26,13 +26,14 @@
     <script src="../js/base.js"></script>
     <script src="../js/service/goodsService.js"></script>
     <script src="../js/service/uploadService.js"></script>
+    <script src="../js/service/itemCatService.js"></script>
     <script src="../js/controller/baseController.js"></script>
     <script src="../js/controller/goodsController.js"></script>
 
 
 </head>
 
-<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="goodsController">
+<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="goodsController" ng-init="selectCategory_1_List()">
 
 <!-- 正文区域 -->
 <section class="content">
@@ -71,17 +72,25 @@
                             <table>
                                 <tr>
                                     <td>
-                                        <select class="form-control">
+                                        <select class="form-control"
+                                                ng-model="goodsEntity.tbGoods.category1Id"
+                                                ng-options="category.id as category.name for category in category_1_List">
                                         </select>
                                     </td>
                                     <td>
-                                        <select class="form-control select-sm"></select>
+                                        <select class="form-control select-sm"
+                                                ng-model="goodsEntity.tbGoods.category2Id"
+                                                ng-options="category.id as category.name for category in category_2_List">
+                                        </select>
                                     </td>
                                     <td>
-                                        <select class="form-control select-sm"></select>
+                                        <select class="form-control select-sm"
+                                                ng-model="goodsEntity.tbGoods.category3Id"
+                                                ng-options="category.id as category.name for category in category_3_List">
+                                        </select>
                                     </td>
                                     <td>
-                                        模板ID:19
+                                        模板ID: {{ goodsEntity.tbGoods.typeTemplateId }}
                                     </td>
                                 </tr>
                             </table>
