@@ -215,44 +215,21 @@
                     <p>
 
                     <div>
-
                         <div class="row data-type">
-
-                            <div>
-                                <div class="col-md-2 title">屏幕尺寸</div>
+<!--                            循环展示规格列表中的每个规格-->
+                            <div ng-repeat="spec in specList">
+                                <div class="col-md-2 title">{{ spec.text }}</div>
                                 <div class="col-md-10 data">
-					                               
-					                            <span>
-					                            	<input type="checkbox">4.0
-					                            </span>
-                                    <span>
-					                            	<input type="checkbox">4.5
-					                            </span>
-                                    <span>
-					                            	<input type="checkbox">5.0
-					                            </span>
-
-                                </div>
-                            </div>
-                            <div>
-                                <div class="col-md-2 title">网络制式</div>
-                                <div class="col-md-10 data">
-					                               
-					                            <span>
-					                            	<input type="checkbox">2G
-					                            </span>
-                                    <span>
-					                            	<input type="checkbox">3G
-					                            </span>
-                                    <span>
-					                            	<input type="checkbox">4G
-					                            </span>
-
+<!--                                    循环展示每个规格的规格选项-->
+                                    <span ng-repeat="option in spec.options">
+                                        <input type="checkbox" ng-click="updateSpecAttribute($event, spec.text, option.optionName)">
+                                        {{ option.optionName }}
+                                    </span>
                                 </div>
                             </div>
 
+                            {{ goodsEntity.tbGoodsDesc.specificationItems }}
                         </div>
-
 
                         <div class="row data-type">
                             <table class="table table-bordered table-striped table-hover dataTable">

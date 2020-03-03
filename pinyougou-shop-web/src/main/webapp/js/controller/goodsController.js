@@ -145,7 +145,7 @@ pyg.controller('goodsController', function ($scope,
             );
     };
 
-    $scope.goodsEntity = {tbGoods: {}, tbGoodsDesc: {itemImages: []}};
+    $scope.goodsEntity = {tbGoods: {}, tbGoodsDesc: {itemImages: [], specificationItems: []}};
 
     // 将图片实体添加到 goodsEntity.tbGoodsDesc.itemImages 集合中
     $scope.addImgEntity = function () {
@@ -203,11 +203,10 @@ pyg.controller('goodsController', function ($scope,
     });
 
 
-    // 监控模板 ID 变量，如果它的值发生改变，就要到后台查询该模板包含的所有品牌和扩展属性
+    // 监控模板 ID 变量，如果它的值发生改变，就要到后台查询该模板包含的所有品牌和扩展属性，和规格列表
     $scope.$watch('goodsEntity.tbGoods.typeTemplateId', function (newValue, oldValue) {
         typeTemplateService.findOne(newValue).success(
             function (response) {
-
                 // 当前模板对应的品牌下拉列表
                 $scope.selectBrandList = JSON.parse(response.brandIds);
 
@@ -215,6 +214,45 @@ pyg.controller('goodsController', function ($scope,
                 $scope.goodsEntity.tbGoodsDesc.customAttributeItems = JSON.parse(response.customAttributeItems);
             }
         );
+
+        // 商家添加商品时，查询规格列表
+        typeTemplateService.findSpecList(newValue).success(
+            function (response) {
+                // response 是个集合，集合里的元素是对象 { id:"", text:"", options:"" }
+                $scope.specList = response;
+            }
+        );
     });
+
+
+    // 用户输入规格信息时，更新用户选择的规格列表
+    // name：规格名称
+    // value：规格选项名称
+    $scope.updateSpecAttribute = function($event, name, value) {
+        // 查找规格集合 $scope.goodsEntity.tbGoodsDesc.specificationItems 中，
+        // 是否有某个对象，这个对象有一个键叫做 attributeName，键的值叫做 name
+        var object = $scope.searchObjectKey($scope.goodsEntity.tbGoodsDesc.specificationItems, 'attributeName', name);
+
+        if (object != null) {
+            // 对象已经存在
+
+            if ($event.target.checked) {
+                // 如果用户选择的是勾选，将选项的值添加到规格对象 object 的规格选项集合 object.attributeValue 中
+                object.attributeValue.push(value);
+            } else {
+                // 用户取消勾选，将 object.attributeValue 中的 value 删除
+                object.attributeValue.splice(object.attributeValue.indexOf(value), 1);
+                // 如果 object.attributeValue 集合被删除成为空，则将对象从 $scope.goodsEntity.tbGoodsDesc.specificationItems 中移除
+                if (object.attributeValue.length === 0) {
+                    $scope.goodsEntity.tbGoodsDesc.specificationItems.splice(
+                        $scope.goodsEntity.tbGoodsDesc.specificationItems.indexOf(object), 1);
+                }
+            }
+        } else {
+            // 对象不存在
+            // 创建对象，并将对象添加到 $scope.goodsEntity.tbGoodsDesc.specificationItems 集合中
+            $scope.goodsEntity.tbGoodsDesc.specificationItems.push({"attributeName":name, "attributeValue":[value]});
+        }
+    }
 
 });	

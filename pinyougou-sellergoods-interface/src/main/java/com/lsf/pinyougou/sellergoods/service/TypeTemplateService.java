@@ -73,4 +73,14 @@ public interface TypeTemplateService {
      * @return
      */
     List<Map> findTypeList();
+
+
+    /**
+     * 商家添加商品时，需要填写规格列表，此处根据模板 ID 查询模板，再将模板中的规格列表（json 字符串）提取出来，转换成集合
+     * 集合里的元素是 Map，用来保存对象
+     *
+     * @param id
+     * @return
+     */
+    List<Map> findSpecList(Long id);
 }
