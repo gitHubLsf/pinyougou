@@ -78,6 +78,8 @@ pyg.controller('goodsController', function ($scope,
                     $scope.goodsEntity = {};
                     // 清空富文本编辑器中的商品介绍内容
                     editor.html('');
+                    // 清空规格列表
+                    $scope.specList = [];
                 } else {
                     alert(response.message);
                 }
@@ -253,6 +255,44 @@ pyg.controller('goodsController', function ($scope,
             // 创建对象，并将对象添加到 $scope.goodsEntity.tbGoodsDesc.specificationItems 集合中
             $scope.goodsEntity.tbGoodsDesc.specificationItems.push({"attributeName":name, "attributeValue":[value]});
         }
-    }
+    };
 
+
+    // 当用户任意一个规格选项的复选框时，我们要清空 SKU 列表，也就是 $scope.goodsEntity.tbItemList，
+    // 然后根据 $scope.goodsEntity.tbGoodsDesc.specificationItems 规格列表中的信息，重建 itemList 列表
+    $scope.createItemList = function () {
+        // 先重置 tbItemList
+        $scope.goodsEntity.tbItemList = [ { spec:{ }, price:0, num:0, status:'0', is_default:'0' } ];
+
+        // 遍历 specificationItems 集合，将集合中的每个规格（也就是新的一列），添加到 tbItemList 中的每个对象中去
+        var items = $scope.goodsEntity.tbGoodsDesc.specificationItems;
+        for (var i = 0; i < items.length; i++) {
+            $scope.goodsEntity.tbItemList = addColumn($scope.goodsEntity.tbItemList,    // 旧的 tbItemList 集合，修改完成后，要在 addColumn 中返回给 tbItemList
+                                                    items[i].attributeName,         // 规格列名称
+                                                    items[i].attributeValue);       // 规格列包含的规格选项列表
+        }
+    };
+
+
+    // 在 itemList 中添加新的一列，oldList 是旧的 tbItemList，column 是规格列名称，columnValue 是规格选项列表
+    addColumn = function (oldList, columnName, columnValue) {
+        var newList = [];
+        // 遍历 oldList 中的每个对象，每个对象都要加新的列
+        for (var i = 0; i < oldList.length; i++) {
+            // 获取旧的对象，之后要做对象拷贝
+            var oldObj = oldList[i];
+            // 遍历 columnValue 规格选项列表，将每个规格选项赋值给对象的新列
+            for (var j = 0; j < columnValue.length; j++) {
+                // 创建新对象，新对象来自于旧对象的深拷贝
+                // JSON.stringify 是将对象转换成字符串，JSON.parse 是将字符串形式的字符串转换成新的对象
+                var newObj = JSON.parse(JSON.stringify(oldObj));
+                // 给新的对象添加新的列，新的列赋予新的规格属性值
+                newObj.spec[columnName] = columnValue[j];
+                // 保存新的对象
+                newList.push(newObj);
+            }
+        }
+        // 返回新的 itemList，也就是新的 SKU 列表
+        return newList;
+    }
 });	
