@@ -10,11 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>pinyougou-pojo</artifactId>
-<!--    <packaging>jar</packaging>-->
-
-    <name>pinyougou-pojo</name>
-    <!-- FIXME change it to the project's website -->
-    <url>http://www.example.com</url>
+	<packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -30,11 +26,4 @@
             <version>${lombok.version}</version>
         </dependency>
     </dependencies>
-
-    <build>
-        <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
-            <plugins>
-            </plugins>
-        </pluginManagement>
-    </build>
 </project>

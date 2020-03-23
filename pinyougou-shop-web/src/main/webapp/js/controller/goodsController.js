@@ -118,7 +118,7 @@ pyg.controller('goodsController', function ($scope,
         goodsService.findPageLimit(page, size, $scope.searchEntity).success(
             function (response) {
                 // 修改当前页数据
-                $scope.list = response.rows;
+                $scope.goodsList = response.rows;
                 // 修改页码
                 $scope.paginationConf.currentPage = page;
                 // 修改总记录数
@@ -294,5 +294,25 @@ pyg.controller('goodsController', function ($scope,
         }
         // 返回新的 itemList，也就是新的 SKU 列表
         return newList;
-    }
+    };
+
+    // 显示商品状态
+    // 0 未审核，1 已审核，2 审核未通过，3 关闭
+    $scope.goodStatus = ['未审核', '已审核', '审核未通过', '关闭'];
+
+    // 显示商品分类
+    // 到后台查询商品分类列表，放在数组中，将分类的 ID 作为数组下标，分类名称作为值
+    // 显示分类的时候，直接通过分类 ID  就能定位到分类名称
+
+    // 商品分类数组
+    $scope.itemCatArray =  [];
+    $scope.findItemCatList = function () {
+        itemCatService.findAll().success(
+            function (response) {
+                for (var i = 0; i < response.length; i++) {
+                    $scope.itemCatArray[response[i].id] = response[i].name;
+                }
+            }
+        );
+    };
 });	

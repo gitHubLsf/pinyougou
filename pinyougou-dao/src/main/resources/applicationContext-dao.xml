@@ -47,9 +47,17 @@
                 </bean>
             </array>
         </property>
+		
+		<!-- 给 cn.itcast.ssm.pojo 包下的所有实体类取别名。如果不取别名，就必须使用全类名 -->
+		<!--
+		<property name="typeAliasesPackage" value="cn.itcast.ssm.pojo"></property>-->
+ 
     </bean>
 
-    <!-- 开启 mapper 中的 xml 文件的扫描功能 -->
+    <!-- mapper 扫描器,用于创建 com.lsf.pingyougou.dao 包下所有接口的代理对象，并放入 spring 容器中 
+		如果想获取 spring 容器中的接口代理对象。要先加载 spring 配置文件来获取容器，
+		然后通过 容器.getBean(接口.class) 来获取接口的代理对象
+	-->
     <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.lsf.pinyougou.dao"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />

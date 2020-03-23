@@ -50,7 +50,7 @@
                 and seller_id = #{sellerId}
             </if>
             <if test="goodsName != null and goodsName != ''">
-                and goods_name = #{goodsName}
+                and goods_name like CONCAT('%', #{goodsName}, '%')
             </if>
             <if test="defaultItemId != null">
                 and default_item_id = #{defaultItemId}

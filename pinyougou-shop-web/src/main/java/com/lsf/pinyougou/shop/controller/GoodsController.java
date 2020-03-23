@@ -49,16 +49,20 @@ public class GoodsController {
 
 
     /**
+     * 商家查询自己的全部列表
      * 多条件分页查询
      *
      * @param goods
      * @param page
-     * @param rows
+     * @param size
      * @return
      */
     @RequestMapping("/search.do")
-    public PageResult findPageLimit(@RequestBody TbGoods goods, int page, int rows) {
-        return goodsService.findPageLimit(goods, page, rows);
+    public PageResult findPageLimit(@RequestBody TbGoods goods, int page, int size) {
+        // 获取商家 ID
+        String sellerId = SecurityContextHolder.getContext().getAuthentication().getName();
+        goods.setSellerId(sellerId);
+        return goodsService.findPageLimit(goods, page, size);
     }
 
 

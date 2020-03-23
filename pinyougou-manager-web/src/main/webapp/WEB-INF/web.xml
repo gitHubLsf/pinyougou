@@ -30,10 +30,21 @@
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath:springmvc.xml</param-value>
         </init-param>
+		
+		<!--
+		多个 servlet 中，首先加载此 servlet
+		-->
+		<load-on-startup>1</load-on-startup>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>springmvc</servlet-name>
+		<!--
+		此处如果写成 *.do，那么在 springMVC 配置文件中，就不需要释放静态资源了
+		也就是不需要写 <mvc:default-servlet-handler>
+		
+		此处也可以写成 /，如果写成 /，就需要在 springMVC 配置文件中，释放静态资源
+		-->
         <url-pattern>*.do</url-pattern>
     </servlet-mapping>
 

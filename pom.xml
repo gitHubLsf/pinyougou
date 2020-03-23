@@ -8,19 +8,16 @@
     <artifactId>pinyougou-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>pinyougou-pojo</module>
-        <module>pinyougou-dao</module>
+        <module>pinyougou-pojo</module>    
         <module>pinyougou-common</module>
+		<module>pinyougou-dao</module>
         <module>pinyougou-sellergoods-interface</module>
         <module>pinyougou-sellergoods-service</module>
         <module>pinyougou-manager-web</module>
-        <module>pinyougou-shop-web</module>
+        <module>pinyougou-shop-web</module>	
     </modules>
     <packaging>pom</packaging>
 
-    <name>pinyougou-parent</name>
-    <!-- FIXME change it to the project's website -->
-    <url>http://www.example.com</url>
 
     <!-- 集中定义依赖版本号 -->
     <properties>
@@ -221,20 +218,4 @@
         </dependency>
     </dependencies>
 
-    <build>
-        <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
-            <plugins>
-                <!-- java 编译插件 -->
-                <plugin>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.8.0</version>
-                    <configuration>
-                        <source>1.7</source>
-                        <target>1.7</target>
-                        <encoding>UTF-8</encoding>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
 </project>

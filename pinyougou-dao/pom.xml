@@ -10,11 +10,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>pinyougou-dao</artifactId>
-<!--    <packaging>jar</packaging>-->
+	<packaging>jar</packaging>
 
-    <name>pinyougou-dao</name>
-    <!-- FIXME change it to the project's website -->
-    <url>http://www.example.com</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -29,6 +26,14 @@
     </properties>
 
     <dependencies>
+
+		<!-- 依赖 pinyougou-pojo 实体类模块 -->
+        <dependency>
+            <groupId>com.lsf.pinyougou</groupId>
+            <artifactId>pinyougou-pojo</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+	
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper</artifactId>
@@ -66,18 +71,6 @@
             <version>${druid.version}</version>
         </dependency>
 
-        <!-- 依赖 pinyougou-pojo 实体类模块 -->
-        <dependency>
-            <groupId>com.lsf.pinyougou</groupId>
-            <artifactId>pinyougou-pojo</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
     </dependencies>
 
-    <build>
-        <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
-            <plugins>
-            </plugins>
-        </pluginManagement>
-    </build>
 </project>
