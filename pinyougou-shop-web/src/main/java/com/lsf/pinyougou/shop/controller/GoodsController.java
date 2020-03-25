@@ -90,13 +90,31 @@ public class GoodsController {
 
 
     /**
-     * 修改
+     * 商家修改自己的商品信息
      *
      * @param goods
      * @return
      */
     @RequestMapping("/update.do")
-    public Result update(@RequestBody TbGoods goods) {
+    public Result update(@RequestBody Goods goods) {
+
+        // 出于安全考虑，在商户后台执行的商品修改，必须要校验提交的商品属于该商户
+
+        // 判断商品的商家 ID 是否和当前在线商家一致
+        String selledId = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        // 判断商品的商家 ID 是否和数据库中的商家 ID 一致
+        Goods dbGoods = goodsService.findOne(goods.getTbGoods().getId());
+
+        if (!selledId.equals(goods.getTbGoods().getSellerId())
+            || !dbGoods.getTbGoods().getSellerId().equals(selledId)) {
+            return new Result(false, "非法操作");
+        }
+
+        // 后续还要检验商品详情和商品 SKU 中的商品 ID 是否和商品的 ID 一致
+        // 因为可能商品的 ID 正确，但是商品详情和商品 SKU 中的商品 ID 被修改了
+        // 会导致修改了别的商品详情或者商品 SKU
+
         try {
             goodsService.update(goods);
             return new Result(true, "修改成功");
@@ -107,13 +125,13 @@ public class GoodsController {
 
 
     /**
-     * 根据 ID 获取实体
+     * 根据商品 ID 查询商品信息，返回商品组合实体类对象
      *
      * @param id
      * @return
      */
     @RequestMapping("/findOne.do")
-    public TbGoods findOne(long id) {
+    public Goods findOne(long id) {
         return goodsService.findOne(id);
     }
 

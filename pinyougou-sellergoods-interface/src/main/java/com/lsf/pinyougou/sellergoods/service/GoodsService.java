@@ -45,18 +45,18 @@ public interface GoodsService {
 
 
     /**
-     * 修改
+     * 修改商品信息
      */
-    void update(TbGoods goods);
+    void update(Goods goods);
 
 
     /**
-     * 根据 ID 获取实体
+     * 根据商品 ID 查询商品信息，返回商品组合实体类对象 Goods
      *
      * @param id
      * @return
      */
-    TbGoods findOne(long id);
+    Goods findOne(long id);
 
 
     /**

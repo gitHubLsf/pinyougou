@@ -64,4 +64,10 @@ public interface TbItemDao {
      */
     int deleteById(Long id);
 
+
+    /**
+     * 通过商品 ID 删除商品 SKU
+     * @param id
+     */
+    void deleteByGoodsId(Long id);
 }

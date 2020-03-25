@@ -8,13 +8,13 @@
     <artifactId>pinyougou-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>pinyougou-pojo</module>    
+        <module>pinyougou-pojo</module>
         <module>pinyougou-common</module>
-		<module>pinyougou-dao</module>
+        <module>pinyougou-dao</module>
         <module>pinyougou-sellergoods-interface</module>
         <module>pinyougou-sellergoods-service</module>
         <module>pinyougou-manager-web</module>
-        <module>pinyougou-shop-web</module>	
+        <module>pinyougou-shop-web</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -217,5 +217,4 @@
             <version>1.4.01</version>
         </dependency>
     </dependencies>
-
 </project>

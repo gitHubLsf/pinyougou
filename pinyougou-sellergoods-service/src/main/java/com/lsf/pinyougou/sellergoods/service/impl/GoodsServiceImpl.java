@@ -104,6 +104,17 @@ public class GoodsServiceImpl implements GoodsService {
         // 添加商品扩展
         tbGoodsDescDao.insert(goods.getTbGoodsDesc());
 
+        // 添加商品 SKU 列表
+        saveItemList(goods);
+
+    }
+
+    /**
+     * 保存商品 SKU 列表
+     * @param goods
+     */
+    private void saveItemList(Goods goods) {
+
         // 如果用户选择启用规格，则需要遍历 SKU 列表
         if ("1".equals(goods.getTbGoods().getIsEnableSpec())) {
             // 获取 SKU 列表,将每个 SKU 插入到数据库
@@ -148,7 +159,9 @@ public class GoodsServiceImpl implements GoodsService {
             // 添加 SKU 信息
             tbItemDao.insert(tbItem);
         }
+
     }
+
 
     private void setItemValue(TbItem item, Goods goods) {
         // 设置 SKU 所属的 SPU 编号，也就是商品的编号
@@ -194,23 +207,53 @@ public class GoodsServiceImpl implements GoodsService {
 
 
     /**
-     * 修改
+     * 商家修改自己的商品信息
      */
     @Override
-    public void update(TbGoods goods) {
-        tbGoodsDao.update(goods);
+    public void update(Goods goods) {
+
+        // 修改商品
+        // 设置商品的状态为未审核，因为经过修改的商品需要重新审核
+        goods.getTbGoods().setAuditStatus("0");
+        tbGoodsDao.update(goods.getTbGoods());
+
+        // 修改商品扩展
+        tbGoodsDescDao.update(goods.getTbGoodsDesc());
+
+        // 删除旧的 SKU 列表
+        tbItemDao.deleteByGoodsId(goods.getTbGoods().getId());
+
+        // 添加新的 SKU 列表
+        saveItemList(goods);
     }
 
 
+
     /**
-     * 根据 ID 获取实体
+     * 根据商品 ID 查询商品信息，返回商品组合实体类对象 Goods
      *
      * @param id
      * @return
      */
     @Override
-    public TbGoods findOne(long id) {
-        return tbGoodsDao.queryById(id);
+    public Goods findOne(long id) {
+        Goods goods = new Goods();
+
+        // 查询商品对象
+        TbGoods tbGoods = tbGoodsDao.queryById(id);
+        goods.setTbGoods(tbGoods);
+
+        // 查询商品详情对象
+        TbGoodsDesc tbGoodsDesc = tbGoodsDescDao.queryById(id);
+        goods.setTbGoodsDesc(tbGoodsDesc);
+
+        // 查询商品的 SKU 列表
+        TbItem tbItem = new TbItem();
+        tbItem.setGoodsId(id);
+        List<TbItem> itemList = tbItemDao.queryAll(tbItem);
+        goods.setTbItemList(itemList);
+
+        return goods;
     }
 
 

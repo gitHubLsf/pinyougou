@@ -207,4 +207,9 @@
         delete from pinyougoudb.tb_item where id = #{id}
     </delete>
 
+    <!-- 通过商品 ID 删除商品 SKU -->
+    <delete id="deleteByGoodsId">
+        delete from pinyougoudb.tb_item where goods_id = #{id}
+    </delete>
+
 </mapper>

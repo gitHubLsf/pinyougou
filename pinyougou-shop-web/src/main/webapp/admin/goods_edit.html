@@ -35,7 +35,7 @@
 </head>
 
 <body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="goodsController"
-      ng-init="selectCategory_1_List()">
+      ng-init="goodsEntity = {}; selectCategory_1_List(); findGoodById()">
 
 <!-- 正文区域 -->
 <section class="content">
@@ -226,7 +226,8 @@
                                     <span ng-repeat="option in spec.options">
                                         <input type="checkbox"
                                                ng-click="updateSpecAttribute($event, spec.text, option.optionName);
-                                                         createItemList()">
+                                                         createItemList()"
+                                               ng-checked="checkSpecificationItem(spec.text, option.optionName)">
                                         {{ option.optionName }}
                                     </span>
                                 </div>
@@ -279,8 +280,8 @@
         </div>
     </div>
     <div class="btn-toolbar list-toolbar">
-        <button class="btn btn-primary" ng-click="add()"><i class="fa fa-save"></i>保存</button>
-        <button class="btn btn-default">返回列表</button>
+        <button class="btn btn-primary" ng-click="save()"><i class="fa fa-save"></i>保存</button>
+        <a class="btn btn-default" href="goods.html">返回列表</a>
     </div>
 
 </section>

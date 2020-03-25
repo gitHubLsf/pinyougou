@@ -1,6 +1,7 @@
 // 控制层 
 pyg.controller('goodsController', function ($scope,
                                             $controller,
+                                            $location,
                                             goodsService,
                                             uploadService,
                                             itemCatService,
@@ -43,43 +44,28 @@ pyg.controller('goodsController', function ($scope,
         );
     };
 
-    //保存
+    // 保存商品（整合 添加商品 + 修改商品 方法）
     $scope.save = function () {
-        var serviceObject;//服务层对象
-        if ($scope.entity.id != null) {//如果有ID
-            serviceObject = goodsService.update($scope.entity); //修改
-        } else {
-            serviceObject = goodsService.add($scope.entity);//增加
-        }
-        serviceObject.success(
-            function (response) {
-                if (response.success) {
-                    //重新查询
-                    $scope.reloadList();//重新加载
-                } else {
-                    alert(response.message);
-                }
-            }
-        );
-    };
 
-
-    // 添加商品
-    $scope.add = function () {
         // 获取富文本编辑器 editor 中，用户输入的商品介绍的内容
         $scope.goodsEntity.tbGoodsDesc.introduction = editor.html();
 
-        goodsService.add($scope.goodsEntity).success(
+        var serviceObject;//服务层对象
+        if ($scope.goodsEntity.tbGoods.id != null) {//如果有商品 ID，说明是修改操作
+            serviceObject = goodsService.update($scope.goodsEntity); //修改
+        } else {
+            serviceObject = goodsService.add($scope.goodsEntity);   //增加操作
+        }
+
+        serviceObject.success(
             function (response) {
                 if (response.success) {
-                    // 添加商品成功
+                    // 保存商品成功
                     alert(response.message);
-                    // 清空输入框，让商家继续录入商品
-                    $scope.goodsEntity = {};
-                    // 清空富文本编辑器中的商品介绍内容
-                    editor.html('');
                     // 清空规格列表
                     $scope.specList = [];
+                    // 保存成功后，跳转到商品管理页面
+                    location.href = 'goods.html';
                 } else {
                     alert(response.message);
                 }
@@ -212,8 +198,11 @@ pyg.controller('goodsController', function ($scope,
                 // 当前模板对应的品牌下拉列表
                 $scope.selectBrandList = JSON.parse(response.brandIds);
 
-                // 当前模板对应的扩展属性
-                $scope.goodsEntity.tbGoodsDesc.customAttributeItems = JSON.parse(response.customAttributeItems);
+                if ($location.search()['id'] == null) {
+                    // 当前模板对应的扩展属性
+                    $scope.goodsEntity.tbGoodsDesc.customAttributeItems
+                        = JSON.parse(response.customAttributeItems);
+                }
             }
         );
 
@@ -314,5 +303,81 @@ pyg.controller('goodsController', function ($scope,
                 }
             }
         );
+    };
+
+    // 修改商品信息时，根据商品 ID 查询商品信息
+    $scope.findGoodById = function () {
+        // 此处的 id 通过地址栏来获取，通过 $location 服务来获取参数 id
+        // goods_edit.html#?id=xxxxx;
+        var goodId = $location.search()['id'];
+        // search() 方法查找的是页面地址栏中的所有参数，此处查找的是参数 id
+
+        if (goodId == null) {
+            // 由于添加商品和修改商品使用的是同一个页面 goods_edit.html
+            // 所以此处要做个判断
+            // 如果没有传递参数 id ，表示不是修改商品信息操作，而是增加商品操作
+            return;
+        }
+
+        // 如果 id 不为空，说明是修改商品操作，就要到后台先查询商品信息
+        goodsService.findOne(goodId).success(
+            function (response) {
+                // 此处的 goodsEntity 包含商品的所有信息（商品+商品详情+SKU列表）
+                $scope.goodsEntity = response;
+
+                // 提取商品详情中的商品介绍，填充在富文本编辑器中
+                editor.html($scope.goodsEntity.tbGoodsDesc.introduction);
+
+                // 将商品详情中的图片列表(string) 转成集合形式
+                $scope.goodsEntity.tbGoodsDesc.itemImages
+                    = JSON.parse($scope.goodsEntity.tbGoodsDesc.itemImages);
+
+                // 将商品详情中的自定义扩展属性列表(string) 转成集合形式
+                $scope.goodsEntity.tbGoodsDesc.customAttributeItems
+                    = JSON.parse($scope.goodsEntity.tbGoodsDesc.customAttributeItems);
+
+                // 将商品详情中的规格列表（string）转成集合形式
+                $scope.goodsEntity.tbGoodsDesc.specificationItems
+                    = JSON.parse($scope.goodsEntity.tbGoodsDesc.specificationItems);
+                // 注意：上述转换的规格列表只是商家选择后的部分规格数据
+                // 比如 [ { attributeName:'内存', attributeValue:[ '4G', '8G' ] ]
+                // 而页面上此时展示的是模板对应的全部规格列表
+                // 比如 [ { text:'内存', options:[ '4G', '8G', '16G', '32G' ] } ]
+                // 此时我们在页面上展示规格列表，展示每个规格及规格选项时，需要判断此规格选项是否在商家选择后的规格列表中
+                // 如果在才需要勾选，不再就不勾选
+                // 此时要用到 ng-checked 指令 ng-checked="" 如果返回 true，则勾选，否则不勾选
+
+                // 将商品 SKU 列表 tbItemList 中的 spec 属性（string）转换成对象形式
+                for (var i = 0; i < $scope.goodsEntity.tbItemList.length; i++) {
+                    $scope.goodsEntity.tbItemList[i].spec
+                        = JSON.parse($scope.goodsEntity.tbItemList[i].spec);
+                }
+            }
+        );
+    };
+
+
+    // 判断规格选项是否在商家选择后的规格列表中
+    // specName 是规格名称，optionName 是规格选项名称
+    $scope.checkSpecificationItem = function(specName, optionName) {
+        // 获取商家选择后的规格列表
+        var list = $scope.goodsEntity.tbGoodsDesc.specificationItems;
+        // 判断商家自己的规格列表中是否有 specName 这个规格
+        var obj = $scope.searchObjectKey(list, 'attributeName', specName);
+
+        if (obj == null) {
+            // 表示商家自己的规格列表没有这个规格，直接返回 false，代表不勾选
+            return false;
+        } else {
+            // obj 表示对应 specName 的那个规格对象
+            // 判断此对象的 attributeValue 集合中，是否有一个值叫做 optionName（规格选项名称）
+            if (obj.attributeValue.indexOf(optionName) >= 0) {
+                // 如果有，则返回 true
+                return true;
+            } else {
+                // 没有，则返回 false
+                return false;
+            }
+        }
     };
 });	
