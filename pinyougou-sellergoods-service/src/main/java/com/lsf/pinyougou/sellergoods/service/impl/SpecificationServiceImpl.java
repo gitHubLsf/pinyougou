@@ -13,6 +13,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 import com.lsf.pinyougou.dao.TbSpecificationDao;
 import com.lsf.pinyougou.pojo.TbSpecification;
+import org.springframework.transaction.annotation.Transactional;
 import vo.PageResult;
 
 
@@ -71,6 +72,7 @@ public class SpecificationServiceImpl implements SpecificationService {
      * 添加规格
      */
     @Override
+    @Transactional
     public void add(Specification specification) {
         // 添加规格
         TbSpecification tbspecification = specification.getSpecification();
@@ -89,6 +91,7 @@ public class SpecificationServiceImpl implements SpecificationService {
      * 修改规格
      */
     @Override
+    @Transactional
     public void update(Specification specification) {
         // 修改规格名称
         tbSpecificationDao.update(specification.getSpecification());
@@ -125,6 +128,7 @@ public class SpecificationServiceImpl implements SpecificationService {
      * 批量删除
      */
     @Override
+    @Transactional
     public void batchDelete(Long[] ids) {
         for (Long id : ids) {
             // 删除某种规格

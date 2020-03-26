@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 
+import org.springframework.transaction.annotation.Transactional;
 import vo.PageResult;
 
 
@@ -93,6 +94,7 @@ public class GoodsServiceImpl implements GoodsService {
      * 添加商品
      */
     @Override
+    @Transactional
     public void add(Goods goods) {
 
         // 设置商品的状态为 未审核
@@ -217,6 +219,7 @@ public class GoodsServiceImpl implements GoodsService {
      * 商家修改自己的商品信息
      */
     @Override
+    @Transactional
     public void update(Goods goods) {
 
         // 修改商品
@@ -232,6 +235,7 @@ public class GoodsServiceImpl implements GoodsService {
 
         // 添加新的 SKU 列表
         saveItemList(goods);
+
     }
 
 

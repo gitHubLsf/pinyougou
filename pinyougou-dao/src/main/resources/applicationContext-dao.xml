@@ -62,4 +62,5 @@
         <property name="basePackage" value="com.lsf.pinyougou.dao"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
     </bean>
+
 </beans>
