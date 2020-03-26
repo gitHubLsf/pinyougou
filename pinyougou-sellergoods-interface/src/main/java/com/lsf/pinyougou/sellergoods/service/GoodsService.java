@@ -60,10 +60,24 @@ public interface GoodsService {
 
 
     /**
-     * 批量删除
+     * 批量删除商品，只进行逻辑删除
      *
      * @param ids
      */
     void batchDelete(Long[] ids);
 
+
+    /**
+     * 修改商品的审核状态
+     */
+    void updateGoodStatus(Long[] ids, String status);
+
+
+    /**
+     * 修改商品的上下架状态
+     *
+     * @param ids
+     * @param status
+     */
+    void updateGoodMarketable(Long[] ids, String status);
 }

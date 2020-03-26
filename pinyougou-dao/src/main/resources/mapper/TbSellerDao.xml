@@ -32,23 +32,20 @@
     <!--根据 ID 查询某个未审核商家的全部信息 -->
     <select id="queryById" resultMap="TbSellerMap">
         select
-          seller_id, name, nick_name, password, email, mobile, telephone, status, address_detail, linkman_name, linkman_qq, linkman_mobile, linkman_email, license_number, tax_number, org_number, address, logo_pic, brief, create_time, legal_person, legal_person_card_id, bank_user, bank_name
+        seller_id, name, nick_name, password, email, mobile, telephone, status, address_detail, linkman_name,
+        linkman_qq, linkman_mobile, linkman_email, license_number, tax_number, org_number, address, logo_pic, brief,
+        create_time, legal_person, legal_person_card_id, bank_user, bank_name
         from pinyougoudb.tb_seller
         where seller_id = #{sellerId}
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="TbSellerMap">
-        select
-          seller_id, name, nick_name, password, email, mobile, telephone, status, address_detail, linkman_name, linkman_qq, linkman_mobile, linkman_email, license_number, tax_number, org_number, address, logo_pic, brief, create_time, legal_person, legal_person_card_id, bank_user, bank_name
-        from pinyougoudb.tb_seller
-        limit #{offset}, #{limit}
-    </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TbSellerMap">
         select
-          seller_id, name, nick_name, password, email, mobile, telephone, status, address_detail, linkman_name, linkman_qq, linkman_mobile, linkman_email, license_number, tax_number, org_number, address, logo_pic, brief, create_time, legal_person, legal_person_card_id, bank_user, bank_name
+        seller_id, name, nick_name, password, email, mobile, telephone, status, address_detail, linkman_name,
+        linkman_qq, linkman_mobile, linkman_email, license_number, tax_number, org_number, address, logo_pic, brief,
+        create_time, legal_person, legal_person_card_id, bank_user, bank_name
         from pinyougoudb.tb_seller
         <where>
             <if test="sellerId != null and sellerId != ''">
@@ -126,10 +123,12 @@
         </where>
     </select>
 
-<!--    多条件分页查询未审核商家列表-->
+    <!--    多条件分页查询未审核商家列表-->
     <select id="queryAllLimit" resultMap="TbSellerMap">
         select
-        seller_id, name, nick_name, password, email, mobile, telephone, status, address_detail, linkman_name, linkman_qq, linkman_mobile, linkman_email, license_number, tax_number, org_number, address, logo_pic, brief, create_time, legal_person, legal_person_card_id, bank_user, bank_name
+        seller_id, name, nick_name, password, email, mobile, telephone, status, address_detail, linkman_name,
+        linkman_qq, linkman_mobile, linkman_email, license_number, tax_number, org_number, address, logo_pic, brief,
+        create_time, legal_person, legal_person_card_id, bank_user, bank_name
         from pinyougoudb.tb_seller
         <where>
             <if test="sellerId != null and sellerId != ''">
@@ -210,15 +209,15 @@
     <!--新增所有列-->
     <insert id="insert" keyProperty="sellerId" useGeneratedKeys="true">
         insert into pinyougoudb.tb_seller(
-            seller_id, name, nick_name, password, email, mobile, telephone, status, address_detail,
-            linkman_name, linkman_qq, linkman_mobile, linkman_email, license_number, tax_number,
-            org_number, address, logo_pic, brief, create_time, legal_person, legal_person_card_id,
-            bank_user, bank_name)
+        seller_id, name, nick_name, password, email, mobile, telephone, status, address_detail,
+        linkman_name, linkman_qq, linkman_mobile, linkman_email, license_number, tax_number,
+        org_number, address, logo_pic, brief, create_time, legal_person, legal_person_card_id,
+        bank_user, bank_name)
         values (
-            #{sellerId}, #{name}, #{nickName}, #{password}, #{email}, #{mobile}, #{telephone},
-            #{status}, #{addressDetail}, #{linkmanName}, #{linkmanQq}, #{linkmanMobile}, #{linkmanEmail},
-            #{licenseNumber}, #{taxNumber}, #{orgNumber}, #{address}, #{logoPic}, #{brief}, #{createTime},
-            #{legalPerson}, #{legalPersonCardId}, #{bankUser}, #{bankName})
+        #{sellerId}, #{name}, #{nickName}, #{password}, #{email}, #{mobile}, #{telephone},
+        #{status}, #{addressDetail}, #{linkmanName}, #{linkmanQq}, #{linkmanMobile}, #{linkmanEmail},
+        #{licenseNumber}, #{taxNumber}, #{orgNumber}, #{address}, #{logoPic}, #{brief}, #{createTime},
+        #{legalPerson}, #{legalPersonCardId}, #{bankUser}, #{bankName})
     </insert>
 
     <!--修改商家的审核状态-->

@@ -15,23 +15,16 @@
     <!--查询单个-->
     <select id="queryById" resultMap="TbFreightTemplateMap">
         select
-          id, seller_id, is_default, name, send_time_type, price, create_time
+        id, seller_id, is_default, name, send_time_type, price, create_time
         from pinyougoudb.tb_freight_template
         where id = #{id}
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="TbFreightTemplateMap">
-        select
-          id, seller_id, is_default, name, send_time_type, price, create_time
-        from pinyougoudb.tb_freight_template
-        limit #{offset}, #{limit}
-    </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TbFreightTemplateMap">
         select
-          id, seller_id, is_default, name, send_time_type, price, create_time
+        id, seller_id, is_default, name, send_time_type, price, create_time
         from pinyougoudb.tb_freight_template
         <where>
             <if test="id != null">

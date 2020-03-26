@@ -53,7 +53,24 @@ pyg.controller('baseController', function ($scope) {
             value += json[i][key];
         }
         return value;
-    }
+    };
+
+    // 从集合中按照某个对象，这个对象有个键叫做 key，其值为 keyValue
+    // 如果找到这个对象，则返回对象
+    // 如果找不到对象，则返回 null
+    // list = [
+    //      {
+    //          key: "keyValue"
+    //      }
+    // ]
+    $scope.searchObjectKey = function(list, key, keyValue) {
+        for (var i = 0; i < list.length; i++) {
+            if (list[i][key] === keyValue) {
+                return list[i];
+            }
+        }
+        return null;
+    };
 });
 
 

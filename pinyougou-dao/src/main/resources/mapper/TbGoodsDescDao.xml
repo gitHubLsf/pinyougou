@@ -15,23 +15,16 @@
     <!--查询单个-->
     <select id="queryById" resultMap="TbGoodsDescMap">
         select
-          goods_id, introduction, specification_items, custom_attribute_items, item_images, package_list, sale_service
+        goods_id, introduction, specification_items, custom_attribute_items, item_images, package_list, sale_service
         from pinyougoudb.tb_goods_desc
         where goods_id = #{goodsId}
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="TbGoodsDescMap">
-        select
-          goods_id, introduction, specification_items, custom_attribute_items, item_images, package_list, sale_service
-        from pinyougoudb.tb_goods_desc
-        limit #{offset}, #{limit}
-    </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TbGoodsDescMap">
         select
-          goods_id, introduction, specification_items, custom_attribute_items, item_images, package_list, sale_service
+        goods_id, introduction, specification_items, custom_attribute_items, item_images, package_list, sale_service
         from pinyougoudb.tb_goods_desc
         <where>
             <if test="goodsId != null">
@@ -60,8 +53,10 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="goodsId" useGeneratedKeys="true">
-        insert into pinyougoudb.tb_goods_desc(goods_id, introduction, specification_items, custom_attribute_items, item_images, package_list, sale_service)
-        values (#{goodsId}, #{introduction}, #{specificationItems}, #{customAttributeItems}, #{itemImages}, #{packageList}, #{saleService})
+        insert into pinyougoudb.tb_goods_desc(goods_id, introduction, specification_items, custom_attribute_items,
+        item_images, package_list, sale_service)
+        values (#{goodsId}, #{introduction}, #{specificationItems}, #{customAttributeItems}, #{itemImages},
+        #{packageList}, #{saleService})
     </insert>
 
     <!--通过主键修改数据-->

@@ -13,23 +13,16 @@
     <!--查询单个-->
     <select id="queryById" resultMap="TbTypeTemplateMap">
         select
-          id, name, spec_ids, brand_ids, custom_attribute_items
+        id, name, spec_ids, brand_ids, custom_attribute_items
         from pinyougoudb.tb_type_template
         where id = #{id}
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="TbTypeTemplateMap">
-        select
-          id, name, spec_ids, brand_ids, custom_attribute_items
-        from pinyougoudb.tb_type_template
-        limit #{offset}, #{limit}
-    </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TbTypeTemplateMap">
         select
-          id, name, spec_ids, brand_ids, custom_attribute_items
+        id, name, spec_ids, brand_ids, custom_attribute_items
         from pinyougoudb.tb_type_template
         <where>
             <if test="id != null">
@@ -50,7 +43,7 @@
         </where>
     </select>
 
-<!--    多条件分页查询模板数据-->
+    <!--    多条件分页查询模板数据-->
     <select id="queryAllLimit" resultMap="TbTypeTemplateMap">
         select
         id, name, spec_ids, brand_ids, custom_attribute_items
@@ -74,12 +67,12 @@
         </where>
     </select>
 
-<!--    添加商品分类时，查询所有类型模板列表-->
+    <!--    添加商品分类时，查询所有类型模板列表-->
     <select id="findTypeList" resultType="java.util.Map">
         select
-            id, name as text
+        id, name as text
         from
-            pinyougoudb.tb_type_template
+        pinyougoudb.tb_type_template
     </select>
 
     <!--新增所有列-->

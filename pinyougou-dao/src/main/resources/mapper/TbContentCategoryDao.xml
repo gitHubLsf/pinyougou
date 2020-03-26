@@ -10,23 +10,15 @@
     <!--查询单个-->
     <select id="queryById" resultMap="TbContentCategoryMap">
         select
-          id, name
+        id, name
         from pinyougoudb.tb_content_category
         where id = #{id}
-    </select>
-
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="TbContentCategoryMap">
-        select
-          id, name
-        from pinyougoudb.tb_content_category
-        limit #{offset}, #{limit}
     </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TbContentCategoryMap">
         select
-          id, name
+        id, name
         from pinyougoudb.tb_content_category
         <where>
             <if test="id != null">

@@ -40,4 +40,9 @@ pyg.service('typeTemplateService', function ($http) {
     this.findTypeList = function () {
         return $http.get('../typeTemplate/findTypeList.do');
     };
+
+    // 商家添加商品时，输入规格列表时，查询商品所属的模板的规格列表
+    this.findSpecList = function (id) {
+        return $http.get('../typeTemplate/findSpecList.do?id=' + id);
+    }
 });

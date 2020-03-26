@@ -12,23 +12,16 @@
     <!--查询单个-->
     <select id="queryById" resultMap="TbCitiesMap">
         select
-          id, cityid, city, provinceid
+        id, cityid, city, provinceid
         from pinyougoudb.tb_cities
         where id = #{id}
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="TbCitiesMap">
-        select
-          id, cityid, city, provinceid
-        from pinyougoudb.tb_cities
-        limit #{offset}, #{limit}
-    </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TbCitiesMap">
         select
-          id, cityid, city, provinceid
+        id, cityid, city, provinceid
         from pinyougoudb.tb_cities
         <where>
             <if test="id != null">

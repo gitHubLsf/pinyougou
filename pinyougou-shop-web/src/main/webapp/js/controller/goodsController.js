@@ -83,8 +83,8 @@ pyg.controller('goodsController', function ($scope,
                 function (response) {
                     if (response.success) {
                         // 删除成功
-                        // 刷新当前页
-                        $scope.reloadList();
+                        // 刷新列表
+                        $scope.search(1, $scope.paginationConf.itemsPerPage);
                     } else {
                         // 删除失败
                         alert(response.message);
@@ -380,4 +380,29 @@ pyg.controller('goodsController', function ($scope,
             }
         }
     };
+
+
+    // 商家批量修改商品的上下架状态
+    $scope.updateGoodMarketable = function (status) {
+        goodsService.updateGoodMarketable($scope.selectedList, status).success(
+            function (response) {
+                if (response.success) {
+                    // 修改成功
+                    alert(response.message);
+                    // 刷新页面
+                    $scope.search(1, $scope.paginationConf.itemsPerPage);
+                } else {
+                    alert(response.message);
+                }
+            }
+        );
+
+        // 清空保存需要修改商品 ID 的集合
+        $scope.selectedList = [];
+    };
+
+
+    // 显示商品的上下架状态
+    // 0 下架，1 上架
+    $scope.goodMarketableStatus = ['下架', '上架'];
 });	

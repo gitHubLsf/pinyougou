@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>pinyougou-dao</artifactId>
-	<packaging>jar</packaging>
+    <packaging>jar</packaging>
 
 
     <properties>
@@ -27,13 +27,13 @@
 
     <dependencies>
 
-		<!-- 依赖 pinyougou-pojo 实体类模块 -->
+        <!-- 依赖 pinyougou-pojo 实体类模块 -->
         <dependency>
             <groupId>com.lsf.pinyougou</groupId>
             <artifactId>pinyougou-pojo</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-	
+
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper</artifactId>

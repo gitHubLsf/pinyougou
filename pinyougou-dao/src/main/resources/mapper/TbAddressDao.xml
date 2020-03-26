@@ -20,23 +20,16 @@
     <!--查询单个-->
     <select id="queryById" resultMap="TbAddressMap">
         select
-          id, user_id, province_id, city_id, town_id, mobile, address, contact, is_default, notes, create_date, alias
+        id, user_id, province_id, city_id, town_id, mobile, address, contact, is_default, notes, create_date, alias
         from pinyougoudb.tb_address
         where id = #{id}
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="TbAddressMap">
-        select
-          id, user_id, province_id, city_id, town_id, mobile, address, contact, is_default, notes, create_date, alias
-        from pinyougoudb.tb_address
-        limit #{offset}, #{limit}
-    </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TbAddressMap">
         select
-          id, user_id, province_id, city_id, town_id, mobile, address, contact, is_default, notes, create_date, alias
+        id, user_id, province_id, city_id, town_id, mobile, address, contact, is_default, notes, create_date, alias
         from pinyougoudb.tb_address
         <where>
             <if test="id != null">
@@ -80,8 +73,10 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into pinyougoudb.tb_address(user_id, province_id, city_id, town_id, mobile, address, contact, is_default, notes, create_date, alias)
-        values (#{userId}, #{provinceId}, #{cityId}, #{townId}, #{mobile}, #{address}, #{contact}, #{isDefault}, #{notes}, #{createDate}, #{alias})
+        insert into pinyougoudb.tb_address(user_id, province_id, city_id, town_id, mobile, address, contact, is_default,
+        notes, create_date, alias)
+        values (#{userId}, #{provinceId}, #{cityId}, #{townId}, #{mobile}, #{address}, #{contact}, #{isDefault},
+        #{notes}, #{createDate}, #{alias})
     </insert>
 
     <!--通过主键修改数据-->

@@ -152,4 +152,22 @@ public class GoodsController {
         }
     }
 
+
+    /**
+     * 商家批量修改商品的上下架状态
+     *
+     * @param ids
+     * @param status
+     * @return
+     */
+    @RequestMapping("/updateGoodMarketable.do")
+    public Result updateGoodMarketable(Long[] ids, String status) {
+        try {
+            goodsService.updateGoodMarketable(ids, status);
+            return new Result(true, "修改成功");
+        } catch (Exception e) {
+            return new Result(false, "修改失败");
+        }
+    }
+
 }

@@ -10,23 +10,16 @@
     <!--查询单个-->
     <select id="queryById" resultMap="TbSpecificationMap">
         select
-          id, spec_name
+        id, spec_name
         from pinyougoudb.tb_specification
         where id = #{id}
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="TbSpecificationMap">
-        select
-          id, spec_name
-        from pinyougoudb.tb_specification
-        limit #{offset}, #{limit}
-    </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TbSpecificationMap">
         select
-          id, spec_name
+        id, spec_name
         from pinyougoudb.tb_specification
         <where>
             <if test="id != null">
@@ -39,7 +32,7 @@
     </select>
 
 
-<!--    多条件分页查询规格数据-->
+    <!--    多条件分页查询规格数据-->
     <select id="queryAllLimit" resultMap="TbSpecificationMap">
         select
         id, spec_name
@@ -54,12 +47,12 @@
         </where>
     </select>
 
-<!--    查询所有规格下拉列表-->
+    <!--    查询所有规格下拉列表-->
     <select id="selectSpecList" resultType="java.util.Map">
         select
-            id, spec_name as text
+        id, spec_name as text
         from
-            pinyougoudb.tb_specification
+        pinyougoudb.tb_specification
     </select>
 
     <!--新增所有列-->

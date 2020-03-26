@@ -17,23 +17,16 @@
     <!--查询单个-->
     <select id="queryById" resultMap="TbPayLogMap">
         select
-          out_trade_no, create_time, pay_time, total_fee, user_id, transaction_id, trade_state, order_list, pay_type
+        out_trade_no, create_time, pay_time, total_fee, user_id, transaction_id, trade_state, order_list, pay_type
         from pinyougoudb.tb_pay_log
         where out_trade_no = #{outTradeNo}
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="TbPayLogMap">
-        select
-          out_trade_no, create_time, pay_time, total_fee, user_id, transaction_id, trade_state, order_list, pay_type
-        from pinyougoudb.tb_pay_log
-        limit #{offset}, #{limit}
-    </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TbPayLogMap">
         select
-          out_trade_no, create_time, pay_time, total_fee, user_id, transaction_id, trade_state, order_list, pay_type
+        out_trade_no, create_time, pay_time, total_fee, user_id, transaction_id, trade_state, order_list, pay_type
         from pinyougoudb.tb_pay_log
         <where>
             <if test="outTradeNo != null and outTradeNo != ''">
@@ -68,8 +61,10 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="outTradeNo" useGeneratedKeys="true">
-        insert into pinyougoudb.tb_pay_log(create_time, pay_time, total_fee, user_id, transaction_id, trade_state, order_list, pay_type)
-        values (#{createTime}, #{payTime}, #{totalFee}, #{userId}, #{transactionId}, #{tradeState}, #{orderList}, #{payType})
+        insert into pinyougoudb.tb_pay_log(create_time, pay_time, total_fee, user_id, transaction_id, trade_state,
+        order_list, pay_type)
+        values (#{createTime}, #{payTime}, #{totalFee}, #{userId}, #{transactionId}, #{tradeState}, #{orderList},
+        #{payType})
     </insert>
 
     <!--通过主键修改数据-->

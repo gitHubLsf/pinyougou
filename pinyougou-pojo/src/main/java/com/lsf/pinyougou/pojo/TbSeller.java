@@ -3,27 +3,20 @@ package com.lsf.pinyougou.pojo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.util.Date;
 import java.io.Serializable;
 
-/**
- * (TbSeller)实体类
- *
- * @author makejava
- * @since 2020-02-03 17:35:23
- */
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class TbSeller implements Serializable {
     private static final long serialVersionUID = -84446733279122042L;
 
     /**
-    * 用户ID
-    */
+     * 用户ID
+     */
     private String sellerId;
 
     /**
@@ -37,8 +30,8 @@ public class TbSeller implements Serializable {
     private String nickName;
 
     /**
-    * 公司名
-    */
+     * 公司名
+     */
     private String name;
 
     /**
@@ -118,28 +111,28 @@ public class TbSeller implements Serializable {
 
 
     /**
-    * EMAIL
-    */
+     * EMAIL
+     */
     private String email;
 
     /**
-    * 公司手机
-    */
+     * 公司手机
+     */
     private String mobile;
 
     /**
-    * 公司地址
-    */
+     * 公司地址
+     */
     private Long address;
 
     /**
-    * 公司LOGO图
-    */
+     * 公司LOGO图
+     */
     private String logoPic;
 
     /**
-    * 简介
-    */
+     * 简介
+     */
     private String brief;
 
 }

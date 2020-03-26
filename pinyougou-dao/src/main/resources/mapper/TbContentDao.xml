@@ -15,23 +15,16 @@
     <!--查询单个-->
     <select id="queryById" resultMap="TbContentMap">
         select
-          id, category_id, title, url, pic, status, sort_order
+        id, category_id, title, url, pic, status, sort_order
         from pinyougoudb.tb_content
         where id = #{id}
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="TbContentMap">
-        select
-          id, category_id, title, url, pic, status, sort_order
-        from pinyougoudb.tb_content
-        limit #{offset}, #{limit}
-    </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TbContentMap">
         select
-          id, category_id, title, url, pic, status, sort_order
+        id, category_id, title, url, pic, status, sort_order
         from pinyougoudb.tb_content
         <where>
             <if test="id != null">

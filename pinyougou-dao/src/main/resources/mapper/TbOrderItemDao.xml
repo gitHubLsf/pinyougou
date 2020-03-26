@@ -18,23 +18,16 @@
     <!--查询单个-->
     <select id="queryById" resultMap="TbOrderItemMap">
         select
-          id, item_id, goods_id, order_id, title, price, num, total_fee, pic_path, seller_id
+        id, item_id, goods_id, order_id, title, price, num, total_fee, pic_path, seller_id
         from pinyougoudb.tb_order_item
         where id = #{id}
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="TbOrderItemMap">
-        select
-          id, item_id, goods_id, order_id, title, price, num, total_fee, pic_path, seller_id
-        from pinyougoudb.tb_order_item
-        limit #{offset}, #{limit}
-    </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TbOrderItemMap">
         select
-          id, item_id, goods_id, order_id, title, price, num, total_fee, pic_path, seller_id
+        id, item_id, goods_id, order_id, title, price, num, total_fee, pic_path, seller_id
         from pinyougoudb.tb_order_item
         <where>
             <if test="id != null">
@@ -72,7 +65,8 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into pinyougoudb.tb_order_item(item_id, goods_id, order_id, title, price, num, total_fee, pic_path, seller_id)
+        insert into pinyougoudb.tb_order_item(item_id, goods_id, order_id, title, price, num, total_fee, pic_path,
+        seller_id)
         values (#{itemId}, #{goodsId}, #{orderId}, #{title}, #{price}, #{num}, #{totalFee}, #{picPath}, #{sellerId})
     </insert>
 

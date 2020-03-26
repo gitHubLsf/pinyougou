@@ -20,33 +20,25 @@
     <!--查询某种商品分类-->
     <select id="queryById" resultMap="TbItemCatMap1">
         select
-            tic.id,
-            tic.parent_id,
-            tic.name,
-            tic.type_id,
-            ttt.name as type_name
+        tic.id,
+        tic.parent_id,
+        tic.name,
+        tic.type_id,
+        ttt.name as type_name
         from
-            pinyougoudb.tb_item_cat tic
+        pinyougoudb.tb_item_cat tic
         left join
-            pinyougoudb.tb_type_template ttt
+        pinyougoudb.tb_type_template ttt
         on
-            tic.type_id = ttt.id
+        tic.type_id = ttt.id
         where
-            tic.id = #{id}
-    </select>
-
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="TbItemCatMap">
-        select
-          id, parent_id, name, type_id
-        from pinyougoudb.tb_item_cat
-        limit #{offset}, #{limit}
+        tic.id = #{id}
     </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TbItemCatMap">
         select
-          id, parent_id, name, type_id
+        id, parent_id, name, type_id
         from pinyougoudb.tb_item_cat
         <where>
             <if test="id != null">

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>商品编辑</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- 富文本编辑器 -->
+    <link rel="stylesheet" href="../plugins/kindeditor/themes/default/default.css"/>
+    <script charset="utf-8" src="../plugins/kindeditor/kindeditor-min.js"></script>
+    <script charset="utf-8" src="../plugins/kindeditor/lang/zh_CN.js"></script>
+
+
+    <script type="text/javascript" src="../plugins/angularjs/angular.min.js"></script>
+
+    <script src="../js/base.js"></script>
+    <script src="../js/service/goodsService.js"></script>
+    <script src="../js/service/itemCatService.js"></script>
+    <script src="../js/service/typeTemplateService.js"></script>
+    <script src="../js/controller/baseController.js"></script>
+    <script src="../js/controller/goodsController.js"></script>
+
+
+</head>
+
+<body class="hold-transition skin-red sidebar-mini"
+      ng-app="pinyougou"
+      ng-controller="goodsController"
+      ng-init="goodsEntity = {}; selectCategory_1_List(); findGoodById()">
+
+<!-- 正文区域 -->
+<section class="content">
+
+    <div class="box-body">
+
+        <!--tab页-->
+        <div class="nav-tabs-custom">
+
+            <!--tab头-->
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a href="#home" data-toggle="tab">商品基本信息</a>
+                </li>
+                <li>
+                    <a href="#pic_upload" data-toggle="tab">商品图片</a>
+                </li>
+                <li>
+                    <a href="#customAttribute" data-toggle="tab">扩展属性</a>
+                </li>
+                <li>
+                    <a href="#spec" data-toggle="tab">规格</a>
+                </li>
+            </ul>
+            <!--tab头/-->
+
+            <!--tab内容-->
+            <div class="tab-content">
+
+                <!--表单内容-->
+                <div class="tab-pane active" id="home">
+                    <div class="row data-type">
+                        <div class="col-md-2 title">商品分类</div>
+
+                        <div class="col-md-10 data">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <select class="form-control"
+                                                ng-model="goodsEntity.tbGoods.category1Id"
+                                                ng-options="category.id as category.name for category in category_1_List">
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-control select-sm"
+                                                ng-model="goodsEntity.tbGoods.category2Id"
+                                                ng-options="category.id as category.name for category in category_2_List">
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-control select-sm"
+                                                ng-model="goodsEntity.tbGoods.category3Id"
+                                                ng-options="category.id as category.name for category in category_3_List">
+                                        </select>
+                                    </td>
+                                    <td>
+                                        模板ID: {{ goodsEntity.tbGoods.typeTemplateId }}
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+
+
+                        <div class="col-md-2 title">商品名称</div>
+                        <div class="col-md-10 data">
+                            <input type="text" class="form-control"
+                                   placeholder="商品名称" value="" ng-model="goodsEntity.tbGoods.goodsName">
+                        </div>
+
+                        <div class="col-md-2 title">品牌</div>
+                        <div class="col-md-10 data">
+                            <select class="form-control"
+                                    ng-model="goodsEntity.tbGoods.brandId"
+                                    ng-options="brand.id as brand.text for brand in selectBrandList">
+                            </select>
+                        </div>
+
+                        <div class="col-md-2 title">副标题</div>
+                        <div class="col-md-10 data">
+                            <input type="text" class="form-control"
+                                   placeholder="副标题" value="" ng-model="goodsEntity.tbGoods.caption">
+                        </div>
+
+                        <div class="col-md-2 title">价格</div>
+                        <div class="col-md-10 data">
+                            <div class="input-group">
+                                <span class="input-group-addon">¥</span>
+                                <input type="text" class="form-control"
+                                       placeholder="价格" value="" ng-model="goodsEntity.tbGoods.price">
+                            </div>
+                        </div>
+
+                        <div class="col-md-2 title editer">商品介绍</div>
+                        <div class="col-md-10 data editer">
+                            <!--                            此处使用富文本编辑器来保存商品介绍的内容-->
+                            <textarea name="content" style="width:800px;height:400px;visibility:hidden;"></textarea>
+                        </div>
+
+                        <div class="col-md-2 title rowHeight2x">包装列表</div>
+                        <div class="col-md-10 data rowHeight2x">
+
+                            <textarea rows="4" class="form-control"
+                                      placeholder="包装列表" ng-model="goodsEntity.tbGoodsDesc.packageList"></textarea>
+                        </div>
+
+                        <div class="col-md-2 title rowHeight2x">售后服务</div>
+                        <div class="col-md-10 data rowHeight2x">
+                            <textarea rows="4" class="form-control"
+                                      placeholder="售后服务" ng-model="goodsEntity.tbGoodsDesc.saleService"></textarea>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <!--图片上传-->
+                <div class="tab-pane" id="pic_upload">
+                    <div class="row data-type">
+
+                        <table class="table table-bordered table-striped table-hover dataTable">
+                            <thead>
+                            <tr>
+                                <th class="sorting">颜色</th>
+                                <th class="sorting">图片</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="imgEntity in goodsEntity.tbGoodsDesc.itemImages">
+                                <td>
+                                    {{ imgEntity.color }}
+                                </td>
+                                <td>
+                                    <img alt="" src="{{ imgEntity.url }}" width="100px" height="100px">
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!--扩展属性-->
+                <div class="tab-pane" id="customAttribute">
+                    <div class="row data-type">
+                        <div ng-repeat="customAttributeItems in goodsEntity.tbGoodsDesc.customAttributeItems">
+                            <div class="col-md-2 title">{{ customAttributeItems.text }}</div>
+                            <div class="col-md-10 data">
+                                <input class="form-control"
+                                       placeholder="{{ customAttributeItems.text }}"
+                                       ng-model="customAttributeItems.value">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--规格-->
+                <div class="tab-pane" id="spec">
+                    <div class="row data-type">
+                        <div class="col-md-2 title">是否启用规格</div>
+                        <div class="col-md-10 data">
+                            <input type="checkbox" ng-model="goodsEntity.tbGoods.isEnableSpec"
+                                                    ng-true-value="1" ng-false-value="0">
+                        </div>
+                    </div>
+
+                    <!--                        规格列表-->
+                    <div class="row data-type">
+                        <!--                            循环展示规格列表中的每个规格-->
+                        <div ng-repeat="spec in specList">
+                            <div class="col-md-2 title">{{ spec.text }}</div>
+                            <div class="col-md-10 data">
+                                <!--                                    循环展示每个规格的规格选项-->
+                                <span ng-repeat="option in spec.options">
+                                        <input type="checkbox"
+                                               ng-checked="checkSpecificationItem(spec.text, option.optionName)">
+                                        {{ option.optionName }}
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--                        SKU 列表-->
+                    <div class="row data-type">
+                        <table class="table table-bordered table-striped table-hover dataTable">
+                            <thead>
+                            <tr>
+                                <th class="sorting" ng-repeat="spec in goodsEntity.tbGoodsDesc.specificationItems">
+                                    {{ spec.attributeName }}
+                                </th>
+                                <th class="sorting">价格</th>
+                                <th class="sorting">库存</th>
+                                <th class="sorting">是否启用</th>
+                                <th class="sorting">是否默认</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="item in goodsEntity.tbItemList">
+                                <td ng-repeat="spec in goodsEntity.tbGoodsDesc.specificationItems">
+                                    {{ item.spec[spec.attributeName] }}
+                                </td>
+                                <td>
+                                    <input class="form-control" placeholder="价格" ng-model="item.price">
+                                </td>
+                                <td>
+                                    <input class="form-control" placeholder="库存数量" ng-model="item.num">
+                                </td>
+                                <td>
+                                    <input type="checkbox" ng-model="item.status" ng-true-value="1" ng-false-value="0">
+                                </td>
+                                <td>
+                                    <input type="checkbox" ng-model="item.isDefault" ng-true-value="1" ng-false-value="0">
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <!--tab内容/-->
+            <!--表单内容/-->
+
+        </div>
+    </div>
+    <div class="btn-toolbar list-toolbar">
+        <a class="btn btn-default" href="goods.html">返回列表</a>
+    </div>
+
+</section>
+
+
+<!-- 正文区域 /-->
+<script type="text/javascript">
+
+    // editor 就是富文本编辑器对象，KindEditor 将 name=content 的文本域渲染为富文本编辑器，并返回给 editor 变量
+    var editor;
+    KindEditor.ready(function (K) {
+        editor = K.create('textarea[name="content"]', {
+            allowFileManager: true
+        });
+    });
+
+</script>
+
+</body>
+
+</html>

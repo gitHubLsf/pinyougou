@@ -30,23 +30,20 @@
     <!--查询单个-->
     <select id="queryById" resultMap="TbUserMap">
         select
-          id, username, password, phone, email, created, updated, source_type, nick_name, name, status, head_pic, qq, account_balance, is_mobile_check, is_email_check, sex, user_level, points, experience_value, birthday, last_login_time
+        id, username, password, phone, email, created, updated, source_type, nick_name, name, status, head_pic, qq,
+        account_balance, is_mobile_check, is_email_check, sex, user_level, points, experience_value, birthday,
+        last_login_time
         from pinyougoudb.tb_user
         where id = #{id}
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="TbUserMap">
-        select
-          id, username, password, phone, email, created, updated, source_type, nick_name, name, status, head_pic, qq, account_balance, is_mobile_check, is_email_check, sex, user_level, points, experience_value, birthday, last_login_time
-        from pinyougoudb.tb_user
-        limit #{offset}, #{limit}
-    </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TbUserMap">
         select
-          id, username, password, phone, email, created, updated, source_type, nick_name, name, status, head_pic, qq, account_balance, is_mobile_check, is_email_check, sex, user_level, points, experience_value, birthday, last_login_time
+        id, username, password, phone, email, created, updated, source_type, nick_name, name, status, head_pic, qq,
+        account_balance, is_mobile_check, is_email_check, sex, user_level, points, experience_value, birthday,
+        last_login_time
         from pinyougoudb.tb_user
         <where>
             <if test="id != null">
@@ -120,8 +117,12 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into pinyougoudb.tb_user(username, password, phone, email, created, updated, source_type, nick_name, name, status, head_pic, qq, account_balance, is_mobile_check, is_email_check, sex, user_level, points, experience_value, birthday, last_login_time)
-        values (#{username}, #{password}, #{phone}, #{email}, #{created}, #{updated}, #{sourceType}, #{nickName}, #{name}, #{status}, #{headPic}, #{qq}, #{accountBalance}, #{isMobileCheck}, #{isEmailCheck}, #{sex}, #{userLevel}, #{points}, #{experienceValue}, #{birthday}, #{lastLoginTime})
+        insert into pinyougoudb.tb_user(username, password, phone, email, created, updated, source_type, nick_name,
+        name, status, head_pic, qq, account_balance, is_mobile_check, is_email_check, sex, user_level, points,
+        experience_value, birthday, last_login_time)
+        values (#{username}, #{password}, #{phone}, #{email}, #{created}, #{updated}, #{sourceType}, #{nickName},
+        #{name}, #{status}, #{headPic}, #{qq}, #{accountBalance}, #{isMobileCheck}, #{isEmailCheck}, #{sex},
+        #{userLevel}, #{points}, #{experienceValue}, #{birthday}, #{lastLoginTime})
     </insert>
 
     <!--通过主键修改数据-->

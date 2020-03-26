@@ -11,23 +11,16 @@
     <!--查询单个-->
     <select id="queryById" resultMap="TbBrandMap">
         select
-          id, name, first_char
+        id, name, first_char
         from pinyougoudb.tb_brand
         where id = #{id}
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="TbBrandMap">
-        select
-          id, name, first_char
-        from pinyougoudb.tb_brand
-        limit #{offset}, #{limit}
-    </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TbBrandMap">
         select
-          id, name, first_char
+        id, name, first_char
         from pinyougoudb.tb_brand
         <where>
             <if test="id != null">
@@ -61,12 +54,12 @@
         </where>
     </select>
 
-<!--    查询所有品牌下拉列表-->
+    <!--    查询所有品牌下拉列表-->
     <select id="selectBrandList" resultType="java.util.Map">
         select
-            id, name as text
+        id, name as text
         from
-            pinyougoudb.tb_brand
+        pinyougoudb.tb_brand
     </select>
 
     <!--新增所有列-->

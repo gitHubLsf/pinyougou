@@ -28,11 +28,19 @@ pyg.service('goodsService', function ($http) {
 
     // 批量删除
     this.batchDelete = function (selectedList) {
-        return $http.get('../goods/batcheDelete.do?ids=' + selectedList);
+        return $http.get('../goods/batchDelete.do?ids=' + selectedList);
     };
 
     // 多条件分页查询
     this.findPageLimit = function (page, size, searchEntity) {
         return $http.post('../goods/search.do?page=' + page + "&size=" + size, searchEntity);
+    };
+
+    // 商家批量修改商品的上下架状态
+    this.updateGoodMarketable = function (ids, status) {
+        return $http.get('../goods/updateGoodMarketable.do?ids='
+            + ids
+            + "&status="
+            + status);
     };
 });

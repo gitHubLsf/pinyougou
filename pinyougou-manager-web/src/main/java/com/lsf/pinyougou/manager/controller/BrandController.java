@@ -1,7 +1,6 @@
 package com.lsf.pinyougou.manager.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.alibaba.dubbo.container.page.Page;
 import com.lsf.pinyougou.pojo.TbBrand;
 import com.lsf.pinyougou.sellergoods.service.BrandService;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,18 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 import vo.PageResult;
 import vo.Result;
 
-import javax.swing.plaf.PanelUI;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * 运营商管理后台-品牌列表控制器
  *
- * @author linshaofeng
- * @date 2020/2/4 13:06
- */
-
-/**
  * @RestController 是 Responsebody + Controller 的组合
  */
 @RestController

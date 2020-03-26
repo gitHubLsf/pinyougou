@@ -31,23 +31,19 @@
     <!--查询单个-->
     <select id="queryById" resultMap="TbItemMap">
         select
-          id, title, sell_point, price, stock_count, num, barcode, image, categoryId, status, create_time, update_time, item_sn, cost_pirce, market_price, is_default, goods_id, seller_id, cart_thumbnail, category, brand, spec, seller
+        id, title, sell_point, price, stock_count, num, barcode, image, categoryId, status, create_time, update_time,
+        item_sn, cost_pirce, market_price, is_default, goods_id, seller_id, cart_thumbnail, category, brand, spec,
+        seller
         from pinyougoudb.tb_item
         where id = #{id}
-    </select>
-
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="TbItemMap">
-        select
-          id, title, sell_point, price, stock_count, num, barcode, image, categoryId, status, create_time, update_time, item_sn, cost_pirce, market_price, is_default, goods_id, seller_id, cart_thumbnail, category, brand, spec, seller
-        from pinyougoudb.tb_item
-        limit #{offset}, #{limit}
     </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TbItemMap">
         select
-          id, title, sell_point, price, stock_count, num, barcode, image, categoryId, status, create_time, update_time, item_sn, cost_pirce, market_price, is_default, goods_id, seller_id, cart_thumbnail, category, brand, spec, seller
+        id, title, sell_point, price, stock_count, num, barcode, image, categoryId, status, create_time, update_time,
+        item_sn, cost_pirce, market_price, is_default, goods_id, seller_id, cart_thumbnail, category, brand, spec,
+        seller
         from pinyougoudb.tb_item
         <where>
             <if test="id != null">
@@ -124,8 +120,12 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into pinyougoudb.tb_item(title, sell_point, price, stock_count, num, barcode, image, categoryId, status, create_time, update_time, item_sn, cost_pirce, market_price, is_default, goods_id, seller_id, cart_thumbnail, category, brand, spec, seller)
-        values (#{title}, #{sellPoint}, #{price}, #{stockCount}, #{num}, #{barcode}, #{image}, #{categoryid}, #{status}, #{createTime}, #{updateTime}, #{itemSn}, #{costPirce}, #{marketPrice}, #{isDefault}, #{goodsId}, #{sellerId}, #{cartThumbnail}, #{category}, #{brand}, #{spec}, #{seller})
+        insert into pinyougoudb.tb_item(title, sell_point, price, stock_count, num, barcode, image, categoryId, status,
+        create_time, update_time, item_sn, cost_pirce, market_price, is_default, goods_id, seller_id, cart_thumbnail,
+        category, brand, spec, seller)
+        values (#{title}, #{sellPoint}, #{price}, #{stockCount}, #{num}, #{barcode}, #{image}, #{categoryid}, #{status},
+        #{createTime}, #{updateTime}, #{itemSn}, #{costPirce}, #{marketPrice}, #{isDefault}, #{goodsId}, #{sellerId},
+        #{cartThumbnail}, #{category}, #{brand}, #{spec}, #{seller})
     </insert>
 
     <!--通过主键修改数据-->

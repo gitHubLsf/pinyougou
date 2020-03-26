@@ -75,10 +75,13 @@ public class GoodsServiceImpl implements GoodsService {
 
 
     /**
-     * 多条件分页查询
+     * 多条件分页查询，逻辑上被删除的商品不查询
      */
     @Override
     public PageResult findPageLimit(TbGoods goods, int pageNum, int pageSize) {
+
+        goods.setIsDelete("0");
+
         PageHelper.startPage(pageNum, pageSize);
         List<TbGoods> list = tbGoodsDao.queryAll(goods);
         PageInfo<TbGoods> pageInfo = new PageInfo<>(list);
@@ -94,6 +97,9 @@ public class GoodsServiceImpl implements GoodsService {
 
         // 设置商品的状态为 未审核
         goods.getTbGoods().setAuditStatus("0");
+
+        // 设置商品的状态为上架，默认情况下，商品是上架的
+        goods.getTbGoods().setIsMarketable("1");
 
         // 添加商品，同时返回商品 ID
         tbGoodsDao.insert(goods.getTbGoods());
@@ -111,6 +117,7 @@ public class GoodsServiceImpl implements GoodsService {
 
     /**
      * 保存商品 SKU 列表
+     *
      * @param goods
      */
     private void saveItemList(Goods goods) {
@@ -200,7 +207,7 @@ public class GoodsServiceImpl implements GoodsService {
         if (imageList.size() > 0) {
             // 表示有图片
             // 获取第一张图片的 url
-            String url = (String)imageList.get(0).get("url");
+            String url = (String) imageList.get(0).get("url");
             item.setImage(url);
         }
     }
@@ -226,7 +233,6 @@ public class GoodsServiceImpl implements GoodsService {
         // 添加新的 SKU 列表
         saveItemList(goods);
     }
-
 
 
     /**
@@ -258,12 +264,51 @@ public class GoodsServiceImpl implements GoodsService {
 
 
     /**
-     * 批量删除
+     * 批量删除商品，只进行逻辑删除
      */
     @Override
     public void batchDelete(Long[] ids) {
+        TbGoods good = new TbGoods();
         for (Long id : ids) {
-            tbGoodsDao.deleteById(id);
+            good.setId(id);
+            good.setIsDelete("1");
+            tbGoodsDao.update(good);
+        }
+    }
+
+
+    /**
+     * 修改商品的审核状态
+     *
+     * @param ids
+     * @param status
+     */
+    @Override
+    public void updateGoodStatus(Long[] ids, String status) {
+        TbGoods good = new TbGoods();
+        for (Long id : ids) {
+            good.setId(id);
+            good.setAuditStatus(status);
+            tbGoodsDao.update(good);
+        }
+    }
+
+
+    /**
+     * 修改商品的上下架状态，前提是商品已通过运营商审核
+     *
+     * @param ids
+     * @param status
+     */
+    @Override
+    public void updateGoodMarketable(Long[] ids, String status) {
+        for (Long id : ids) {
+            TbGoods good = tbGoodsDao.queryById(id);
+            if (good != null && "1".equals(good.getAuditStatus())) {
+                // 商品通过审核后，才能进行上下架修改
+                good.setIsMarketable(status);
+                tbGoodsDao.update(good);
+            }
         }
     }
 

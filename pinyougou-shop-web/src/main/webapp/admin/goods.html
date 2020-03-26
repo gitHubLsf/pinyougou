@@ -36,7 +36,10 @@
 
 </head>
 
-<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="goodsController" ng-init="findItemCatList()">
+<body class="hold-transition skin-red sidebar-mini"
+      ng-app="pinyougou"
+      ng-controller="goodsController"
+      ng-init="findItemCatList()">
 <!-- .box-body -->
 
 <div class="box-header with-border">
@@ -53,7 +56,7 @@
             <div class="form-group form-inline">
                 <div class="btn-group">
                     <a class="btn btn-default" href="goods_edit.html"> 新建</a>
-                    <button type="button" class="btn btn-default" title="删除"><i class="fa fa-trash-o"></i> 删除</button>
+                    <button type="button" class="btn btn-default" title="删除" ng-click="batchDelete()"><i class="fa fa-trash-o"></i> 删除</button>
                     <button type="button" class="btn btn-default" title="提交审核"><i class="fa fa-check"></i> 提交审核</button>
                     <button type="button" class="btn btn-default" title="屏蔽" onclick='confirm("你确认要屏蔽吗？")'><i
                             class="fa fa-ban"></i> 屏蔽
@@ -61,18 +64,29 @@
                     <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i
                             class="fa fa-refresh"></i> 刷新
                     </button>
+                    <button type="button" class="btn btn-default" title="上架"
+                            ng-click="updateGoodMarketable('1')"><i class="fa fa-trash-o"></i> 上架</button>
+                    <button type="button" class="btn btn-default" title="下架"
+                            ng-click="updateGoodMarketable('0')"><i class="fa fa-trash-o"></i> 下架</button>
                 </div>
             </div>
         </div>
         <div class="box-tools pull-right">
             <div class="has-feedback">
-                状态：
+                审核状态：
                 <select ng-model="searchEntity.auditStatus">
                     <option value="">全部</option>
                     <option value="0">未审核</option>
                     <option value="1">已审核</option>
                     <option value="2">审核未通过</option>
                     <option value="3">关闭</option>
+                </select>
+
+                上下架状态：
+                <select ng-model="searchEntity.isMarketable">
+                    <option value="">全部</option>
+                    <option value="0">下架</option>
+                    <option value="1">上架</option>
                 </select>
 
                 商品名称：<input ng-model="searchEntity.goodsName">
@@ -98,13 +112,14 @@
                 <th class="sorting">一级分类</th>
                 <th class="sorting">二级分类</th>
                 <th class="sorting">三级分类</th>
-                <th class="sorting">状态</th>
+                <th class="sorting">审核状态</th>
+                <th class="sorting">上下架状态</th>
                 <th class="text-center">操作</th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="goodEntity in goodsList">
-                <td><input type="checkbox"></td>
+                <td><input type="checkbox" ng-click="updateSelected($event, goodEntity.id)"></td>
                 <td>{{ goodEntity.id }}</td>
                 <td>{{ goodEntity.goodsName }}</td>
                 <td>{{ goodEntity.price }}</td>
@@ -116,6 +131,11 @@
                 <td>
                     <span>
                         {{ goodStatus[ goodEntity.auditStatus ] }}
+                    </span>
+                </td>
+                <td>
+                    <span>
+                        {{ goodMarketableStatus[ goodEntity.isMarketable ] }}
                     </span>
                 </td>
                 <td class="text-center">

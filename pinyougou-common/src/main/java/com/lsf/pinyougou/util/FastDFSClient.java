@@ -25,6 +25,7 @@ public class FastDFSClient {
         storageClient = new StorageClient1(trackerServer, storageServer);
     }
 
+
     /**
      * 上传文件方法
      * <p>Title: uploadFile</p>
@@ -41,13 +42,16 @@ public class FastDFSClient {
         return result;
     }
 
+
     public String uploadFile(String fileName) throws Exception {
         return uploadFile(fileName, null, null);
     }
 
+
     public String uploadFile(String fileName, String extName) throws Exception {
         return uploadFile(fileName, extName, null);
     }
+
 
     /**
      * 上传文件方法
@@ -66,9 +70,11 @@ public class FastDFSClient {
         return result;
     }
 
+
     public String uploadFile(byte[] fileContent) throws Exception {
         return uploadFile(fileContent, null, null);
     }
+
 
     public String uploadFile(byte[] fileContent, String extName) throws Exception {
         return uploadFile(fileContent, extName, null);
