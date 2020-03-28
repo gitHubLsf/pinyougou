@@ -1,7 +1,9 @@
 // 广告管理控制层
 pyg.controller('contentController', function ($scope,
 											  $controller,
-											  contentService) {
+											  contentService,
+                                              uploadService,
+                                              contentCategoryService) {
 
     // 继承父类控制器 baseController
     $controller('baseController', {$scope: $scope});
@@ -87,4 +89,33 @@ pyg.controller('contentController', function ($scope,
         );
     };
 
+
+    // 上传商品图片
+    $scope.uploadImg = function () {
+        uploadService.uploadImg()
+            .success(
+                function (response) {
+                    if (response.success) {
+                        // 上传成功后，修改页面中 img 标签的 src 属性
+                        $scope.contentEntity.pic = response.message;
+                    } else {
+                        alert(response.message);
+                    }
+                })
+            .error(
+                function () {
+                    alert("上传发生错误");
+                }
+            );
+    };
+
+
+    // 查询所有广告分类下拉列表
+    $scope.selectContentCategoryList = function () {
+        contentCategoryService.findAll().success(
+            function (response) {
+                $scope.contentCategoryList = response;
+            }
+        );
+    };
 });	

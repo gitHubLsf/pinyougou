@@ -21,13 +21,16 @@
 
     <script type="text/javascript" src="../js/base_pagination.js"></script>
     <script type="text/javascript" src="../js/service/contentService.js"></script>
+    <script type="text/javascript" src="../js/service/uploadService.js"></script>
+    <script type="text/javascript" src="../js/service/contentCategoryService.js"></script>
     <script type="text/javascript" src="../js/controller/baseController.js"></script>
     <script type="text/javascript" src="../js/controller/contentController.js"></script>
 
 </head>
 <body class="hold-transition skin-red sidebar-mini"
       ng-app="pinyougou"
-      ng-controller="contentController">
+      ng-controller="contentController"
+      ng-init="selectContentCategoryList()">
 <!-- .box-body -->
 <div class="box-header with-border">
     <h3 class="box-title">管理</h3>
@@ -43,7 +46,9 @@
             <div class="form-group form-inline">
                 <div class="btn-group">
                     <button type="button" class="btn btn-default" title="新建" data-toggle="modal"
-                            data-target="#editModal" ng-click="contentEntity={}"><i class="fa fa-file-o"></i> 新建
+                            data-target="#editModal" ng-click="contentEntity={ categoryId:1 }">
+                        <i class="fa fa-file-o"></i>
+                        新建
                     </button>
                     <button type="button" class="btn btn-default" title="删除" ng-click="batchDelete()"><i
                             class="fa fa-trash-o"></i> 删除
@@ -71,7 +76,7 @@
                 <th class="sorting">内容类目ID</th>
                 <th class="sorting">内容标题</th>
                 <th class="sorting">链接</th>
-                <th class="sorting">图片绝对路径</th>
+                <th class="sorting">图片</th>
                 <th class="sorting">状态</th>
                 <th class="sorting">排序</th>
                 <th class="text-center">操作</th>
@@ -84,7 +89,7 @@
                 <td>{{ contentEntity.categoryId }}</td>
                 <td>{{ contentEntity.title }}</td>
                 <td>{{ contentEntity.url }}</td>
-                <td>{{ contentEntity.pic }}</td>
+                <td><img alt="" src="{{ contentEntity.pic }}" width="200px" height="100px"></td>
                 <td>{{ contentEntity.status }}</td>
                 <td>{{ contentEntity.sortOrder }}</td>
 
@@ -116,7 +121,12 @@
                 <table class="table table-bordered table-striped" width="800px">
                     <tr>
                         <td>内容类目ID</td>
-                        <td><input class="form-control" ng-model="contentEntity.categoryId" placeholder="内容类目ID"></td>
+                        <td>
+                            <select class="form-control"
+                                    ng-model="contentEntity.categoryId"
+                                    ng-options="contentCategory.id as contentCategory.name for contentCategory in contentCategoryList">
+                            </select>
+                        </td>
                     </tr>
                     <tr>
                         <td>内容标题</td>
@@ -127,12 +137,21 @@
                         <td><input class="form-control" ng-model="contentEntity.url" placeholder="链接"></td>
                     </tr>
                     <tr>
-                        <td>图片绝对路径</td>
-                        <td><input class="form-control" ng-model="contentEntity.pic" placeholder="图片绝对路径"></td>
+                        <td>图片</td>
+                        <td>
+                            <input type="file" id="file">
+                            <button ng-click="uploadImg()">上传</button>
+                            <img alt="" src="{{ contentEntity.pic }}" width="200px" height="100px">
+                        </td>
                     </tr>
                     <tr>
                         <td>状态</td>
-                        <td><input class="form-control" ng-model="contentEntity.status" placeholder="状态"></td>
+                        <td>
+                            <input type="checkbox"
+                                   ng-model="contentEntity.status"
+                                   ng-true-value="1"
+                                   ng-false-value="0">
+                        </td>
                     </tr>
                     <tr>
                         <td>排序</td>

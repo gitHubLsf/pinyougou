@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import vo.PageResult;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 广告分类服务实现层
@@ -61,5 +62,4 @@ public class ContentCategoryServiceImpl implements ContentCategoryService {
             tbContentCategoryDao.deleteById(id);
         }
     }
-
 }

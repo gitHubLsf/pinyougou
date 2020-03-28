@@ -238,4 +238,7 @@ pyg.controller('goodsController', function ($scope,
             $scope.selectedList = [];
         }
     };
+
+
+
 });	
