@@ -28,4 +28,6 @@ public interface ContentService {
 
     void batchDelete(Long[] ids);
 
+
+    List<TbContent> findByContentCategoryId(Long contentCategoryId);
 }

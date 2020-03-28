@@ -3,6 +3,7 @@ package com.lsf.pinyougou.content.service.impl;
 import java.util.List;
 
 import com.github.pagehelper.PageInfo;
+import com.lsf.pinyougou.pojo.TbGoods;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
@@ -60,6 +61,22 @@ public class ContentServiceImpl implements ContentService {
         for (Long id : ids) {
             tbContentDao.deleteById(id);
         }
+    }
+
+
+    /**
+     * 查询指定广告分类 ID 下的所有广告
+     */
+    @Override
+    public List<TbContent> findByContentCategoryId(Long contentCategoryId) {
+
+        TbContent content = new TbContent();
+        content.setCategoryId(contentCategoryId);
+
+        // 只显示有效的广告
+        content.setStatus("1");
+
+        return tbContentDao.findByContentCategoryId(content);
     }
 
 }

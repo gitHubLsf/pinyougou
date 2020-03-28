@@ -51,6 +51,22 @@
         </where>
     </select>
 
+    <!--    查询指定广告分类 ID 下的所有广告，只查有效的广告，升序排列-->
+    <select id="findByContentCategoryId" resultMap="TbContentMap">
+        select
+        id, category_id, title, url, pic, status, sort_order
+        from pinyougoudb.tb_content
+        <where>
+            <if test="categoryId != null">
+                and category_id = #{categoryId}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+        </where>
+        order by sort_order
+    </select>
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into pinyougoudb.tb_content(category_id, title, url, pic, status, sort_order)

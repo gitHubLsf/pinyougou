@@ -23,4 +23,8 @@ public interface TbContentDao {
 
     int deleteById(Long id);
 
+    /**
+     * 查询指定广告分类 ID 下的所有广告，只查有效的广告，升序排列
+     */
+    List<TbContent> findByContentCategoryId(TbContent content);
 }
