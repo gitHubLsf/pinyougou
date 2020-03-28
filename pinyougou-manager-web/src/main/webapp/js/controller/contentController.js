@@ -118,4 +118,7 @@ pyg.controller('contentController', function ($scope,
             }
         );
     };
+
+    // 广告状态，0 无效，1 有效
+    $scope.contentStatus = [ '无效', '有效' ];
 });	
