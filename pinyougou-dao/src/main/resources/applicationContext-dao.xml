@@ -10,7 +10,7 @@
 	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
     <!-- 加载数据库连接信息配置文件 -->
-    <context:property-placeholder location="classpath*:db.properties"/>
+    <context:property-placeholder location="classpath*:db.properties" order="1" ignore-unresolvable="true"/>
 
     <!-- 数据库连接池 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
