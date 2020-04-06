@@ -2,7 +2,6 @@ package com.lsf.pinyougou.sellergoods.service;
 
 import java.util.List;
 
-import com.lsf.pinyougou.pojo.TbItem;
 import vo.PageResult;
 
 

@@ -18,6 +18,7 @@
         <module>pinyougou-content-interface</module>
         <module>pinyougou-content-service</module>
         <module>pinyougou-portal-web</module>
+        <module>pinyougou-solr-util</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -36,7 +37,7 @@
         <freemarker.version>2.3.23</freemarker.version>
         <activemq.version>5.11.2</activemq.version>
         <security.version>3.2.3.RELEASE</security.version>
-        <solrj.version>4.10.3</solrj.version>
+<!--        <solrj.version>4.10.3</solrj.version>-->
         <ik.version>2012_u6</ik.version>
     </properties>
 
@@ -177,17 +178,18 @@
             </exclusions>
         </dependency>
 
-        <!-- solr 客户端 -->
-        <dependency>
-            <groupId>org.apache.solr</groupId>
-            <artifactId>solr-solrj</artifactId>
-            <version>${solrj.version}</version>
-        </dependency>
+<!--        &lt;!&ndash; solr 客户端 &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.solr</groupId>-->
+<!--            <artifactId>solr-solrj</artifactId>-->
+<!--            <version>${solrj.version}</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.janeluo</groupId>
             <artifactId>ikanalyzer</artifactId>
             <version>${ik.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore</artifactId>

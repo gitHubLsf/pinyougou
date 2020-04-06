@@ -89,10 +89,6 @@
     <orderEntry type="library" scope="RUNTIME" name="Maven: xml-resolver:xml-resolver:1.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: xalan:xalan:2.7.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: xalan:serializer:2.7.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.solr:solr-solrj:4.10.3" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpmime:4.3.1" level="project" />
-    <orderEntry type="library" name="Maven: org.codehaus.woodstox:wstx-asl:3.2.7" level="project" />
-    <orderEntry type="library" name="Maven: org.noggit:noggit:0.5" level="project" />
     <orderEntry type="library" name="Maven: com.janeluo:ikanalyzer:2012_u6" level="project" />
     <orderEntry type="library" name="Maven: org.apache.lucene:lucene-core:4.7.2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.lucene:lucene-queryparser:4.7.2" level="project" />

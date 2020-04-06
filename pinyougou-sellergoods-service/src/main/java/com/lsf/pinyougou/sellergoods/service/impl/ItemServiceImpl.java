@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 import com.lsf.pinyougou.dao.TbItemDao;
-import com.lsf.pinyougou.pojo.TbItem;
 import vo.PageResult;
 
 
