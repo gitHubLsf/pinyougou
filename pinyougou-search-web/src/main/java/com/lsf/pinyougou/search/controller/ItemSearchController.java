@@ -17,6 +17,7 @@ import java.util.Map;
 public class ItemSearchController {
 
     @Reference
+    //@Reference(timeout = 5000)
     private ItemSearchService itemSearchService;
 
     @RequestMapping("/search.do")

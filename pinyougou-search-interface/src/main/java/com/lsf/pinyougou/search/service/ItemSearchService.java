@@ -2,6 +2,7 @@ package com.lsf.pinyougou.search.service;
 
 import java.util.Map;
 
+
 /**
  * 商品搜索服务接口层
  */
