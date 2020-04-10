@@ -2,6 +2,7 @@ package com.lsf.pinyougou.manager.controller;
 
 import java.util.List;
 
+import com.lsf.pinyougou.pojo.TbItem;
 import com.lsf.pinyougou.sellergoods.service.ItemService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -4,12 +4,13 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.lsf.pinyougou.pojo.TbItem;
 import com.lsf.pinyougou.search.service.ItemSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.core.query.*;
-import org.springframework.data.solr.core.query.result.HighlightEntry;
-import org.springframework.data.solr.core.query.result.HighlightPage;
-import org.springframework.data.solr.core.query.result.ScoredPage;
+import org.springframework.data.solr.core.query.result.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,11 @@ public class ItemSearchServiceImpl implements ItemSearchService {
     @Autowired
     private SolrTemplate solrTemplate;
 
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+
     /**
      * 搜索商品
      *
@@ -37,6 +43,29 @@ public class ItemSearchServiceImpl implements ItemSearchService {
     public Map<String, Object> search(Map searchMap) {
 
         // 构造返回体
+        Map<String, Object> maps = new HashMap<>();
+
+        // 1.根据关键字搜索全部商品（关键字高亮显示）
+        // map.putAll() 代表将 searchList() 返回的 map 中的 k-v 键值对追加到 maps 中
+        // k = rows
+        maps.putAll(searchList(searchMap));
+
+        // 2.根据关键字查询商品分类（使用 spring data solr 的分组查询 API）
+        // k = categoryList
+        maps.putAll(searchCategoryList(searchMap));
+
+        // 3.根据商品分类列表中的第一个商品分类名称，查询对应的品牌列表和规格列表
+        List<String> categoryList = (List<String>)maps.get("categoryList");
+        if (categoryList != null && categoryList.size() > 0) {
+            maps.putAll(searchBrandAndSpecList(categoryList.get(0)));
+        }
+
+        return maps;
+    }
+
+    // 1.根据关键字搜索全部商品（关键字高亮显示）
+    private Map<String, Object> searchList(Map searchMap) {
+
         Map<String, Object> map = new HashMap<>();
 
         /*
@@ -120,4 +149,55 @@ public class ItemSearchServiceImpl implements ItemSearchService {
 
         return map;
     }
+
+    // 2.根据关键字查询商品分类（使用 spring data solr 的分组查询 API）
+    private Map<String, Object> searchCategoryList(Map searchMap) {
+        Map<String, Object> map = new HashMap<>();
+        List<String> list = new ArrayList<>();
+
+        // 构造搜索对象
+        Query query = new SimpleQuery("*:*");
+
+        // 添加查询条件
+        Criteria criteria = new Criteria("item_keywords").is(searchMap.get("keywords"));
+        query.addCriteria(criteria);
+
+        // 设置分组选项(item_category 列)
+        GroupOptions groupOptions = new GroupOptions().addGroupByField("item_category");
+        query.setGroupOptions(groupOptions);
+        // 得到分组页
+        GroupPage<TbItem> page = solrTemplate.queryForGroupPage(query, TbItem.class);
+        // 根据列得到分组结果(按照某列进行分组查询)
+        GroupResult<TbItem> groupResult = page.getGroupResult("item_category");
+        // 得到分组结果入口页
+        Page<GroupEntry<TbItem>> groupEntries = groupResult.getGroupEntries();
+        // 得到分组结果入口页集合
+        List<GroupEntry<TbItem>> content = groupEntries.getContent();
+        for (GroupEntry<TbItem> entry : content) {
+            // 将每一项分组结果的值，封装在集合中，并返回
+            list.add(entry.getGroupValue());
+        }
+
+        map.put("categoryList", list);
+
+        return map;
+    }
+
+    // 3.根据商品分类名称，查询品牌列表和规格列表
+    private Map<String, Object> searchBrandAndSpecList(String categoryName) {
+        Map map = new HashMap<>();
+
+        // 在缓存中，根据商品分类名称，查询模板 ID
+        Long typeId = (Long)redisTemplate.boundHashOps("catNameToTypeID").get(categoryName);
+        if (typeId != null) {
+            // 在缓存中，根据模板 ID 查询品牌列表和规格列表
+            List<Map> brandList = (List<Map>)redisTemplate.boundHashOps("typeIdToBrandList").get(typeId);
+            List<Map> specList = (List<Map>)redisTemplate.boundHashOps("typeIdToSpecList").get(typeId);
+            map.put("brandList", brandList);
+            map.put("specList", specList);
+        }
+
+        return map;
+    }
+
 }

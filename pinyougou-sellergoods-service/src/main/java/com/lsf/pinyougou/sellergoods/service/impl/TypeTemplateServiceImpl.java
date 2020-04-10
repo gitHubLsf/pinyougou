@@ -13,7 +13,10 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 import com.lsf.pinyougou.dao.TbTypeTemplateDao;
 import com.lsf.pinyougou.pojo.TbTypeTemplate;
+import org.springframework.data.redis.core.RedisTemplate;
 import vo.PageResult;
+
+import javax.annotation.PostConstruct;
 
 
 /**
@@ -30,9 +33,27 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
     @Autowired
     private TbTypeTemplateDao tbTypeTemplateDao;
 
-
     @Autowired
     private TbSpecificationOptionDao tbSpecificationOptionDao;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    @PostConstruct
+    private void init() {
+        // 当对象创建时，提前往 redis 缓存中添加品牌缓存和规格缓存
+        if (tbTypeTemplateDao != null && redisTemplate != null) {
+            List<TbTypeTemplate> list = tbTypeTemplateDao.queryAll(new TbTypeTemplate());
+            for (TbTypeTemplate t : list) {
+                // 构造品牌列表集合
+                List<Map> brandList = JSON.parseArray(t.getBrandIds(), Map.class);
+                redisTemplate.boundHashOps("typeIdToBrandList").put(t.getId(), brandList);
+                // 构造规格列表集合
+                List<Map> specList = findSpecList(t.getId());
+                redisTemplate.boundHashOps("typeIdToSpecList").put(t.getId(), specList);
+            }
+        }
+    }
 
 
     /**
@@ -69,20 +90,36 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 
 
     /**
-     * 添加
+     * 添加（往数据库中添加，往缓存中添加）
      */
     @Override
     public void add(TbTypeTemplate typeTemplate) {
+        // 往数据库中添加模板
         tbTypeTemplateDao.insert(typeTemplate);
+
+        // 往 typeIdToBrandList 缓存中添加品牌缓存
+        List<Map> brandList = JSON.parseArray(typeTemplate.getBrandIds(), Map.class);
+        redisTemplate.boundHashOps("typeIdToBrandList").put(typeTemplate.getId(), brandList);
+
+        // 往 缓存中添加规格缓存
+        List<Map> specList = findSpecList(typeTemplate.getId());
+        redisTemplate.boundHashOps("typeIdToSpecList").put(typeTemplate.getId(), specList);
     }
 
 
     /**
-     * 修改
+     * 修改（修改数据库中的内容，更新缓存中的内容）
      */
     @Override
     public void update(TbTypeTemplate typeTemplate) {
+        // 修改数据库中的内容
         tbTypeTemplateDao.update(typeTemplate);
+
+        // 更新缓存中的内容
+        List<Map> brandList = JSON.parseArray(typeTemplate.getBrandIds(), Map.class);
+        redisTemplate.boundHashOps("typeIdToBrandList").put(typeTemplate.getId(), brandList);
+        List<Map> specList = findSpecList(typeTemplate.getId());
+        redisTemplate.boundHashOps("typeIdToSpecList").put(typeTemplate.getId(), specList);
     }
 
 
@@ -99,12 +136,17 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 
 
     /**
-     * 批量删除
+     * 批量删除（删除数据库，删除缓存中的旧内容）
      */
     @Override
     public void batchDelete(Long[] ids) {
         for (Long id : ids) {
+            // 删除数据库的内容
             tbTypeTemplateDao.deleteById(id);
+
+            // 删除缓存中的旧内容
+            redisTemplate.boundHashOps("typeIdToBrandList").delete(id);
+            redisTemplate.boundHashOps("typeIdToSpecList").delete(id);
         }
     }
 
