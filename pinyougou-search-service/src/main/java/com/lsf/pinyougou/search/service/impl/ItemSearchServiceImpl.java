@@ -55,13 +55,13 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         maps.putAll(searchCategoryList(searchMap));
 
         // 3.根据商品分类，查询对应的品牌列表和规格列表
-        String category = (String)searchMap.get("category");
+        String category = (String) searchMap.get("category");
         if (!"".equals(category)) {
             // 前端传递的搜索条件中包含商品分类，就以前端传递的为准，查询对应的品牌列表和规格列表
             maps.putAll(searchBrandAndSpecList(category));
         } else {
             // 如果前端没有传递商品分类，默认根据商品分类列表中的第一个商品分类名称，查询对应的品牌列表和规格列表
-            List<String> categoryList = (List<String>)maps.get("categoryList");
+            List<String> categoryList = (List<String>) maps.get("categoryList");
             if (categoryList != null && categoryList.size() > 0) {
                 maps.putAll(searchBrandAndSpecList(categoryList.get(0)));
             }
@@ -129,7 +129,7 @@ public class ItemSearchServiceImpl implements ItemSearchService {
 
         // 1.4:按规格进行过滤查询
         if (searchMap.get("spec") != null) {
-            Map<String, String> specMap = (Map<String, String>)searchMap.get("spec");
+            Map<String, String> specMap = (Map<String, String>) searchMap.get("spec");
             for (String key : specMap.keySet()) {
                 FilterQuery filterQuery = new SimpleFilterQuery();
                 Criteria filterCriteria = new Criteria("item_spec_" + key).is(specMap.get(key));
@@ -137,6 +137,42 @@ public class ItemSearchServiceImpl implements ItemSearchService {
                 query.addFilterQuery(filterQuery);
             }
         }
+
+        // 1.5:按价格区间进行过滤查询
+        if (!"".equals(searchMap.get("price"))) {
+            String priceStr = (String) searchMap.get("price");
+            if (priceStr != null) {
+                String[] price = priceStr.split("-");
+                if (!"0".equals(price[0])) { // 左区间不为 0 时，需要设置下界
+                    FilterQuery filterQuery = new SimpleFilterQuery();
+                    Criteria filterCriteria = new Criteria("item_price").greaterThanEqual(price[0]);
+                    filterQuery.addCriteria(filterCriteria);
+                    query.addFilterQuery(filterQuery);
+                }
+
+                if (!"*".equals(price[1])) { // 右区间不为 * 时，需要设置上界
+                    FilterQuery filterQuery = new SimpleFilterQuery();
+                    Criteria filterCriteria = new Criteria("item_price").lessThanEqual(price[1]);
+                    filterQuery.addCriteria(filterCriteria);
+                    query.addFilterQuery(filterQuery);
+                }
+            }
+        }
+
+        // 1.6 设置分页
+        Integer pageNo = Integer.valueOf((String)searchMap.get("pageNo"));
+        if (null == pageNo) {
+            pageNo = 1;
+        }
+        Integer pageSize = Integer.valueOf((String)searchMap.get("pageSize"));
+        if (null == pageSize) {
+            pageSize = 40;
+        }
+
+        // 设置分页查询的起始位置
+        query.setOffset((pageNo - 1) * pageSize);
+        // 设置每页记录数
+        query.setRows(pageSize);
 
         // ***************** 高亮显示处理
         // 获取查询的高亮列表
@@ -182,7 +218,9 @@ public class ItemSearchServiceImpl implements ItemSearchService {
             }
         }
 
-        map.put("rows", page.getContent());
+        map.put("rows", page.getContent()); // 查询结果
+        map.put("totalPage", page.getTotalPages());     // 分页查询后的总页数
+        map.put("total", page.getTotalElements());      // 分页查询后的总记录数
 
         return map;
     }
@@ -225,11 +263,11 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         Map map = new HashMap<>();
 
         // 在缓存中，根据商品分类名称，查询模板 ID
-        Long typeId = (Long)redisTemplate.boundHashOps("catNameToTypeID").get(categoryName);
+        Long typeId = (Long) redisTemplate.boundHashOps("catNameToTypeID").get(categoryName);
         if (typeId != null) {
             // 在缓存中，根据模板 ID 查询品牌列表和规格列表
-            List<Map> brandList = (List<Map>)redisTemplate.boundHashOps("typeIdToBrandList").get(typeId);
-            List<Map> specList = (List<Map>)redisTemplate.boundHashOps("typeIdToSpecList").get(typeId);
+            List<Map> brandList = (List<Map>) redisTemplate.boundHashOps("typeIdToBrandList").get(typeId);
+            List<Map> specList = (List<Map>) redisTemplate.boundHashOps("typeIdToSpecList").get(typeId);
             map.put("brandList", brandList);
             map.put("specList", specList);
         }
