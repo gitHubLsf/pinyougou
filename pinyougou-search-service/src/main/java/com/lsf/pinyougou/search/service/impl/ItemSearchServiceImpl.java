@@ -45,6 +45,17 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         // 构造返回体
         Map<String, Object> maps = new HashMap<>();
 
+        // 去掉搜索添加 searchMap 中 keywords 关键字的空格
+        String keywords = (String) searchMap.get("keywords");
+        if (keywords == null) {
+            return maps;
+        }
+        keywords = keywords.replace(" ", "");
+        if ("".equals(keywords)) {
+            return maps;
+        }
+        searchMap.put("keywords", keywords);
+
         // 1.根据关键字搜索全部商品（关键字高亮显示）
         // map.putAll() 代表将 searchList() 返回的 map 中的 k-v 键值对追加到 maps 中
         // k = rows

@@ -61,6 +61,13 @@ pyg.controller('itemSearchController', function ($scope,
 
         // id = 2 表示切换页码时发起的搜索
 
+        // 去除搜索条件中关键字 keywords 的所有空格
+        var keywords = $scope.searchMap.keywords.replace(/\s/ig,'');
+        if (keywords == null || keywords == "") {
+            return;
+        }
+        $scope.searchMap.keywords = keywords;
+
         itemSearchService.itemSearch($scope.searchMap).success(
             function (response) {
                 // 返回的 response 是 Map 集合, key 为 rows 的键保存查询结果
