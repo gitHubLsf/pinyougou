@@ -116,8 +116,9 @@ public class TbItem implements Serializable {
 
 
     /**
-     * 更新时间
+     * 商品的更新时间
      */
+    @Field("item_updateTime")
     private Date updateTime;
 
 

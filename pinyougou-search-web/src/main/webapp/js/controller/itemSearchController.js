@@ -9,7 +9,9 @@ pyg.controller('itemSearchController', function ($scope,
         spec:{},        // 规格对象
         price:'',       // 价格区间（字符串形式：例如：0-500）
         pageNo:1,     // 页码
-        pageSize:1   // 每页记录数
+        pageSize:1,   // 每页记录数
+        sort:'',        // 排序方式，例如 ASC 表示升序，DESC 表示降序
+        sortField:''    // 排序关键字，例如 price 表示价格
     };
 
     // 根据用户选择的搜索条件，动态创建搜索条件
@@ -53,7 +55,7 @@ pyg.controller('itemSearchController', function ($scope,
             $scope.searchMap.price = "";
             $scope.searchMap.pageNo = 1;
         } else if (id == 1) {
-            // id = 1: 表示增加或者撤销搜索条件时，调用该方法
+            // id = 1: 表示增加或者撤销搜索条件时或者按关键字排序时，调用该方法
             // 此时对搜索条件不做修改
             // 页码 pageNo 置为 1
             $scope.searchMap.pageNo = 1;
@@ -147,4 +149,14 @@ pyg.controller('itemSearchController', function ($scope,
         // itemSearch(2) 表示切换页码时发起的搜索
         $scope.itemSearch(2);
     };
+
+
+    // 按关键字排序查询
+    $scope.sortSearch = function (sort, sortField) {
+        $scope.searchMap.sort = sort;
+        $scope.searchMap.sortField = sortField;
+
+        // 调用 itemSearch 方法
+        $scope.itemSearch(1);
+    }
 });

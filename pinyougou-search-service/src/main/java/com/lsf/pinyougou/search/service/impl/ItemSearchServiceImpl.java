@@ -5,6 +5,7 @@ import com.lsf.pinyougou.pojo.TbItem;
 import com.lsf.pinyougou.search.service.ItemSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.core.query.*;
@@ -184,6 +185,22 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         query.setOffset((pageNo - 1) * pageSize);
         // 设置每页记录数
         query.setRows(pageSize);
+
+        // 1.7 按关键字排序
+        String sortMethod = (String)searchMap.get("sort");    // 排序方式，ASC 表示升序，DESC 表示降序
+        if (sortMethod != null && !"".equals(sortMethod)) {
+            String sortField = (String) searchMap.get("sortField"); // 排序关键字，例如 price 表示价格
+            if ("ASC".equals(sortMethod)) {
+                // 升序
+                Sort sort = new Sort(Sort.Direction.ASC, "item_" + sortField);
+                query.addSort(sort);
+            }
+            if ("DESC".equals(sortMethod)) {
+                // 降序
+                Sort sort = new Sort(Sort.Direction.DESC, "item_" + sortField);
+                query.addSort(sort);
+            }
+        }
 
         // ***************** 高亮显示处理
         // 获取查询的高亮列表
