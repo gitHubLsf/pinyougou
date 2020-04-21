@@ -160,11 +160,11 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         }
 
         // 1.6 设置分页
-        Integer pageNo = Integer.valueOf((String)searchMap.get("pageNo"));
+        Integer pageNo = (Integer)searchMap.get("pageNo");
         if (null == pageNo) {
             pageNo = 1;
         }
-        Integer pageSize = Integer.valueOf((String)searchMap.get("pageSize"));
+        Integer pageSize = (Integer)searchMap.get("pageSize");
         if (null == pageSize) {
             pageSize = 40;
         }
@@ -219,7 +219,7 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         }
 
         map.put("rows", page.getContent()); // 查询结果
-        map.put("totalPage", page.getTotalPages());     // 分页查询后的总页数
+        map.put("totalPage", page.getTotalElements());     // 分页查询后的总页数
         map.put("total", page.getTotalElements());      // 分页查询后的总记录数
 
         return map;

@@ -339,25 +339,30 @@
             <div class="fr page">
                 <div class="sui-pagination pagination-large">
                     <ul>
-                        <li class="prev disabled">
-                            <a href="#">«上一页</a>
+                        <li class="prev {{ searchMap.pageNo == 1 ? 'disabled' : '' }}">
+                            <a href="#" ng-click="queryPage(searchMap.pageNo - 1)">«</a>
                         </li>
-                        <li ng-repeat="page in pageArray">
-                            <a href="#">{{ page }}</a>
+
+                        <li class="dotted" ng-if="showFirstDot == true"><span>...</span></li>
+
+                        <li ng-repeat="page in pageArray" class="{{ searchMap.pageNo == page ? 'active': '' }}">
+                            <a href="#" ng-click="queryPage(page)">{{ page }}</a>
                         </li>
-                        <li class="next">
-                            <a href="#">下一页»</a>
+
+                        <li class="dotted" ng-if="showLastDot == true"><span>...</span></li>
+
+                        <li class="next {{ searchMap.pageNo == resultMap.totalPage ? 'disabled' : '' }}">
+                            <a href="#" ng-click="queryPage(searchMap.pageNo + 1)">»</a>
                         </li>
                     </ul>
                     <div>
 <!--                        总页数-->
                         <span>共{{ resultMap.totalPage }}页&nbsp;</span>
 
-                        <span>到第<input type="text" class="page-num">页
-                            <button class="page-confirm" onclick="alert(1)">确定</button>
+                        <span>到第<input type="text" class="page-num" ng-model="searchMap.pageNo">页
+                            <button class="page-confirm" ng-click="queryPage(searchMap.pageNo)">确定</button>
                         </span>
                     </div>
-
                 </div>
             </div>
         </div>
