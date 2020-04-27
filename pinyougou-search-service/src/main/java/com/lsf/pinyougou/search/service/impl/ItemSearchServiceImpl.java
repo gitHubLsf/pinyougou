@@ -123,6 +123,7 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         // 1.1:关键字查询：往 query 中添加查询条件
         Criteria criteria = new Criteria("item_keywords").is(searchMap.get("keywords"));
         query.addCriteria(criteria);
+
         // 1.2:按商品分类进行过滤查询
         if (!"".equals(searchMap.get("category"))) {
             FilterQuery filterQuery = new SimpleFilterQuery();

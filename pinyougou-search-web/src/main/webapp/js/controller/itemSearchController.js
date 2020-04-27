@@ -159,4 +159,19 @@ pyg.controller('itemSearchController', function ($scope,
         // 调用 itemSearch 方法
         $scope.itemSearch(1);
     }
+
+
+    // 判断搜索的关键字 keywords 中是否包含品牌，如果包含则返回 true，就不展示品牌列表
+    $scope.isKeywordsInBrandList = function () {
+        // 遍历前端的品牌列表集合，如果列表中的某个品牌名称是 keywords 的子字符串，就返回 true
+        for (var i = 0; i < $scope.resultMap.brandList.length; i++) {
+            if ($scope.searchMap.keywords.indexOf($scope.resultMap.brandList[i].text) >= 0) {
+                return true;
+            }
+        }
+        return false;
+    };
+    // 上述方法有个 bug，就是我输入的关键字中的品牌恰巧不在前端的品牌列表集合中
+    // 那么上述方法就会返回 false，那么前端就会展示品牌列表
+    // 这不符合我们的预期。
 });
