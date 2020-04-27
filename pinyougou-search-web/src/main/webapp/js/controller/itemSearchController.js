@@ -1,5 +1,5 @@
 pyg.controller('itemSearchController', function ($scope,
-                                              itemSearchService) {
+                                              itemSearchService, $location) {
 
     // 构建前端传递给后端的搜索条件
     $scope.searchMap = {
@@ -174,4 +174,11 @@ pyg.controller('itemSearchController', function ($scope,
     // 上述方法有个 bug，就是我输入的关键字中的品牌恰巧不在前端的品牌列表集合中
     // 那么上述方法就会返回 false，那么前端就会展示品牌列表
     // 这不符合我们的预期。
+
+
+    // 接收 pinyougou-portal-web 模块传递过来的搜索关键字，并向后台发起搜索请求
+    $scope.getKeywordsFromIndexPage = function () {
+        $scope.searchMap.keywords = $location.search()['keywords'];
+        $scope.itemSearch(0);
+    }
 });

@@ -14,4 +14,16 @@ pyg.controller('contentController', function ($scope,
         );
     };
 
+    // 接收主页的搜索关键字，然后通过路由携带搜索关键字
+    // 跳转到 pinyougou-search-web 模块的 search.html 页面
+    $scope.search = function () {
+        // 去除搜索关键字 keywords 的所有空格
+        var keywords = $scope.keywords.replace(/\s/ig,'');
+        if (keywords == null || keywords == "") {
+            return;
+        }
+
+        location.href = 'http://localhost:9104/search.html#?keywords=' + keywords;
+    };
+
 });
