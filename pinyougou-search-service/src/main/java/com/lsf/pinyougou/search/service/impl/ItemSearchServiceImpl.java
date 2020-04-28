@@ -26,19 +26,8 @@ import java.util.Map;
 @Service(timeout = 5000)
 public class ItemSearchServiceImpl implements ItemSearchService {
 
-    @Autowired
-    private SolrTemplate solrTemplate;
-
-
-    @Autowired
-    private RedisTemplate redisTemplate;
-
-
     /**
      * 搜索商品
-     *
-     * @param searchMap
-     * @return
      */
     @Override
     public Map<String, Object> search(Map searchMap) {
@@ -85,7 +74,6 @@ public class ItemSearchServiceImpl implements ItemSearchService {
 
     // 1.根据关键字搜索全部商品（关键字高亮显示）
     private Map<String, Object> searchList(Map searchMap) {
-
         Map<String, Object> map = new HashMap<>();
 
         /*
@@ -254,6 +242,7 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         return map;
     }
 
+
     // 2.根据关键字查询商品分类（使用 spring data solr 的分组查询 API）
     private Map<String, Object> searchCategoryList(Map searchMap) {
         Map<String, Object> map = new HashMap<>();
@@ -287,6 +276,7 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         return map;
     }
 
+
     // 3.根据商品分类名称，查询品牌列表和规格列表
     private Map<String, Object> searchBrandAndSpecList(String categoryName) {
         Map map = new HashMap<>();
@@ -303,5 +293,30 @@ public class ItemSearchServiceImpl implements ItemSearchService {
 
         return map;
     }
+
+
+    // 批量导入商品 SKU 到 solr 中
+    public void batchImportItem(List<TbItem> itemList) {
+        solrTemplate.saveBeans(itemList);
+        solrTemplate.commit();
+    }
+
+
+    // 根据 item_goodsid 批量删除 solr 中的商品
+    public void batchDeleteItem(List<Long> ids) {
+        Query query = new SimpleQuery("*:*");
+        Criteria criteria = new Criteria("item_goodsid").in(ids);
+        query.addCriteria(criteria);
+        solrTemplate.delete(query);
+        solrTemplate.commit();
+    }
+
+
+    @Autowired
+    private SolrTemplate solrTemplate;
+
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
 }

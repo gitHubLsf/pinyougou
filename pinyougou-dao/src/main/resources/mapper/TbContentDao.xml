@@ -104,4 +104,29 @@
         delete from pinyougoudb.tb_content where id = #{id}
     </delete>
 
+
+<!--    查询这些广告对应的广告分类集合（使用分组查询）-->
+    <select id="findContentsCategoryList" resultType="Long">
+        select
+            category_id
+        from
+            pinyougou.tb_content
+        where
+            id in
+        <foreach collection="ids" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        group by
+            category_id;
+    </select>
+
+
+    <!--批量删除广告-->
+    <delete id="batchDeleteContent">
+        delete from pinyougoudb.tb_content where id in
+        <foreach collection="ids" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
 </mapper>

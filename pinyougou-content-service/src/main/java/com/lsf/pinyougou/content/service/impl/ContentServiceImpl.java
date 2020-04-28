@@ -1,10 +1,8 @@
 package com.lsf.pinyougou.content.service.impl;
 
-import java.util.Collections;
 import java.util.List;
 
 import com.github.pagehelper.PageInfo;
-import com.lsf.pinyougou.pojo.TbGoods;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
@@ -20,16 +18,6 @@ import vo.PageResult;
  */
 @Service
 public class ContentServiceImpl implements ContentService {
-
-    @Autowired
-    private TbContentDao tbContentDao;
-
-    /**
-     * 数据库缓存
-     */
-    @Autowired
-    private RedisTemplate redisTemplate;
-
 
     @Override
     public List<TbContent> findAll() {
@@ -48,8 +36,7 @@ public class ContentServiceImpl implements ContentService {
 
     /**
      * 添加广告（往数据库中添加广告成功后，随后要将缓存中对应广告的广告分类集合清空
-     *          方便后续查询到新的数据）
-     * @param content
+     * 方便后续查询到新的数据）
      */
     @Override
     public void add(TbContent content) {
@@ -67,7 +54,6 @@ public class ContentServiceImpl implements ContentService {
      * 2.将新的广告更新到数据库中
      * 3.删除缓存中，旧的广告分类集合
      * 4.如果新的广告分类 ID 和旧的广告分类 ID 不一致，就删除缓存中，新的广告分类集合
-     * @param content
      */
     @Override
     public void update(TbContent content) {
@@ -88,7 +74,6 @@ public class ContentServiceImpl implements ContentService {
             // 删除缓冲中，新的广告分类集合
             redisTemplate.boundHashOps("content").delete(newCategoryId);
         }
-
     }
 
 
@@ -100,20 +85,22 @@ public class ContentServiceImpl implements ContentService {
 
     /**
      * 批量删除广告，每次删除一个广告后，要将缓存中，对应广告分类集合删除
-     * @param ids
      */
     @Override
     public void batchDelete(Long[] ids) {
-        for (Long id : ids) {
-            // 获取广告分类ID
-            Long categoryId = tbContentDao.queryById(id).getCategoryId();
-            // 删除数据库中的广告
-            tbContentDao.deleteById(id);
-            // 删除缓存中的广告分类集合
-            redisTemplate.boundHashOps("content").delete(categoryId);
+        if (ids != null && ids.length > 0) {
+            // 查询这些广告对应的广告分类集合
+            List<Long> categoryIdList = tbContentDao.findContentsCategoryList(ids);
+
+            // 根据广告 ID 批量删除广告
+            tbContentDao.batchDeleteContent(ids);
+
+            // 遍历广告分类集合，删除缓存中对应的广告分类列表
+            for (Long categoryId : categoryIdList) {
+                redisTemplate.boundHashOps("content").delete(categoryId);
+            }
         }
     }
-
 
 
     /**
@@ -122,7 +109,7 @@ public class ContentServiceImpl implements ContentService {
     @Override
     public List<TbContent> findByContentCategoryId(Long contentCategoryId) {
         // 先查找缓存
-        List<TbContent> list = (List<TbContent>)redisTemplate.boundHashOps("content").get(contentCategoryId);
+        List<TbContent> list = (List<TbContent>) redisTemplate.boundHashOps("content").get(contentCategoryId);
 
         if (null == list) {
             // 缓存没找到，去数据库查找
@@ -138,5 +125,16 @@ public class ContentServiceImpl implements ContentService {
         // 返回结果
         return list;
     }
+
+
+    @Autowired
+    private TbContentDao tbContentDao;
+
+
+    /**
+     * 数据库缓存
+     */
+    @Autowired
+    private RedisTemplate redisTemplate;
 
 }

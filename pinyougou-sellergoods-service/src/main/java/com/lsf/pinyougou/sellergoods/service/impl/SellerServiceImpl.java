@@ -15,19 +15,10 @@ import vo.PageResult;
 
 
 /**
- * 服务实现层
- *
- * @author Administrator
+ * 商家服务实现层
  */
 @Service
 public class SellerServiceImpl implements SellerService {
-
-    /**
-     * 此处依赖的 dao 对象是本地调用,使用本地依赖注入即可
-     */
-    @Autowired
-    private TbSellerDao tbSellerDao;
-
 
     /**
      * 查询全部
@@ -67,7 +58,6 @@ public class SellerServiceImpl implements SellerService {
      */
     @Override
     public void add(TbSeller seller) {
-
         // 新入驻的商家，默认状态为 0，表示未审核
         seller.setStatus("0");
 
@@ -94,9 +84,6 @@ public class SellerServiceImpl implements SellerService {
 
     /**
      * 根据 ID 查询某个未审核商家的全部信息
-     *
-     * @param id
-     * @return
      */
     @Override
     public TbSeller findOne(String id) {
@@ -113,5 +100,12 @@ public class SellerServiceImpl implements SellerService {
             tbSellerDao.deleteById(id + "");
         }
     }
+
+
+    /**
+     * 此处依赖的 dao 对象是本地调用,使用本地依赖注入即可
+     */
+    @Autowired
+    private TbSellerDao tbSellerDao;
 
 }

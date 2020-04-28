@@ -90,4 +90,13 @@
         delete from pinyougoudb.tb_goods_desc where goods_id = #{goodsId}
     </delete>
 
+
+    <!--批量删除广告详情-->
+    <delete id="batchDeleteGoodsDesc">
+        delete from pinyougoudb.tb_goods_desc where goods_id in
+        <foreach collection="ids" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
 </mapper>

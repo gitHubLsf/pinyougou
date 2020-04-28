@@ -160,4 +160,35 @@
         delete from pinyougoudb.tb_goods where id = #{id}
     </delete>
 
+
+<!--    批量删除商品（只设置商品的 is_delete 字段为 1）-->
+    <update id="batchDeleteGoods">
+        update pinyougoudb.tb_goods set is_delete = '1' where id in
+        <foreach collection="ids" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </update>
+
+
+    <!--    批量修改商品的审核状态-->
+    <update id="batchUpdateGoodsAuditStatus">
+        update pinyougoudb.tb_goods set audit_status = #{status} where id in
+        <foreach collection="ids" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </update>
+
+
+    <!--    批量修改商品的上下架状态，前提是商品已通过审核-->
+    <update id="batchUpdateGoodsMarketAble">
+        update pinyougoudb.tb_goods set is_marketable = #{status}
+        where
+            audit_status = '1'
+        and
+            id in
+        <foreach collection="ids" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </update>
+
 </mapper>

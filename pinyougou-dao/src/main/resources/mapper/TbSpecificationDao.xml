@@ -80,4 +80,13 @@
         delete from pinyougoudb.tb_specification where id = #{id}
     </delete>
 
+
+    <!--根据规格 ID 批量删除规格-->
+    <delete id="batchDeleteSpecById">
+        delete from pinyougoudb.tb_specification where id in
+        <foreach collection="ids" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
 </mapper>

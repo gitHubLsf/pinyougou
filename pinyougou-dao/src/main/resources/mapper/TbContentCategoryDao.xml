@@ -52,4 +52,13 @@
         delete from pinyougoudb.tb_content_category where id = #{id}
     </delete>
 
+
+<!--    通过广告分类 ID 批量删除广告分类-->
+    <delete id="batchDeleteById">
+        delete from pinyougoudb.tb_content_category where id in
+
+        <foreach collection="ids" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

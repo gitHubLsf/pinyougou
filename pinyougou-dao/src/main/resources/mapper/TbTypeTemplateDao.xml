@@ -106,4 +106,13 @@
         delete from pinyougoudb.tb_type_template where id = #{id}
     </delete>
 
+
+    <!--根据模板 ID 批量删除模板-->
+    <delete id="batchDeleteById">
+        delete from pinyougoudb.tb_type_template where id in
+        <foreach collection="ids" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
 </mapper>

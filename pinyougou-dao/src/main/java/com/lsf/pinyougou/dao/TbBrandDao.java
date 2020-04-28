@@ -2,6 +2,7 @@ package com.lsf.pinyougou.dao;
 
 
 import com.lsf.pinyougou.pojo.TbBrand;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -34,5 +35,11 @@ public interface TbBrandDao {
      * @return
      */
     List<Map> selectBrandList();
+
+
+    /**
+     * 批量删除品牌
+     */
+    int batchDeleteBrand(@Param("ids") Long[] ids);
 
 }

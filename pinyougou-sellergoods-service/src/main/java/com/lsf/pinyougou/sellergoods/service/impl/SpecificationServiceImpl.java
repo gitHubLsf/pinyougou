@@ -18,22 +18,10 @@ import vo.PageResult;
 
 
 /**
- * 服务实现层
- *
- * @author Administrator
+ * 规格服务实现层
  */
 @Service
 public class SpecificationServiceImpl implements SpecificationService {
-
-    /**
-     * 此处依赖的 dao 对象是本地调用,使用本地依赖注入即可
-     */
-    @Autowired
-    private TbSpecificationDao tbSpecificationDao;
-
-    @Autowired
-    private TbSpecificationOptionDao tbSpecificationOptionDao;
-
 
     /**
      * 查询全部
@@ -98,6 +86,7 @@ public class SpecificationServiceImpl implements SpecificationService {
 
         // 删除旧的规格选项
         tbSpecificationOptionDao.deleteBySpecId(specification.getSpecification().getId());
+
         // 添加新的规格选项
         List<TbSpecificationOption> specificationOptionList = specification.getSpecificationOptionList();
         for (TbSpecificationOption to : specificationOptionList) {
@@ -109,9 +98,6 @@ public class SpecificationServiceImpl implements SpecificationService {
 
     /**
      * 根据 ID 获取某种规格的信息
-     *
-     * @param id
-     * @return
      */
     @Override
     public Specification findOne(long id) {
@@ -130,11 +116,11 @@ public class SpecificationServiceImpl implements SpecificationService {
     @Override
     @Transactional
     public void batchDelete(Long[] ids) {
-        for (Long id : ids) {
-            // 删除某种规格
-            tbSpecificationDao.deleteById(id);
-            // 删除某种规格对应的规格选项
-            tbSpecificationOptionDao.deleteBySpecId(id);
+        if (ids != null && ids.length > 0) {
+            // 批量删除规格
+            tbSpecificationDao.batchDeleteSpecById(ids);
+            // 批量删除规格选项
+            tbSpecificationOptionDao.batchDeleteBySpecId(ids);
         }
     }
 
@@ -148,5 +134,16 @@ public class SpecificationServiceImpl implements SpecificationService {
     public List<Map> selectSpecList() {
         return tbSpecificationDao.selectSpecList();
     }
+
+
+    /**
+     * 此处依赖的 dao 对象是本地调用,使用本地依赖注入即可
+     */
+    @Autowired
+    private TbSpecificationDao tbSpecificationDao;
+
+
+    @Autowired
+    private TbSpecificationOptionDao tbSpecificationOptionDao;
 
 }

@@ -2,6 +2,7 @@ package com.lsf.pinyougou.dao;
 
 
 import com.lsf.pinyougou.pojo.TbTypeTemplate;
+import org.apache.ibatis.annotations.Param;
 
 
 import java.util.List;
@@ -41,4 +42,10 @@ public interface TbTypeTemplateDao {
      * @return
      */
     List<Map> findTypeList();
+
+
+    /**
+     * 根据模板 ID 批量删除模板
+     */
+    int batchDeleteById(@Param("ids") Long[] ids);
 }

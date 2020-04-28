@@ -82,9 +82,19 @@
         where id = #{id}
     </update>
 
+
     <!--通过主键删除-->
     <delete id="deleteById">
         delete from pinyougoudb.tb_brand where id = #{id}
+    </delete>
+
+
+    <!--批量删除品牌-->
+    <delete id="batchDeleteBrand">
+        delete from pinyougoudb.tb_brand where id in
+        <foreach collection="ids" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
     </delete>
 
 </mapper>

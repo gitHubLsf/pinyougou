@@ -13,19 +13,10 @@ import vo.PageResult;
 
 
 /**
- * 服务实现层
- *
- * @author Administrator
+ * 规格选项服务实现层
  */
 @Service
 public class SpecificationOptionServiceImpl implements SpecificationOptionService {
-
-    /**
-     * 此处依赖的 dao 对象是本地调用,使用本地依赖注入即可
-     */
-    @Autowired
-    private TbSpecificationOptionDao tbSpecificationOptionDao;
-
 
     /**
      * 查询全部
@@ -80,9 +71,6 @@ public class SpecificationOptionServiceImpl implements SpecificationOptionServic
 
     /**
      * 根据 ID 获取实体
-     *
-     * @param id
-     * @return
      */
     @Override
     public TbSpecificationOption findOne(long id) {
@@ -99,5 +87,12 @@ public class SpecificationOptionServiceImpl implements SpecificationOptionServic
             tbSpecificationOptionDao.deleteById(id);
         }
     }
+
+
+    /**
+     * 此处依赖的 dao 对象是本地调用,使用本地依赖注入即可
+     */
+    @Autowired
+    private TbSpecificationOptionDao tbSpecificationOptionDao;
 
 }

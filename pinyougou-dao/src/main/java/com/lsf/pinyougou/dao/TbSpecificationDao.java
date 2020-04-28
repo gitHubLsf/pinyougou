@@ -1,6 +1,7 @@
 package com.lsf.pinyougou.dao;
 
 import com.lsf.pinyougou.pojo.TbSpecification;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -39,5 +40,11 @@ public interface TbSpecificationDao {
      * @return
      */
     List<Map> selectSpecList();
+
+
+    /**
+     * 根据规格 ID 批量删除规格
+     */
+    int batchDeleteSpecById(@Param("ids") Long[] ids);
 
 }

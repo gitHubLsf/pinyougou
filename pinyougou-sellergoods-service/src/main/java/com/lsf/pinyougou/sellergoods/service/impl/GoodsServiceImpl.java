@@ -20,39 +20,10 @@ import vo.PageResult;
 
 
 /**
- * 服务实现层
- *
- * @author Administrator
+ * 商品服务
  */
 @Service
 public class GoodsServiceImpl implements GoodsService {
-
-    /**
-     * 此处依赖的 dao 对象是本地调用,使用本地依赖注入即可
-     */
-    @Autowired
-    private TbGoodsDao tbGoodsDao;
-
-
-    /**
-     * 商品扩展数据访问层对象
-     */
-    @Autowired
-    private TbGoodsDescDao tbGoodsDescDao;
-
-
-    @Autowired
-    private TbBrandDao tbBrandDao;
-
-
-    @Autowired
-    private TbItemCatDao tbItemCatDao;
-
-    @Autowired
-    private TbSellerDao tbSellerDao;
-
-    @Autowired
-    private TbItemDao tbItemDao;
 
     /**
      * 查询全部
@@ -80,7 +51,6 @@ public class GoodsServiceImpl implements GoodsService {
      */
     @Override
     public PageResult findPageLimit(TbGoods goods, int pageNum, int pageSize) {
-
         goods.setIsDelete("0");
 
         PageHelper.startPage(pageNum, pageSize);
@@ -96,12 +66,14 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     @Transactional
     public void add(Goods goods) {
-
         // 设置商品的状态为 未审核
         goods.getTbGoods().setAuditStatus("0");
 
         // 设置商品的状态为上架，默认情况下，商品是上架的
         goods.getTbGoods().setIsMarketable("1");
+
+        // 设置商品的状态为未删除，0 表示未删除，1 表示已删除
+        goods.getTbGoods().setIsDelete("0");
 
         // 添加商品，同时返回商品 ID
         tbGoodsDao.insert(goods.getTbGoods());
@@ -114,16 +86,13 @@ public class GoodsServiceImpl implements GoodsService {
 
         // 添加商品 SKU 列表
         saveItemList(goods);
-
     }
+
 
     /**
      * 保存商品 SKU 列表
-     *
-     * @param goods
      */
     private void saveItemList(Goods goods) {
-
         // 如果用户选择启用规格，则需要遍历 SKU 列表
         if ("1".equals(goods.getTbGoods().getIsEnableSpec())) {
             // 获取 SKU 列表,将每个 SKU 插入到数据库
@@ -221,7 +190,6 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     @Transactional
     public void update(Goods goods) {
-
         // 修改商品
         // 设置商品的状态为未审核，因为经过修改的商品需要重新审核
         goods.getTbGoods().setAuditStatus("0");
@@ -230,20 +198,16 @@ public class GoodsServiceImpl implements GoodsService {
         // 修改商品扩展
         tbGoodsDescDao.update(goods.getTbGoodsDesc());
 
-        // 删除旧的 SKU 列表
+        // 删除数据库中旧的 SKU 列表
         tbItemDao.deleteByGoodsId(goods.getTbGoods().getId());
 
         // 添加新的 SKU 列表
         saveItemList(goods);
-
     }
 
 
     /**
      * 根据商品 ID 查询商品信息，返回商品组合实体类对象 Goods
-     *
-     * @param id
-     * @return
      */
     @Override
     public Goods findOne(long id) {
@@ -268,52 +232,82 @@ public class GoodsServiceImpl implements GoodsService {
 
 
     /**
-     * 批量删除商品，只进行逻辑删除
+     * 批量删除商品，只进行逻辑删除（将商品的 is_delete 字段设置为 "1"）
+     * 同时批量删除商品 SKU，只进行逻辑删除，将 SKU 的 status 字段设置为 "3"
      */
     @Override
     public void batchDelete(Long[] ids) {
-        TbGoods good = new TbGoods();
-        for (Long id : ids) {
-            good.setId(id);
-            good.setIsDelete("1");
-            tbGoodsDao.update(good);
-        }
+        // 批量删除商品 SPU
+        tbGoodsDao.batchDeleteGoods(ids);
+
+        // 批量编辑商品 SKU，修改 status 字段，因为此处是删除，所以 status 字段值为 "3"
+        tbItemDao.batchEditItem(ids, "3");
     }
 
 
     /**
-     * 修改商品的审核状态
-     *
-     * @param ids
-     * @param status
+     * 批量修改商品的审核状态
      */
     @Override
-    public void updateGoodStatus(Long[] ids, String status) {
-        TbGoods good = new TbGoods();
-        for (Long id : ids) {
-            good.setId(id);
-            good.setAuditStatus(status);
-            tbGoodsDao.update(good);
-        }
+    public void updateGoodStatus(Long[] ids, String status) throws Exception {
+        tbGoodsDao.batchUpdateGoodsAuditStatus(ids, status);
     }
 
 
     /**
      * 修改商品的上下架状态，前提是商品已通过运营商审核
-     *
-     * @param ids
-     * @param status
      */
     @Override
     public void updateGoodMarketable(Long[] ids, String status) {
-        for (Long id : ids) {
-            TbGoods good = tbGoodsDao.queryById(id);
-            if (good != null && "1".equals(good.getAuditStatus())) {
-                // 商品通过审核后，才能进行上下架修改
-                good.setIsMarketable(status);
-                tbGoodsDao.update(good);
-            }
+        // 批量修改商品的上下架状态
+        tbGoodsDao.batchUpdateGoodsMarketAble(ids, status);
+
+        // 如果对商品的上下架状态进行修改
+        // 那么对应的 SKU 信息的 status 状态也要修改
+        String itemStatus = "3";
+        if ("0".equals(status)) {
+            itemStatus = "2";
+        } else if ("1".equals(status)) {
+            itemStatus = "1";
         }
+        tbItemDao.batchEditItem(ids, itemStatus);
     }
+
+
+    /**
+     * 批量根据商品 SPU ID 查询商品 SKU，SKU 的状态 status 要等于 1
+     */
+    @Override
+    public List<TbItem> batchSearchItemByGoodId(Long[] ids, String status) throws Exception {
+        return tbItemDao.batchSearchItemByGoodId(ids, status);
+    }
+
+
+    /**
+     * 此处依赖的 dao 对象是本地调用,使用本地依赖注入即可
+     */
+    @Autowired
+    private TbGoodsDao tbGoodsDao;
+
+
+    /**
+     * 商品扩展数据访问层对象
+     */
+    @Autowired
+    private TbGoodsDescDao tbGoodsDescDao;
+
+
+    @Autowired
+    private TbBrandDao tbBrandDao;
+
+
+    @Autowired
+    private TbItemCatDao tbItemCatDao;
+
+    @Autowired
+    private TbSellerDao tbSellerDao;
+
+    @Autowired
+    private TbItemDao tbItemDao;
 
 }

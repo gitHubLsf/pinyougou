@@ -212,4 +212,27 @@
         delete from pinyougoudb.tb_item where goods_id = #{id}
     </delete>
 
+
+    <!--    批量编辑商品 SKU，修改 status 字段-->
+    <update id="batchEditItem">
+        update pinyougoudb.tb_item set status = #{status} where goods_id in
+        <foreach collection="ids" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </update>
+
+
+    <!--批量根据商品 SPU ID 查询商品 SKU，SKU 的状态 status 要等于 1-->
+    <select id="batchSearchItemByGoodId" resultMap="TbItemMap">
+        select
+        id, title, sell_point, price, stock_count, num, barcode, image, categoryId, status, create_time, update_time,
+        item_sn, cost_pirce, market_price, is_default, goods_id, seller_id, cart_thumbnail, category, brand, spec,
+        seller
+        from pinyougoudb.tb_item
+        where status = #{status} and goods_id in
+        <foreach collection="ids" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
 </mapper>

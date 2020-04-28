@@ -1,6 +1,7 @@
 package com.lsf.pinyougou.dao;
 
 import com.lsf.pinyougou.pojo.TbContentCategory;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -22,5 +23,11 @@ public interface TbContentCategoryDao {
 
 
     int deleteById(Long id);
+
+
+    /**
+     * 通过广告分类 ID 批量删除广告分类
+     */
+    int batchDeleteById(@Param("ids") Long[] ids);
 
 }

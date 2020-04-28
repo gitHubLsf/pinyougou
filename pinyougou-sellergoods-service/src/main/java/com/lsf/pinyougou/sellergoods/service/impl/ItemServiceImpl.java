@@ -12,22 +12,11 @@ import vo.PageResult;
 import java.util.List;
 
 
-
-
 /**
- * 服务实现层
- *
- * @author Administrator
+ * 商品 SKU 服务实现层
  */
 @Service
 public class ItemServiceImpl implements ItemService {
-
-    /**
-     * 此处依赖的 dao 对象是本地调用,使用本地依赖注入即可
-     */
-    @Autowired
-    private TbItemDao tbItemDao;
-
 
     /**
      * 查询全部
@@ -82,9 +71,6 @@ public class ItemServiceImpl implements ItemService {
 
     /**
      * 根据 ID 获取实体
-     *
-     * @param id
-     * @return
      */
     @Override
     public TbItem findOne(long id) {
@@ -97,9 +83,15 @@ public class ItemServiceImpl implements ItemService {
      */
     @Override
     public void batchDelete(Long[] ids) {
-        for (Long id : ids) {
-            tbItemDao.deleteById(id);
-        }
+        if (ids != null && ids.length > 0)
+            tbItemDao.batchEditItem(ids, "3");
     }
+
+
+    /**
+     * 此处依赖的 dao 对象是本地调用,使用本地依赖注入即可
+     */
+    @Autowired
+    private TbItemDao tbItemDao;
 
 }

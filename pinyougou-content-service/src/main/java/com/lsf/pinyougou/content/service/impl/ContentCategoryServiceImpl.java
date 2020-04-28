@@ -11,17 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import vo.PageResult;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Objects;
+
 
 /**
  * 广告分类服务实现层
  */
 @Service
 public class ContentCategoryServiceImpl implements ContentCategoryService {
-
-    @Autowired
-    private TbContentCategoryDao tbContentCategoryDao;
-
 
     @Override
     public List<TbContentCategory> findAll() {
@@ -58,8 +55,12 @@ public class ContentCategoryServiceImpl implements ContentCategoryService {
 
     @Override
     public void batchDelete(Long[] ids) {
-        for (Long id : ids) {
-            tbContentCategoryDao.deleteById(id);
-        }
+        if (ids != null && ids.length > 0)
+            tbContentCategoryDao.batchDeleteById(ids);
     }
+
+
+    @Autowired
+    private TbContentCategoryDao tbContentCategoryDao;
+
 }

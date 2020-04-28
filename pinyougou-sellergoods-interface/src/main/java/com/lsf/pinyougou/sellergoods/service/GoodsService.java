@@ -3,6 +3,7 @@ package com.lsf.pinyougou.sellergoods.service;
 import java.util.List;
 
 import com.lsf.pinyougou.pojo.TbGoods;
+import com.lsf.pinyougou.pojo.TbItem;
 import com.lsf.pinyougou.pojogroup.Goods;
 import vo.PageResult;
 
@@ -70,7 +71,7 @@ public interface GoodsService {
     /**
      * 修改商品的审核状态
      */
-    void updateGoodStatus(Long[] ids, String status);
+    void updateGoodStatus(Long[] ids, String status) throws Exception;
 
 
     /**
@@ -80,4 +81,10 @@ public interface GoodsService {
      * @param status
      */
     void updateGoodMarketable(Long[] ids, String status);
+
+
+    /**
+     * 批量根据商品 SPU ID 查询商品 SKU，SKU 的状态 status 要等于 1
+     */
+    List<TbItem> batchSearchItemByGoodId(Long[] ids, String status) throws Exception;
 }

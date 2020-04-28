@@ -20,24 +20,10 @@ import javax.annotation.PostConstruct;
 
 
 /**
- * 服务实现层
- *
- * @author Administrator
+ * 模板服务实现层
  */
 @Service
 public class TypeTemplateServiceImpl implements TypeTemplateService {
-
-    /**
-     * 此处依赖的 dao 对象是本地调用,使用本地依赖注入即可
-     */
-    @Autowired
-    private TbTypeTemplateDao tbTypeTemplateDao;
-
-    @Autowired
-    private TbSpecificationOptionDao tbSpecificationOptionDao;
-
-    @Autowired
-    private RedisTemplate redisTemplate;
 
     @PostConstruct
     private void init() {
@@ -125,9 +111,6 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 
     /**
      * 根据 ID 获取实体
-     *
-     * @param id
-     * @return
      */
     @Override
     public TbTypeTemplate findOne(long id) {
@@ -140,21 +123,21 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
      */
     @Override
     public void batchDelete(Long[] ids) {
-        for (Long id : ids) {
-            // 删除数据库的内容
-            tbTypeTemplateDao.deleteById(id);
+        if (ids != null && ids.length > 0) {
+            // 根据模板 ID 批量删除数据库中的模板
+            tbTypeTemplateDao.batchDeleteById(ids);
 
-            // 删除缓存中的旧内容
-            redisTemplate.boundHashOps("typeIdToBrandList").delete(id);
-            redisTemplate.boundHashOps("typeIdToSpecList").delete(id);
+            for (Long id : ids) {
+                // 删除缓存中的旧内容
+                redisTemplate.boundHashOps("typeIdToBrandList").delete(id);
+                redisTemplate.boundHashOps("typeIdToSpecList").delete(id);
+            }
         }
     }
 
 
     /**
      * 添加商品分类时，查询所有类型模板列表
-     *
-     * @return
      */
     @Override
     public List<Map> findTypeList() {
@@ -165,9 +148,6 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
     /**
      * 商家添加商品时，需要填写规格列表，此处根据模板 ID 查询模板，再将模板中的规格列表（json 字符串）提取出来，转换成集合
      * 集合里的元素是 Map，用来保存对象
-     *
-     * @param id
-     * @return
      */
     @Override
     public List<Map> findSpecList(Long id) {
@@ -195,4 +175,20 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
         // 返回规格列表集合 List<Map> Map { id:"", text:"", options:"" }
         return specList;
     }
+
+
+    /**
+     * 此处依赖的 dao 对象是本地调用,使用本地依赖注入即可
+     */
+    @Autowired
+    private TbTypeTemplateDao tbTypeTemplateDao;
+
+
+    @Autowired
+    private TbSpecificationOptionDao tbSpecificationOptionDao;
+
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+
 }

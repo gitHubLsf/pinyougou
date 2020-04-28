@@ -1,11 +1,8 @@
 package com.lsf.pinyougou.sellergoods.service.impl;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import com.github.pagehelper.PageInfo;
-import com.lsf.pinyougou.pojo.TbItem;
 import com.lsf.pinyougou.pojogroup.TbItemCats;
 import com.lsf.pinyougou.sellergoods.service.ItemCatService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,20 +18,9 @@ import javax.annotation.PostConstruct;
 
 /**
  * 商品分类服务实现层
- *
- * @author Administrator
  */
 @Service
 public class ItemCatServiceImpl implements ItemCatService {
-
-    /**
-     * 此处依赖的 dao 对象是本地调用,使用本地依赖注入即可
-     */
-    @Autowired
-    private TbItemCatDao tbItemCatDao;
-
-    @Autowired
-    private RedisTemplate redisTemplate;
 
     @PostConstruct
     private void init() {
@@ -129,9 +115,6 @@ public class ItemCatServiceImpl implements ItemCatService {
 
     /**
      * 根据 ID 获取实体
-     *
-     * @param id
-     * @return
      */
     @Override
     public TbItemCats findOne(long id) {
@@ -152,7 +135,6 @@ public class ItemCatServiceImpl implements ItemCatService {
             if (tbItemCats != null && tbItemCats.size() > 0) {
                 throw new Exception();
             } else {
-
                 // 获取商品分类的名称
                 TbItemCat tb = new TbItemCat();
                 tb.setId(id);
@@ -173,9 +155,6 @@ public class ItemCatServiceImpl implements ItemCatService {
 
     /**
      * 根据上级 ID 查询商品分类
-     *
-     * @param parentId
-     * @return
      */
     @Override
     public List<TbItemCat> findByParentId(Long parentId) {
@@ -183,5 +162,16 @@ public class ItemCatServiceImpl implements ItemCatService {
         tbItemCat.setParentId(parentId);
         return tbItemCatDao.queryAll(tbItemCat);
     }
+
+
+    /**
+     * 此处依赖的 dao 对象是本地调用,使用本地依赖注入即可
+     */
+    @Autowired
+    private TbItemCatDao tbItemCatDao;
+
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
 }

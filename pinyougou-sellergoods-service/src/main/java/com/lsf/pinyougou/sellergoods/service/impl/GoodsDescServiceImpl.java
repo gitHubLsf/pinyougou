@@ -14,18 +14,9 @@ import vo.PageResult;
 
 /**
  * 服务实现层
- *
- * @author Administrator
  */
 @Service
 public class GoodsDescServiceImpl implements GoodsDescService {
-
-    /**
-     * 此处依赖的 dao 对象是本地调用,使用本地依赖注入即可
-     */
-    @Autowired
-    private TbGoodsDescDao tbGoodsDescDao;
-
 
     /**
      * 查询全部
@@ -80,9 +71,6 @@ public class GoodsDescServiceImpl implements GoodsDescService {
 
     /**
      * 根据 ID 获取实体
-     *
-     * @param id
-     * @return
      */
     @Override
     public TbGoodsDesc findOne(long id) {
@@ -95,9 +83,15 @@ public class GoodsDescServiceImpl implements GoodsDescService {
      */
     @Override
     public void batchDelete(Long[] ids) {
-        for (Long id : ids) {
-            tbGoodsDescDao.deleteById(id);
-        }
+        if (ids != null && ids.length > 0)
+            tbGoodsDescDao.batchDeleteGoodsDesc(ids);
     }
+
+
+    /**
+     * 此处依赖的 dao 对象是本地调用,使用本地依赖注入即可
+     */
+    @Autowired
+    private TbGoodsDescDao tbGoodsDescDao;
 
 }

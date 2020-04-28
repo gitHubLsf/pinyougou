@@ -1,9 +1,13 @@
 package com.lsf.pinyougou.shop.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
+import com.lsf.pinyougou.pojo.TbItem;
 import com.lsf.pinyougou.pojogroup.Goods;
+import com.lsf.pinyougou.search.service.ItemSearchService;
 import com.lsf.pinyougou.sellergoods.service.GoodsService;
+import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,21 +19,12 @@ import vo.PageResult;
 import vo.Result;
 
 
-/**
- * controller
- */
 @RestController
 @RequestMapping("/goods")
 public class GoodsController {
 
-    @Reference
-    private GoodsService goodsService;
-
-
     /**
      * 返回全部列表
-     *
-     * @return
      */
     @RequestMapping("/findAll.do")
     public List<TbGoods> findAll() {
@@ -39,8 +34,6 @@ public class GoodsController {
 
     /**
      * 无条件分页查询
-     *
-     * @return
      */
     @RequestMapping("/findPage.do")
     public PageResult findPage(int page, int rows) {
@@ -51,11 +44,6 @@ public class GoodsController {
     /**
      * 商家查询自己的全部列表
      * 多条件分页查询
-     *
-     * @param goods
-     * @param page
-     * @param size
-     * @return
      */
     @RequestMapping("/search.do")
     public PageResult findPageLimit(@RequestBody TbGoods goods, int page, int size) {
@@ -68,9 +56,6 @@ public class GoodsController {
 
     /**
      * 添加商品
-     *
-     * @param goods
-     * @return
      */
     @RequestMapping("/add.do")
     public Result add(@RequestBody Goods goods) {
@@ -91,13 +76,9 @@ public class GoodsController {
 
     /**
      * 商家修改自己的商品信息
-     *
-     * @param goods
-     * @return
      */
     @RequestMapping("/update.do")
     public Result update(@RequestBody Goods goods) {
-
         // 出于安全考虑，在商户后台执行的商品修改，必须要校验提交的商品属于该商户
 
         // 判断商品的商家 ID 是否和当前在线商家一致
@@ -116,7 +97,13 @@ public class GoodsController {
         // 会导致修改了别的商品详情或者商品 SKU
 
         try {
+            // 修改数据库中的商品信息
             goodsService.update(goods);
+
+            // 删除 solr 中，商品对应的 SKU
+            Long[] ids = new Long[1];
+            ids[0] = goods.getTbGoods().getId();
+            itemSearchService.batchDeleteItem(Arrays.asList(ids));
             return new Result(true, "修改成功");
         } catch (Exception e) {
             return new Result(false, "修改失败");
@@ -126,9 +113,6 @@ public class GoodsController {
 
     /**
      * 根据商品 ID 查询商品信息，返回商品组合实体类对象
-     *
-     * @param id
-     * @return
      */
     @RequestMapping("/findOne.do")
     public Goods findOne(long id) {
@@ -137,15 +121,15 @@ public class GoodsController {
 
 
     /**
-     * 批量删除
-     *
-     * @param ids
-     * @return
+     * 商家批量删除商品
      */
     @RequestMapping("/batchDelete.do")
     public Result batchDelete(Long[] ids) {
         try {
+            // 删除数据库中的商品
             goodsService.batchDelete(ids);
+            // 删除 solr 中的商品
+            itemSearchService.batchDeleteItem(Arrays.asList(ids));
             return new Result(true, "删除成功");
         } catch (Exception e) {
             return new Result(false, "删除失败");
@@ -155,19 +139,39 @@ public class GoodsController {
 
     /**
      * 商家批量修改商品的上下架状态
-     *
-     * @param ids
-     * @param status
-     * @return
      */
     @RequestMapping("/updateGoodMarketable.do")
     public Result updateGoodMarketable(Long[] ids, String status) {
+        if (ids == null || ids.length == 0)
+            return new Result(false, "修改失败");
         try {
+            // 修改数据库中商品的上下架状态
             goodsService.updateGoodMarketable(ids, status);
+            // 同步数据到 solr 中
+            // 如果是上架商品
+            if ("1".equals(status)) {
+                // 往 solr 中添加 SKU
+                // 查询对应的 SKU
+                List<TbItem> itemList = goodsService.batchSearchItemByGoodId(ids, "1");
+                // 保存到 solr 中
+                itemSearchService.batchImportItem(itemList);
+            } else if ("0".equals(status)) {
+                // 下架商品
+                // 删除 solr 中相关的 SKU
+                itemSearchService.batchDeleteItem(Arrays.asList(ids));
+            }
             return new Result(true, "修改成功");
         } catch (Exception e) {
             return new Result(false, "修改失败");
         }
     }
+
+
+    @Reference
+    private GoodsService goodsService;
+
+
+    @Reference(timeout = 100000)
+    private ItemSearchService itemSearchService;
 
 }
