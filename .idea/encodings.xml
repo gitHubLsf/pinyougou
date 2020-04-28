@@ -10,6 +10,9 @@
     <file url="file://$PROJECT_DIR$/pinyougou-dao/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/pinyougou-manager-web/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/pinyougou-manager-web/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pinyougou-page-interface/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pinyougou-page-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pinyougou-page-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/pinyougou-pojo/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/pinyougou-portal-web/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/pinyougou-portal-web/src/main/resources" charset="UTF-8" />
@@ -25,5 +28,6 @@
     <file url="file://$PROJECT_DIR$/pinyougou-shop-web/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/pinyougou-solr-util/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/pinyougou-solr-util/src/main/resources" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>
