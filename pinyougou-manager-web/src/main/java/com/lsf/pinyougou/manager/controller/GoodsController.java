@@ -1,6 +1,7 @@
 package com.lsf.pinyougou.manager.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.lsf.pinyougou.page.service.ItemPageService;
 import com.lsf.pinyougou.pojo.TbGoods;
 import com.lsf.pinyougou.pojo.TbItem;
 import com.lsf.pinyougou.pojogroup.Goods;
@@ -61,6 +62,11 @@ public class GoodsController {
     }
 
 
+    @RequestMapping("/getItemHtml.do")
+    public void getItemHtml(Long goodsId) {
+        itemPageService.getItemHtml(goodsId);
+    }
+
     /**
      * 批量删除商品，只进行逻辑删除
      */
@@ -79,7 +85,11 @@ public class GoodsController {
     private GoodsService goodsService;
 
 
-    @Reference(timeout = 100000)
+    @Reference(timeout = 40000)
     private ItemSearchService itemSearchService;
+
+
+    @Reference(timeout = 40000)
+    private ItemPageService itemPageService;
 
 }

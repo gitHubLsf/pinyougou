@@ -50,6 +50,9 @@
           <element id="archive" name="pinyougou-search-interface-1.0-SNAPSHOT.jar">
             <element id="module-output" name="pinyougou-search-interface" />
           </element>
+          <element id="archive" name="pinyougou-page-interface-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="pinyougou-page-interface" />
+          </element>
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-web:4.1.0.RELEASE" />
           <element id="library" level="project" name="Maven: aopalliance:aopalliance:1.0" />
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-core:4.1.0.RELEASE" />

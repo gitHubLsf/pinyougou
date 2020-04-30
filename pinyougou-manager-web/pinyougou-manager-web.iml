@@ -51,6 +51,7 @@
     <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.18.8" level="project" />
     <orderEntry type="module" module-name="pinyougou-content-interface" />
     <orderEntry type="module" module-name="pinyougou-search-interface" />
+    <orderEntry type="module" module-name="pinyougou-page-interface" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-web:4.1.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: aopalliance:aopalliance:1.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-core:4.1.0.RELEASE" level="project" />

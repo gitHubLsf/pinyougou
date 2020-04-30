@@ -27,6 +27,13 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
+<!--        依赖数据访问层-->
+        <dependency>
+            <groupId>com.lsf.pinyougou</groupId>
+            <artifactId>pinyougou-dao</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
 <!--        依赖 freeMarker -->
         <dependency>
             <groupId>org.freemarker</groupId>

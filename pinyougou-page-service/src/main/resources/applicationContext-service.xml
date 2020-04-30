@@ -15,7 +15,9 @@
 
     <!-- 加载 page.properties 配置文件 -->
     <context:property-placeholder
-            location="classpath:page.properties"/>
+            location="classpath:page.properties"
+            order="2"
+            ignore-unresolvable="true"/>
 
     <bean id="freemarkerConfig"
           class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
