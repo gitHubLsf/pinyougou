@@ -11,9 +11,13 @@
     <link rel="stylesheet" type="text/css" href="css/pages-item.css"/>
     <link rel="stylesheet" type="text/css" href="css/pages-zoom.css"/>
     <link rel="stylesheet" type="text/css" href="css/widget-cartPanelView.css"/>
+
+    <script type="text/javascript" src="plugins/angularjs/angular.min.js"></script>
+    <script src="js/base.js"></script>
+    <script src="js/controller/itemPageController.js"></script>
 </head>
 
-<body>
+<body ng-app="pinyougou" ng-controller="itemPageController">
 
 <#--将图片 json 字符串转换成集合 imageList-->
 <#assign imageList=goodsDesc.itemImages?eval>
@@ -146,13 +150,16 @@
                                         <i>${spec.attributeName}</i>
                                     </div>
                                 </dt>
-<#--                                <dd>-->
-<#--                                    <a href="javascript:;" class="selected">金色<span title="点击取消选择">&nbsp;</span></a>-->
-<#--                                </dd>-->
-
 <#--                                展示某个规格对应的规格选项列表-->
                                 <#list spec.attributeValue as item>
-                                    <dd><a href="javascript:;">${item}</a></dd>
+                                    <dd>
+                                        <a href="javascript:;"
+                                           ng-click="selectSpec('${spec.attributeName}', '${item}')"
+                                           class="{{ specItems['${spec.attributeName}'] == '${item}' ? 'selected' : '' }}">
+                                            ${item}
+                                            <span title="点击取消选择">&nbsp;</span>
+                                        </a>
+                                    </dd>
                                 </#list>
                             </dl>
                         </#list>
@@ -162,9 +169,10 @@
                         <div class="fl title">
                             <div class="control-group">
                                 <div class="controls">
-                                    <input autocomplete="off" type="text" value="1" minnum="1" class="itxt"/>
-                                    <a href="javascript:void(0)" class="increment plus">+</a>
-                                    <a href="javascript:void(0)" class="increment mins">-</a>
+<#--                                    通过加减按钮修改商品购买数量-->
+                                    <input autocomplete="off" type="text" value="{{ num }}" minnum="1" class="itxt"/>
+                                    <a href="javascript:void(0)" class="increment plus" ng-click="changeNum(1)">+</a>
+                                    <a href="javascript:void(0)" class="increment mins" ng-click="changeNum(-1)">-</a>
                                 </div>
                             </div>
                         </div>
