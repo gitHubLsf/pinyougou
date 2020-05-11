@@ -44,4 +44,10 @@ public interface TbItemDao {
      */
     List<TbItem> batchSearchItemByGoodId(@Param("ids") Long[] ids, @Param("status") String status);
 
+
+    /**
+     * 多条件查询 SKU，并根据 is_default 字段降序排列
+     */
+    List<TbItem> queryAllSortByIsDefault(TbItem item);
+
 }

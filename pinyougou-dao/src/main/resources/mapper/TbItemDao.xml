@@ -28,6 +28,7 @@
         <result property="seller" column="seller" jdbcType="VARCHAR"/>
     </resultMap>
 
+
     <!--查询单个-->
     <select id="queryById" resultMap="TbItemMap">
         select
@@ -37,6 +38,7 @@
         from pinyougoudb.tb_item
         where id = #{id}
     </select>
+
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TbItemMap">
@@ -118,6 +120,7 @@
         </where>
     </select>
 
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into pinyougoudb.tb_item(title, sell_point, price, stock_count, num, barcode, image, categoryId, status,
@@ -127,6 +130,7 @@
         #{createTime}, #{updateTime}, #{itemSn}, #{costPirce}, #{marketPrice}, #{isDefault}, #{goodsId}, #{sellerId},
         #{cartThumbnail}, #{category}, #{brand}, #{spec}, #{seller})
     </insert>
+
 
     <!--通过主键修改数据-->
     <update id="update">
@@ -202,10 +206,12 @@
         where id = #{id}
     </update>
 
+
     <!--通过主键删除-->
     <delete id="deleteById">
         delete from pinyougoudb.tb_item where id = #{id}
     </delete>
+
 
     <!-- 通过商品 ID 删除商品 SKU -->
     <delete id="deleteByGoodsId">
@@ -233,6 +239,25 @@
         <foreach collection="ids" item="item" open="(" close=")" separator=",">
             #{item}
         </foreach>
+    </select>
+
+<!--    多条件查询 SKU，并根据 is_default 字段降序排列 -->
+    <select id="queryAllSortByIsDefault" resultMap="TbItemMap">
+        select
+            id, title, sell_point, price, stock_count, num, barcode, image, categoryId, status, create_time, update_time,
+            item_sn, cost_pirce, market_price, is_default, goods_id, seller_id, cart_thumbnail, category, brand, spec,
+            seller
+        from
+            pinyougoudb.tb_item
+        <where>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="goodsId != null">
+                and goods_id = #{goodsId}
+            </if>
+        </where>
+        order by #{isDefault} desc
     </select>
 
 </mapper>

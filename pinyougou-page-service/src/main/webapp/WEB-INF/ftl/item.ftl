@@ -15,9 +15,23 @@
     <script type="text/javascript" src="plugins/angularjs/angular.min.js"></script>
     <script src="js/base.js"></script>
     <script src="js/controller/itemPageController.js"></script>
+
+    <script type="text/javascript">
+        // 商品 SKU 列表
+        var skuList=[
+            <#list itemList as item>
+            {
+                "id":${item.id?c},
+                "title":"${item.title!''}",
+                "price":${item.price?c},
+                "spec": ${item.spec}
+            },
+            </#list>
+        ];
+    </script>
 </head>
 
-<body ng-app="pinyougou" ng-controller="itemPageController">
+<body ng-app="pinyougou" ng-controller="itemPageController" ng-init="loadDefaultSKU()">
 
 <#--将图片 json 字符串转换成集合 imageList-->
 <#assign imageList=goodsDesc.itemImages?eval>
@@ -87,8 +101,8 @@
             <div class="fr itemInfo-wrap">
 
                 <div class="sku-name">
-                    <#-- 商品 SPU 名称 -->
-                    <h4>${goods.goodsName}</h4>
+                    <#-- 商品 SKU 名称 -->
+                    <h4>{{ sku.title }}</h4>
                 </div>
 
                 <div class="news">
@@ -103,8 +117,8 @@
                         </div>
                         <div class="fl price">
                             <i>¥</i>
-<#--                            商品 SPU 价格-->
-                            <em>${goods.price}</em>
+<#--                            商品 SKU 价格-->
+                            <em>{{ sku.price }}</em>
                             <span>降价通知</span>
                         </div>
                         <div class="fr remark">

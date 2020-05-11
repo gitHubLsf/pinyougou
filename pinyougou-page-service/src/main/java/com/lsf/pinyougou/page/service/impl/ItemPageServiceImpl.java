@@ -4,8 +4,10 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.lsf.pinyougou.dao.TbGoodsDao;
 import com.lsf.pinyougou.dao.TbGoodsDescDao;
 import com.lsf.pinyougou.dao.TbItemCatDao;
+import com.lsf.pinyougou.dao.TbItemDao;
 import com.lsf.pinyougou.page.service.ItemPageService;
 import com.lsf.pinyougou.pojo.TbGoods;
+import com.lsf.pinyougou.pojo.TbItem;
 import com.lsf.pinyougou.pojogroup.TbItemCats;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -17,6 +19,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -57,6 +60,15 @@ public class ItemPageServiceImpl implements ItemPageService {
             TbItemCats tbItemCats3 = itemCatDao.queryById(goods.getCategory3Id());
             if (tbItemCats1 != null)
                 map.put("itemCat3", tbItemCats3.getName());
+
+            // 查询商品对应的 SKU 列表
+            TbItem item = new TbItem();
+            item.setGoodsId(goodsId);
+            item.setStatus("1");    // SKU 的状态必须为正常
+            // 按照 SKU 是否默认（is_default） 字段降序排列，保证查询结果的第一条记录为默认 SKU
+            List<TbItem> itemList = itemDao.queryAllSortByIsDefault(item);
+            map.put("itemList", itemList);
+
 
             // 输出对象
             writer = new PrintWriter(pageDir + goodsId + ".html");
@@ -99,5 +111,9 @@ public class ItemPageServiceImpl implements ItemPageService {
 
     @Autowired
     private TbItemCatDao itemCatDao;
+
+
+    @Autowired
+    private TbItemDao itemDao;
 
 }
