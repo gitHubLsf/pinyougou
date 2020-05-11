@@ -3,7 +3,6 @@ package com.lsf.pinyougou.solrUtil;
 import com.alibaba.fastjson.JSON;
 import com.lsf.pinyougou.dao.TbItemDao;
 import com.lsf.pinyougou.pojo.TbItem;
-import org.opensaml.ws.wssecurity.impl.SaltImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -15,14 +14,9 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Map;
 
+
 @Component
 public class SolrUtil {
-
-    @Autowired
-    private TbItemDao tbItemDao;
-
-    @Autowired
-    private SolrTemplate solrTemplate;
 
     /**
      * 查询全部 SKU，状态 status 字段为 1
@@ -60,11 +54,13 @@ public class SolrUtil {
         solrTemplate.commit();
     }
 
+
     public void delete() {
         Query query = new SimpleQuery("*:*");
         solrTemplate.delete(query);
         solrTemplate.commit();
     }
+
 
     public static void main(String[] args) {
         // 加载 spring 配置文件
@@ -74,11 +70,19 @@ public class SolrUtil {
         SolrUtil solrUtil = (SolrUtil)context.getBean("solrUtil");
 
         // 查询所有 SKU
-        //solrUtil.queryAllItem();
+        solrUtil.queryAllItem();
 
         //solrUtil.delete();
 
         // 批量导入 SKU 到 solr 中
-        solrUtil.batchImportItemToSolr();
+        //solrUtil.batchImportItemToSolr();
     }
+
+
+    @Autowired
+    private TbItemDao tbItemDao;
+
+
+    @Autowired
+    private SolrTemplate solrTemplate;
 }

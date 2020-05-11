@@ -8,16 +8,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+
 /**
  * 广告控制层
  */
 @RestController
 @RequestMapping("/content")
 public class ContentController {
-
-    @Reference
-    private ContentService contentService;
-
 
     /**
      * 查询指定广告分类 ID 下的所有广告
@@ -26,4 +23,8 @@ public class ContentController {
     public List<TbContent> findByContentCategoryId(Long categoryId) {
         return contentService.findByContentCategoryId(categoryId);
     }
+
+
+    @Reference
+    private ContentService contentService;
 }

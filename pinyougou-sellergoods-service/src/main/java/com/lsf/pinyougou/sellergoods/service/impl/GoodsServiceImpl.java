@@ -304,10 +304,11 @@ public class GoodsServiceImpl implements GoodsService {
     @Autowired
     private TbItemCatDao tbItemCatDao;
 
+
     @Autowired
     private TbSellerDao tbSellerDao;
 
+
     @Autowired
     private TbItemDao tbItemDao;
-
 }

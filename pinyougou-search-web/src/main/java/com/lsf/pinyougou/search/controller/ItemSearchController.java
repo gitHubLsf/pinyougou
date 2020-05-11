@@ -16,13 +16,13 @@ import java.util.Map;
 @RequestMapping("/itemSearch")
 public class ItemSearchController {
 
-    @Reference
-    //@Reference(timeout = 5000)
-    private ItemSearchService itemSearchService;
-
     @RequestMapping("/search.do")
     public Map<String, Object> search(@RequestBody Map searchMap) {
         return itemSearchService.search(searchMap);
     }
 
+
+    @Reference
+    //@Reference(timeout = 5000)
+    private ItemSearchService itemSearchService;
 }

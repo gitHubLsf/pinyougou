@@ -93,5 +93,4 @@ public class GoodsDescServiceImpl implements GoodsDescService {
      */
     @Autowired
     private TbGoodsDescDao tbGoodsDescDao;
-
 }

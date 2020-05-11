@@ -15,21 +15,13 @@ import vo.Result;
 
 /**
  * 商家管理控制层
- *
- * controller
  */
 @RestController
 @RequestMapping("/seller")
 public class SellerController {
 
-    @Reference
-    private SellerService sellerService;
-
-
     /**
      * 返回全部列表
-     *
-     * @return
      */
     @RequestMapping("/findAll.do")
     public List<TbSeller> findAll() {
@@ -39,8 +31,6 @@ public class SellerController {
 
     /**
      * 无条件分页查询
-     *
-     * @return
      */
     @RequestMapping("/findPage.do")
     public PageResult findPage(int page, int rows) {
@@ -50,11 +40,6 @@ public class SellerController {
 
     /**
      * 多条件分页查询
-     *
-     * @param seller
-     * @param page
-     * @param rows
-     * @return
      */
     @RequestMapping("/search.do")
     public PageResult findPageLimit(@RequestBody TbSeller seller, int page, int rows) {
@@ -64,9 +49,6 @@ public class SellerController {
 
     /**
      * 添加，商家入驻申请
-     *
-     * @param seller
-     * @return
      */
     @RequestMapping("/add.do")
     public Result add(@RequestBody TbSeller seller) {
@@ -81,9 +63,6 @@ public class SellerController {
 
     /**
      * 修改
-     *
-     * @param seller
-     * @return
      */
     @RequestMapping("/update.do")
     public Result update(@RequestBody TbSeller seller) {
@@ -98,9 +77,6 @@ public class SellerController {
 
     /**
      * 根据 ID 获取实体
-     *
-     * @param id
-     * @return
      */
     @RequestMapping("/findOne.do")
     public TbSeller findOne(String id) {
@@ -110,9 +86,6 @@ public class SellerController {
 
     /**
      * 批量删除
-     *
-     * @param ids
-     * @return
      */
     @RequestMapping("/batchDelete.do")
     public Result batchDelete(Long[] ids) {
@@ -124,4 +97,7 @@ public class SellerController {
         }
     }
 
+
+    @Reference
+    private SellerService sellerService;
 }

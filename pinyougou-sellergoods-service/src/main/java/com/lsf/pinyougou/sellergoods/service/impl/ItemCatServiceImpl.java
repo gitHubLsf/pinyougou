@@ -173,5 +173,4 @@ public class ItemCatServiceImpl implements ItemCatService {
 
     @Autowired
     private RedisTemplate redisTemplate;
-
 }

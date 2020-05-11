@@ -13,21 +13,12 @@ import vo.PageResult;
 import vo.Result;
 
 
-/**
- * controller
- */
 @RestController
 @RequestMapping("/goodsDesc")
 public class GoodsDescController {
 
-    @Reference
-    private GoodsDescService goodsDescService;
-
-
     /**
      * 返回全部列表
-     *
-     * @return
      */
     @RequestMapping("/findAll.do")
     public List<TbGoodsDesc> findAll() {
@@ -37,8 +28,6 @@ public class GoodsDescController {
 
     /**
      * 无条件分页查询
-     *
-     * @return
      */
     @RequestMapping("/findPage.do")
     public PageResult findPage(int page, int rows) {
@@ -48,11 +37,6 @@ public class GoodsDescController {
 
     /**
      * 多条件分页查询
-     *
-     * @param goodsDesc
-     * @param page
-     * @param rows
-     * @return
      */
     @RequestMapping("/search.do")
     public PageResult findPageLimit(@RequestBody TbGoodsDesc goodsDesc, int page, int rows) {
@@ -62,9 +46,6 @@ public class GoodsDescController {
 
     /**
      * 添加
-     *
-     * @param goodsDesc
-     * @return
      */
     @RequestMapping("/add.do")
     public Result add(@RequestBody TbGoodsDesc goodsDesc) {
@@ -79,9 +60,6 @@ public class GoodsDescController {
 
     /**
      * 修改
-     *
-     * @param goodsDesc
-     * @return
      */
     @RequestMapping("/update.do")
     public Result update(@RequestBody TbGoodsDesc goodsDesc) {
@@ -96,9 +74,6 @@ public class GoodsDescController {
 
     /**
      * 根据 ID 获取实体
-     *
-     * @param id
-     * @return
      */
     @RequestMapping("/findOne.do")
     public TbGoodsDesc findOne(long id) {
@@ -108,9 +83,6 @@ public class GoodsDescController {
 
     /**
      * 批量删除
-     *
-     * @param ids
-     * @return
      */
     @RequestMapping("/batchDelete.do")
     public Result batchDelete(Long[] ids) {
@@ -122,4 +94,7 @@ public class GoodsDescController {
         }
     }
 
+
+    @Reference
+    private GoodsDescService goodsDescService;
 }

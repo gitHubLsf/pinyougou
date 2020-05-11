@@ -94,5 +94,4 @@ public class SpecificationOptionServiceImpl implements SpecificationOptionServic
      */
     @Autowired
     private TbSpecificationOptionDao tbSpecificationOptionDao;
-
 }

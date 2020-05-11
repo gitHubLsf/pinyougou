@@ -190,5 +190,4 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 
     @Autowired
     private RedisTemplate redisTemplate;
-
 }

@@ -14,9 +14,6 @@ import java.util.List;
 
 /**
  * 自定义认证类，实现 UserDetailsService 接口，实现 loadUserByUsername 方法
- *
- * @author linshaofeng
- * @date 2020/2/16 14:07
  */
 public class UserDetailsServiceImpl implements UserDetailsService {
 
@@ -26,9 +23,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      */
     private SellerService sellerService;
 
+
     public void setSellerService(SellerService sellerService) {
         this.sellerService = sellerService;
     }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

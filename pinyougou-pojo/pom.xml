@@ -20,7 +20,6 @@
     </properties>
 
     <dependencies>
-
 <!--        solr 相关的依赖-->
         <dependency>
             <groupId>org.springframework.data</groupId>
@@ -34,5 +33,4 @@
             <version>${lombok.version}</version>
         </dependency>
     </dependencies>
-
 </project>

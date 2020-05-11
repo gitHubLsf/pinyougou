@@ -318,5 +318,4 @@ public class ItemSearchServiceImpl implements ItemSearchService {
 
     @Autowired
     private RedisTemplate redisTemplate;
-
 }

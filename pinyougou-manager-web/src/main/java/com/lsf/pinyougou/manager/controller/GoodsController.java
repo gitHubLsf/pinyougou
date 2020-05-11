@@ -90,5 +90,4 @@ public class GoodsController {
 
     @Reference(timeout = 40000)
     private ItemPageService itemPageService;
-
 }

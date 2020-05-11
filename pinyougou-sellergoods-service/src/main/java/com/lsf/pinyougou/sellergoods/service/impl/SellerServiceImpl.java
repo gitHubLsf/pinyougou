@@ -107,5 +107,4 @@ public class SellerServiceImpl implements SellerService {
      */
     @Autowired
     private TbSellerDao tbSellerDao;
-
 }

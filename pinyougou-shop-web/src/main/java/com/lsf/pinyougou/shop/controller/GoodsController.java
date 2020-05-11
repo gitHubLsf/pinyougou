@@ -173,5 +173,4 @@ public class GoodsController {
 
     @Reference(timeout = 100000)
     private ItemSearchService itemSearchService;
-
 }

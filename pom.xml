@@ -28,7 +28,6 @@
     </modules>
     <packaging>pom</packaging>
 
-
     <!-- 集中定义依赖版本号 -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -109,6 +108,7 @@
             <artifactId>zkclient</artifactId>
             <version>${zkclient.version}</version>
         </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -135,6 +135,7 @@
             <version>2.5</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-all</artifactId>
@@ -142,16 +143,6 @@
         </dependency>
 
         <!-- 身份验证 -->
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-web</artifactId>
-            <version>4.1.0.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-config</artifactId>
-            <version>4.1.0.RELEASE</version>
-        </dependency>
         <dependency>
             <groupId>com.github.penggle</groupId>
             <artifactId>kaptcha</artifactId>
@@ -180,19 +171,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
-<!--        &lt;!&ndash; solr 客户端 &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.solr</groupId>-->
-<!--            <artifactId>solr-solrj</artifactId>-->
-<!--            <version>${solrj.version}</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>com.janeluo</groupId>
             <artifactId>ikanalyzer</artifactId>
             <version>${ik.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore</artifactId>

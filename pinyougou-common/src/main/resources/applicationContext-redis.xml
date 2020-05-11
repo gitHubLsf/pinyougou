@@ -2,30 +2,24 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xmlns:cache="http://www.springframework.org/schema/cache"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/context
-            http://www.springframework.org/schema/context/spring-context.xsd
-            http://www.springframework.org/schema/mvc
-            http://www.springframework.org/schema/mvc/spring-mvc.xsd
-            http://www.springframework.org/schema/cache
-            http://www.springframework.org/schema/cache/spring-cache.xsd">
+            http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:property-placeholder location="classpath*:redis-config.properties" order="2" ignore-unresolvable="true"/>
 
     <!-- jedis 相关配置，包含了连接池 -->
-<!--    注意：此处的连接池中，每一个池对象是 jedis 实例，这个实例用于连接数据库-->
-<!--    类似于 mysql 中的连接池，每一个池对象是 connection 连接，用于连接数据库-->
+    <!--    注意：此处的连接池中，每一个池对象是 jedis 实例，这个实例用于连接数据库-->
+    <!--    类似于 mysql 中的连接池，每一个池对象是 connection 连接，用于连接数据库-->
     <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
-<!--        最大空闲数-->
+        <!--        最大空闲数-->
         <property name="maxIdle" value="${redis.maxIdle}"/>
 
-<!--        连接时的最大等待毫秒数-->
+        <!--        连接时的最大等待毫秒数-->
         <property name="maxWaitMillis" value="${redis.maxWait}"/>
 
-<!--        在提取一个jedis实例时，是否提前进行验证操作；如果为true，则得到的jedis实例均是可用的-->
+        <!--        在提取一个jedis实例时，是否提前进行验证操作；如果为true，则得到的jedis实例均是可用的-->
         <property name="testOnBorrow" value="${redis.testOnBorrow}"/>
     </bean>
 
@@ -33,11 +27,9 @@
           class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
           p:host-name="${redis.host}"
           p:port="${redis.port}"
-          p:password="${redis.pass}"
           p:pool-config-ref="poolConfig"/>
 
     <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
         <property name="connectionFactory" ref="JedisConnectionFactory"/>
     </bean>
-
 </beans>

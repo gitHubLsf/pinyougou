@@ -13,21 +13,12 @@ import java.util.List;
 import java.util.Map;
 
 
-/**
- * controller
- */
 @RestController
 @RequestMapping("/typeTemplate")
 public class TypeTemplateController {
 
-    @Reference
-    private TypeTemplateService typeTemplateService;
-
-
     /**
      * 返回全部列表
-     *
-     * @return
      */
     @RequestMapping("/findAll.do")
     public List<TbTypeTemplate> findAll() {
@@ -37,8 +28,6 @@ public class TypeTemplateController {
 
     /**
      * 无条件分页查询
-     *
-     * @return
      */
     @RequestMapping("/findPage.do")
     public PageResult findPage(int page, int rows) {
@@ -48,11 +37,6 @@ public class TypeTemplateController {
 
     /**
      * 多条件分页查询模板数据
-     *
-     * @param typeTemplate
-     * @param page
-     * @param size
-     * @return
      */
     @RequestMapping("/search.do")
     public PageResult findPageLimit(@RequestBody TbTypeTemplate typeTemplate, int page, int size) {
@@ -62,9 +46,6 @@ public class TypeTemplateController {
 
     /**
      * 添加
-     *
-     * @param typeTemplate
-     * @return
      */
     @RequestMapping("/add.do")
     public Result add(@RequestBody TbTypeTemplate typeTemplate) {
@@ -79,9 +60,6 @@ public class TypeTemplateController {
 
     /**
      * 修改模板数据
-     *
-     * @param typeTemplate
-     * @return
      */
     @RequestMapping("/update.do")
     public Result update(@RequestBody TbTypeTemplate typeTemplate) {
@@ -96,9 +74,6 @@ public class TypeTemplateController {
 
     /**
      * 根据 ID 获取实体
-     *
-     * @param id
-     * @return
      */
     @RequestMapping("/findOne.do")
     public TbTypeTemplate findOne(long id) {
@@ -108,9 +83,6 @@ public class TypeTemplateController {
 
     /**
      * 批量删除
-     *
-     * @param ids
-     * @return
      */
     @RequestMapping("/batchDelete.do")
     public Result batchDelete(Long[] ids) {
@@ -125,8 +97,6 @@ public class TypeTemplateController {
 
     /**
      * 添加商品分类时，查询所有类型模板列表
-     *
-     * @return
      */
     @RequestMapping("/findTypeList.do")
     public List<Map> findTypeList() {
@@ -143,11 +113,13 @@ public class TypeTemplateController {
      * 集合里的元素是 Map，用来保存对象
      *
      * @param id    模板 ID
-     * @return
      */
     @RequestMapping("/findSpecList.do")
     public List<Map> findSpecList(Long id) {
         return typeTemplateService.findSpecList(id);
     }
 
+
+    @Reference
+    private TypeTemplateService typeTemplateService;
 }

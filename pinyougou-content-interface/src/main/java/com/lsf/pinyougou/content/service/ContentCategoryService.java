@@ -28,5 +28,4 @@ public interface ContentCategoryService {
 
 
     void batchDelete(Long[] ids);
-
 }

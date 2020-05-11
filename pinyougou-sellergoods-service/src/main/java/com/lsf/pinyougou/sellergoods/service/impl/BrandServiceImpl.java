@@ -112,5 +112,4 @@ public class BrandServiceImpl implements BrandService {
      */
     @Autowired
     private TbBrandDao tbBrandDao;
-
 }

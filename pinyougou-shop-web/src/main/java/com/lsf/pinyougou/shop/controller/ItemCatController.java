@@ -20,14 +20,8 @@ import java.util.List;
 @RequestMapping("/itemCat")
 public class ItemCatController {
 
-    @Reference
-    private ItemCatService itemCatService;
-
-
     /**
      * 返回全部列表
-     *
-     * @return
      */
     @RequestMapping("/findAll.do")
     public List<TbItemCat> findAll() {
@@ -37,8 +31,6 @@ public class ItemCatController {
 
     /**
      * 无条件分页查询
-     *
-     * @return
      */
     @RequestMapping("/findPage.do")
     public PageResult findPage(int page, int rows) {
@@ -48,11 +40,6 @@ public class ItemCatController {
 
     /**
      * 多条件分页查询
-     *
-     * @param itemCat
-     * @param page
-     * @param rows
-     * @return
      */
     @RequestMapping("/search.do")
     public PageResult findPageLimit(@RequestBody TbItemCat itemCat, int page, int rows) {
@@ -62,9 +49,6 @@ public class ItemCatController {
 
     /**
      * 添加商品分类
-     *
-     * @param itemCat
-     * @return
      */
     @RequestMapping("/add.do")
     public Result add(@RequestBody TbItemCat itemCat) {
@@ -79,9 +63,6 @@ public class ItemCatController {
 
     /**
      * 修改
-     *
-     * @param itemCat
-     * @return
      */
     @RequestMapping("/update.do")
     public Result update(@RequestBody TbItemCat itemCat) {
@@ -96,9 +77,6 @@ public class ItemCatController {
 
     /**
      * 根据 ID 查询某种商品分类
-     *
-     * @param id
-     * @return
      */
     @RequestMapping("/findOne.do")
     public TbItemCats findOne(long id) {
@@ -108,9 +86,6 @@ public class ItemCatController {
 
     /**
      * 批量删除商品分类
-     *
-     * @param ids
-     * @return
      */
     @RequestMapping("/batchDelete.do")
     public Result batchDelete(Long[] ids) {
@@ -125,13 +100,13 @@ public class ItemCatController {
 
     /**
      * 根据上级 ID 查询商品分类
-     *
-     * @param parentId
-     * @return
      */
     @RequestMapping("/findByParentId.do")
     public List<TbItemCat> findByParentId(Long parentId) {
         return itemCatService.findByParentId(parentId);
     }
 
+
+    @Reference
+    private ItemCatService itemCatService;
 }

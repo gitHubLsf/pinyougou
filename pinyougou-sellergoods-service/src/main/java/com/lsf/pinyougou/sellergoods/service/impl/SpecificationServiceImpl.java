@@ -145,5 +145,4 @@ public class SpecificationServiceImpl implements SpecificationService {
 
     @Autowired
     private TbSpecificationOptionDao tbSpecificationOptionDao;
-
 }
