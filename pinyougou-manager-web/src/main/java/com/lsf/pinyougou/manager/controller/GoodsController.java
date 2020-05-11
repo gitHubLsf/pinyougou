@@ -49,7 +49,11 @@ public class GoodsController {
         try {
             goodsService.updateGoodStatus(ids, status);
             // 如果是修改商品的审核状态为已审核 1，需要将审核通过的商品的 SKU 导入到 solr 中
+            // 同时生成商品详情页静态页面
             if ("1".equals(status)) {
+                // 生成商品详情页静态页面
+                itemPageService.getItemHtml(ids);
+
                 // 批量根据商品 SPU ID 查询商品 SKU，SKU 的 status 必须为 "1"，代表 SKU 状态正常
                 List<TbItem> itemList = goodsService.batchSearchItemByGoodId(ids, "1");
                 // 将查询到的 SKU 数据导入到 solr 中
@@ -61,11 +65,6 @@ public class GoodsController {
         }
     }
 
-
-    @RequestMapping("/getItemHtml.do")
-    public void getItemHtml(Long goodsId) {
-        itemPageService.getItemHtml(goodsId);
-    }
 
     /**
      * 批量删除商品，只进行逻辑删除

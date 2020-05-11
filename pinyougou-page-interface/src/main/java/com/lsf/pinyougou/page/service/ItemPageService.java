@@ -6,8 +6,8 @@ package com.lsf.pinyougou.page.service;
 public interface ItemPageService {
 
     /**
-     * 根据商品 SPU ID 生成商品详情页
+     * 批量根据商品 SPU ID 生成商品详情页
      */
-    boolean getItemHtml(Long goodsId);
+    void getItemHtml(Long[] ids);
 
 }

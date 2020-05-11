@@ -30,63 +30,63 @@ import java.util.Map;
 public class ItemPageServiceImpl implements ItemPageService {
 
     /**
-     * 根据商品 SPU ID 生成商品详情页
+     * 批量根据商品 SPU ID 生成商品详情页
      */
     @Override
-    public boolean getItemHtml(Long goodsId) {
+    public void getItemHtml(Long[] ids) {
         Configuration configuration = freeMarkerConfigurer.getConfiguration();
         Writer writer = null;
-        try {
-            // 模板
-            Template template = configuration.getTemplate("item.ftl");
 
-            // 数据模型
-            Map<String, Object> map = new HashMap<>();
+        for (Long id : ids) {
+            try {
+                // 模板
+                Template template = configuration.getTemplate("item.ftl");
 
-            // 查询商品
-            TbGoods goods = goodsDao.queryById(goodsId);
-            map.put("goods", goods);
+                // 数据模型
+                Map<String, Object> map = new HashMap<>();
 
-            // 查询商品详情
-            map.put("goodsDesc", goodsDescDao.queryById(goodsId));
+                // 查询商品
+                TbGoods goods = goodsDao.queryById(id);
+                map.put("goods", goods);
 
-            // 查询商品所属的各级分类的名称
-            TbItemCats tbItemCats1 = itemCatDao.queryById(goods.getCategory1Id());
-            if (tbItemCats1 != null)
-                map.put("itemCat1", tbItemCats1.getName());
-            TbItemCats tbItemCats2 = itemCatDao.queryById(goods.getCategory2Id());
-            if (tbItemCats1 != null)
-                map.put("itemCat2", tbItemCats2.getName());
-            TbItemCats tbItemCats3 = itemCatDao.queryById(goods.getCategory3Id());
-            if (tbItemCats1 != null)
-                map.put("itemCat3", tbItemCats3.getName());
+                // 查询商品详情
+                map.put("goodsDesc", goodsDescDao.queryById(id));
 
-            // 查询商品对应的 SKU 列表
-            TbItem item = new TbItem();
-            item.setGoodsId(goodsId);
-            item.setStatus("1");    // SKU 的状态必须为正常
-            // 按照 SKU 是否默认（is_default） 字段降序排列，保证查询结果的第一条记录为默认 SKU
-            List<TbItem> itemList = itemDao.queryAllSortByIsDefault(item);
-            map.put("itemList", itemList);
+                // 查询商品所属的各级分类的名称
+                TbItemCats tbItemCats1 = itemCatDao.queryById(goods.getCategory1Id());
+                if (tbItemCats1 != null)
+                    map.put("itemCat1", tbItemCats1.getName());
+                TbItemCats tbItemCats2 = itemCatDao.queryById(goods.getCategory2Id());
+                if (tbItemCats1 != null)
+                    map.put("itemCat2", tbItemCats2.getName());
+                TbItemCats tbItemCats3 = itemCatDao.queryById(goods.getCategory3Id());
+                if (tbItemCats1 != null)
+                    map.put("itemCat3", tbItemCats3.getName());
 
+                // 查询商品对应的 SKU 列表
+                TbItem item = new TbItem();
+                item.setGoodsId(id);
+                item.setStatus("1");    // SKU 的状态必须为正常
+                // 按照 SKU 是否默认（is_default） 字段降序排列，保证查询结果的第一条记录为默认 SKU
+                List<TbItem> itemList = itemDao.queryAllSortByIsDefault(item);
+                map.put("itemList", itemList);
 
-            // 输出对象
-            writer = new PrintWriter(pageDir + goodsId + ".html");
-            template.process(map, writer);
-            writer.close();
+                // 输出对象
+                writer = new PrintWriter(pageDir + id + ".html");
+                template.process(map, writer);
+                writer.close();
 
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+                if (writer != null) {
+                    try {
+                        writer.close();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                 }
             }
         }
-        return false;
     }
 
 
