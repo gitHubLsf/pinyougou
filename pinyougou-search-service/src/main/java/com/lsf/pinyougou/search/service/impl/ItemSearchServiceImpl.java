@@ -1,6 +1,7 @@
 package com.lsf.pinyougou.search.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.alibaba.fastjson.JSON;
 import com.lsf.pinyougou.pojo.TbItem;
 import com.lsf.pinyougou.search.service.ItemSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -297,6 +298,16 @@ public class ItemSearchServiceImpl implements ItemSearchService {
 
     // 批量导入商品 SKU 到 solr 中
     public void batchImportItem(List<TbItem> itemList) {
+        for (TbItem item : itemList) {
+            // 查询 spec 字段，是 json 字符串
+            String spec = item.getSpec();
+            // 将其转换成对象形式
+            Map specMap
+                    = JSON.parseObject(spec, Map.class);
+            // 填充到 TbItem 中的 specMap 字段，它映射 solr 中的 item_spec_* 动态域
+            item.setSpecMap(specMap);
+        }
+
         solrTemplate.saveBeans(itemList);
         solrTemplate.commit();
     }

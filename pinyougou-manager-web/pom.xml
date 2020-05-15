@@ -16,6 +16,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
+        <activemq.version>5.11.2</activemq.version>
+        <spring.version>4.2.4.RELEASE</spring.version>
     </properties>
 
     <dependencies>
@@ -40,12 +42,14 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
-        <!--        依赖搜索服务接口模块-->
-        <dependency>
-            <groupId>com.lsf.pinyougou</groupId>
-            <artifactId>pinyougou-search-interface</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+        <!--        依赖搜索服务接口模块
+                此处解耦搜索服务依赖，改用消息队列的异步调用
+        -->
+<!--        <dependency>-->
+<!--            <groupId>com.lsf.pinyougou</groupId>-->
+<!--            <artifactId>pinyougou-search-interface</artifactId>-->
+<!--            <version>1.0-SNAPSHOT</version>-->
+<!--        </dependency>-->
 
 <!--        依赖商品详情页服务接口模块-->
         <dependency>
@@ -58,12 +62,24 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
-            <version>4.1.0.RELEASE</version>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
-            <version>4.1.0.RELEASE</version>
+            <version>${spring.version}</version>
+        </dependency>
+
+<!--        activeMQ 和 spring-jms 的依赖-->
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-client</artifactId>
+            <version>${activemq.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jms</artifactId>
+            <version>${spring.version}</version>
         </dependency>
     </dependencies>
 </project>

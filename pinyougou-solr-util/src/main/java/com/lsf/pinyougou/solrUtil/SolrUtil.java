@@ -65,17 +65,17 @@ public class SolrUtil {
     public static void main(String[] args) {
         // 加载 spring 配置文件
         ApplicationContext context
-                = new ClassPathXmlApplicationContext("classpath*:applicationContext*.xml");
+                = new ClassPathXmlApplicationContext("classpath*:spring-*.xml");
 
         SolrUtil solrUtil = (SolrUtil)context.getBean("solrUtil");
 
         // 查询所有 SKU
-        solrUtil.queryAllItem();
+        //solrUtil.queryAllItem();
 
         //solrUtil.delete();
 
         // 批量导入 SKU 到 solr 中
-        //solrUtil.batchImportItemToSolr();
+        solrUtil.batchImportItemToSolr();
     }
 
 

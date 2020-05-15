@@ -1,18 +1,25 @@
 package com.lsf.pinyougou.manager.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.fastjson.JSON;
 import com.lsf.pinyougou.page.service.ItemPageService;
 import com.lsf.pinyougou.pojo.TbGoods;
 import com.lsf.pinyougou.pojo.TbItem;
 import com.lsf.pinyougou.pojogroup.Goods;
-import com.lsf.pinyougou.search.service.ItemSearchService;
 import com.lsf.pinyougou.sellergoods.service.GoodsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vo.PageResult;
 import vo.Result;
 
+import javax.jms.Destination;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.Session;
 import java.util.List;
 
 
@@ -56,9 +63,24 @@ public class GoodsController {
 
                 // 批量根据商品 SPU ID 查询商品 SKU，SKU 的 status 必须为 "1"，代表 SKU 状态正常
                 List<TbItem> itemList = goodsService.batchSearchItemByGoodId(ids, "1");
+
                 // 将查询到的 SKU 数据导入到 solr 中
-                itemSearchService.batchImportItem(itemList);
+                // 此处是同步调用，修改成消息队列的异步调用
+                //itemSearchService.batchImportItem(itemList);
+
+                // 将查询到的 SKU 数据导入到 solr 中
+                // 此处采用消息传递机制进行异步调用即可
+                // 先将要导入的数据 itemList 集合转换成 json 字符串，然后将其作为字符串类型的消息正文格式进行消息发送
+                final String itemListString = JSON.toJSONString(itemList);
+                jmsTemplate.send(queueSolrDestination, new MessageCreator() {
+
+                    @Override
+                    public Message createMessage(Session session) throws JMSException {
+                        return session.createTextMessage(itemListString);
+                    }
+                });
             }
+
             return new Result(true, "修改成功");
         } catch (Exception e) {
             return new Result(false, "修改失败");
@@ -84,10 +106,19 @@ public class GoodsController {
     private GoodsService goodsService;
 
 
-    @Reference(timeout = 40000)
-    private ItemSearchService itemSearchService;
+    // 此处解耦搜索服务模块，改成消息队列的异步调用
+    //@Reference(timeout = 40000)
+    //private ItemSearchService itemSearchService;
+
+
+    @Autowired
+    private JmsTemplate jmsTemplate;
 
 
     @Reference(timeout = 40000)
     private ItemPageService itemPageService;
+
+
+    @Autowired
+    private Destination queueSolrDestination;
 }
