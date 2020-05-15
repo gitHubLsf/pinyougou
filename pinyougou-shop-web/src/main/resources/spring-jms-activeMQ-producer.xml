@@ -22,6 +22,11 @@
         <property name="connectionFactory" ref="connectionFactory"/>
     </bean>
 
+    <!--这是点对点消息传递类型的队列，注册到 activeMQ 服务器上的队列名称为 pinyougou-queue-solr-delete -->
+    <bean id="queueSolrDeleteDestination" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg value="pinyougou-queue-solr-delete"/>
+    </bean>
+
     <!--这是点对点消息传递类型的队列，注册到 activeMQ 服务器上的队列名称为 pinyougou-queue-solr-import -->
     <bean id="queueSolrImportDestination" class="org.apache.activemq.command.ActiveMQQueue">
         <constructor-arg value="pinyougou-queue-solr-import"/>

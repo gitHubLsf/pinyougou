@@ -15,15 +15,27 @@
         <property name="targetConnectionFactory" ref="targetConnectionFactory"/>
     </bean>
 
-    <!--点对点消息传递类型队列，队列的名称是 queue_text-->
-    <bean id="queueSolrDestination" class="org.apache.activemq.command.ActiveMQQueue">
-        <constructor-arg value="pinyougou-queue-solr"/>
+    <!--点对点消息传递类型队列，队列的名称是 pinyougou-queue-solr-import，用于运营商后台导入数据到 solr-->
+    <bean id="queueSolrImportDestination" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg value="pinyougou-queue-solr-import"/>
     </bean>
 
-    <!-- 消息监听容器 -->
+    <!-- 消息监听容器，监听导入数据到 solr 的消息队列 -->
     <bean class="org.springframework.jms.listener.DefaultMessageListenerContainer">
         <property name="connectionFactory" ref="connectionFactory"/>
-        <property name="destination" ref="queueSolrDestination"/>
-        <property name="messageListener" ref="itemSearchListener"/>
+        <property name="destination" ref="queueSolrImportDestination"/>
+        <property name="messageListener" ref="itemImportListener"/>
+    </bean>
+
+    <!--点对点消息传递类型队列，队列的名称是 pinyougou-queue-solr-delete，用于从 solr 中删除数据-->
+    <bean id="queueSolrDeleteDestination" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg value="pinyougou-queue-solr-delete"/>
+    </bean>
+
+    <!-- 消息监听容器，监听导入数据到 solr 的消息队列 -->
+    <bean class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="destination" ref="queueSolrDeleteDestination"/>
+        <property name="messageListener" ref="itemDeleteListener"/>
     </bean>
 </beans>

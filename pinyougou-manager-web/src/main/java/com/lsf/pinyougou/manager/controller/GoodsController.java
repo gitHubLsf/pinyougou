@@ -20,6 +20,7 @@ import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -72,7 +73,7 @@ public class GoodsController {
                 // 此处采用消息传递机制进行异步调用即可
                 // 先将要导入的数据 itemList 集合转换成 json 字符串，然后将其作为字符串类型的消息正文格式进行消息发送
                 final String itemListString = JSON.toJSONString(itemList);
-                jmsTemplate.send(queueSolrDestination, new MessageCreator() {
+                jmsTemplate.send(queueSolrImportDestination, new MessageCreator() {
 
                     @Override
                     public Message createMessage(Session session) throws JMSException {
@@ -115,10 +116,13 @@ public class GoodsController {
     private JmsTemplate jmsTemplate;
 
 
+    /**
+     * activeMQ 中运营商后台导入数据到solr的队列
+     */
+    @Autowired
+    private Destination queueSolrImportDestination;
+
+
     @Reference(timeout = 40000)
     private ItemPageService itemPageService;
-
-
-    @Autowired
-    private Destination queueSolrDestination;
 }

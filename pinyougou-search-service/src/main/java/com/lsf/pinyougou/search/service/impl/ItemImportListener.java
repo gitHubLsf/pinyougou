@@ -14,10 +14,10 @@ import java.util.List;
 
 
 /**
- * 商品搜索服务的 activeMQ 监听器
+ * 导入数据到 solr 的 activeMQ 监听器
  */
 @Component
-public class ItemSearchListener implements MessageListener {
+public class ItemImportListener implements MessageListener {
 
     /**
      * 此处为本地依赖

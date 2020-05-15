@@ -1,13 +1,14 @@
 package com.lsf.pinyougou.shop.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
+import com.alibaba.fastjson.JSON;
 import com.lsf.pinyougou.pojo.TbItem;
 import com.lsf.pinyougou.pojogroup.Goods;
-import com.lsf.pinyougou.search.service.ItemSearchService;
 import com.lsf.pinyougou.sellergoods.service.GoodsService;
-import org.springframework.data.solr.core.SolrTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,11 @@ import com.lsf.pinyougou.pojo.TbGoods;
 
 import vo.PageResult;
 import vo.Result;
+
+import javax.jms.Destination;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.Session;
 
 
 @RestController
@@ -101,9 +107,21 @@ public class GoodsController {
             goodsService.update(goods);
 
             // 删除 solr 中，商品对应的 SKU
-            Long[] ids = new Long[1];
+            final Long[] ids = new Long[1];
             ids[0] = goods.getTbGoods().getId();
-            itemSearchService.batchDeleteItem(Arrays.asList(ids));
+
+            // 此处改用基于消息队列的异步调用
+            //itemSearchService.batchDeleteItem(Arrays.asList(ids));
+
+            jmsTemplate.send(queueSolrDeleteDestination, new MessageCreator() {
+
+                @Override
+                public Message createMessage(Session session) throws JMSException {
+                    // 因为 ids 是 Long 类型的数组，是可序列化的对象，所以转换成对象类型的消息格式发送
+                    return session.createObjectMessage(ids);
+                }
+            });
+
             return new Result(true, "修改成功");
         } catch (Exception e) {
             return new Result(false, "修改失败");
@@ -124,12 +142,23 @@ public class GoodsController {
      * 商家批量删除商品
      */
     @RequestMapping("/batchDelete.do")
-    public Result batchDelete(Long[] ids) {
+    public Result batchDelete(final Long[] ids) {
         try {
             // 删除数据库中的商品
             goodsService.batchDelete(ids);
+
             // 删除 solr 中的商品
-            itemSearchService.batchDeleteItem(Arrays.asList(ids));
+            // 此处改为基于消息队列的异步调用
+            // itemSearchService.batchDeleteItem(Arrays.asList(ids));
+
+            jmsTemplate.send(queueSolrDeleteDestination, new MessageCreator() {
+
+                @Override
+                public Message createMessage(Session session) throws JMSException {
+                    return session.createObjectMessage(ids);
+                }
+            });
+
             return new Result(true, "删除成功");
         } catch (Exception e) {
             return new Result(false, "删除失败");
@@ -141,7 +170,7 @@ public class GoodsController {
      * 商家批量修改商品的上下架状态
      */
     @RequestMapping("/updateGoodMarketable.do")
-    public Result updateGoodMarketable(Long[] ids, String status) {
+    public Result updateGoodMarketable(final Long[] ids, String status) {
         if (ids == null || ids.length == 0)
             return new Result(false, "修改失败");
         try {
@@ -152,14 +181,38 @@ public class GoodsController {
             if ("1".equals(status)) {
                 // 往 solr 中添加 SKU
                 // 查询对应的 SKU
-                List<TbItem> itemList = goodsService.batchSearchItemByGoodId(ids, "1");
+                final List<TbItem> itemList = goodsService.batchSearchItemByGoodId(ids, "1");
+
                 // 保存到 solr 中
-                itemSearchService.batchImportItem(itemList);
+                // 此处改用基于消息队列的异步调用
+                //itemSearchService.batchImportItem(itemList);
+
+                jmsTemplate.send(queueSolrImportDestination, new MessageCreator() {
+
+                    @Override
+                    public Message createMessage(Session session) throws JMSException {
+
+                        // 将商品 SKU 集合转换成 json 字符串
+                        String itemListString = JSON.toJSONString(itemList);
+
+                        return session.createTextMessage(itemListString);
+                    }
+                });
             } else if ("0".equals(status)) {
                 // 下架商品
                 // 删除 solr 中相关的 SKU
-                itemSearchService.batchDeleteItem(Arrays.asList(ids));
+                // 此处改用基于消息队列的异步调用
+                //itemSearchService.batchDeleteItem(Arrays.asList(ids));
+
+                jmsTemplate.send(queueSolrDeleteDestination, new MessageCreator() {
+
+                    @Override
+                    public Message createMessage(Session session) throws JMSException {
+                        return session.createObjectMessage(ids);
+                    }
+                });
             }
+
             return new Result(true, "修改成功");
         } catch (Exception e) {
             return new Result(false, "修改失败");
@@ -171,6 +224,28 @@ public class GoodsController {
     private GoodsService goodsService;
 
 
-    @Reference(timeout = 100000)
-    private ItemSearchService itemSearchService;
+    /**
+     * 此处改为基于消息队列的异步调用
+     */
+    //@Reference(timeout = 100000)
+    //private ItemSearchService itemSearchService;
+
+
+    @Autowired
+    private JmsTemplate jmsTemplate;
+
+
+    /**
+     * activeMQ 上商家后台删除 solr 数据的消息队列
+     */
+    @Autowired
+    private Destination queueSolrDeleteDestination;
+
+
+    /**
+     * activeMQ 上导入数据到 solr 的消息队列
+     */
+    @Autowired
+    private Destination queueSolrImportDestination;
+
 }
