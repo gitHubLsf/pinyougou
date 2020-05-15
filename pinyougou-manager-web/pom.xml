@@ -51,12 +51,14 @@
 <!--            <version>1.0-SNAPSHOT</version>-->
 <!--        </dependency>-->
 
-<!--        依赖商品详情页服务接口模块-->
-        <dependency>
-            <groupId>com.lsf.pinyougou</groupId>
-            <artifactId>pinyougou-page-interface</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+<!--        依赖商品详情页服务接口模块
+            解除依赖，改为基于消息队列的异步调用
+-->
+<!--        <dependency>-->
+<!--            <groupId>com.lsf.pinyougou</groupId>-->
+<!--            <artifactId>pinyougou-page-interface</artifactId>-->
+<!--            <version>1.0-SNAPSHOT</version>-->
+<!--        </dependency>-->
 
         <!--        springSecurity 的依赖-->
         <dependency>

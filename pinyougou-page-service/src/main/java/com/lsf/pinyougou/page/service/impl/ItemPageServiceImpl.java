@@ -1,6 +1,5 @@
 package com.lsf.pinyougou.page.service.impl;
 
-import com.alibaba.dubbo.config.annotation.Service;
 import com.lsf.pinyougou.dao.TbGoodsDao;
 import com.lsf.pinyougou.dao.TbGoodsDescDao;
 import com.lsf.pinyougou.dao.TbItemCatDao;
@@ -13,6 +12,7 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import java.io.IOException;
@@ -25,6 +25,7 @@ import java.util.Map;
 
 /**
  * 商品详情页服务实现层
+ * 使用 spring 自带的 @Service 注解
  */
 @Service
 public class ItemPageServiceImpl implements ItemPageService {

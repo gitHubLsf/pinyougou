@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="
-	    http://www.springframework.org/schema/beans
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!-- 真正可以产生Connection的ConnectionFactory，由对应的 JMS服务厂商提供-->
@@ -16,19 +15,15 @@
         <property name="targetConnectionFactory" ref="targetConnectionFactory"/>
     </bean>
 
-    <!-- Spring提供的JMS工具类，它可以进行消息发送、接收等 -->
-    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
-        <!-- 这个connectionFactory对应的是我们定义的Spring提供的那个ConnectionFactory对象 -->
-        <property name="connectionFactory" ref="connectionFactory"/>
-    </bean>
-
-    <!--这是点对点消息传递类型的队列，注册到 activeMQ 服务器上的队列名称为 pinyougou-queue-solr-import -->
-    <bean id="queueSolrImportDestination" class="org.apache.activemq.command.ActiveMQQueue">
-        <constructor-arg value="pinyougou-queue-solr-import"/>
-    </bean>
-
-    <!--这是发布订阅消息传递类型的队列，注册到 activeMQ 服务器上的队列名称为 pinyougou-topic-page-create，用于商品详情静态页的生成 -->
+    <!--发布订阅消息传递类型队列，队列的名称是 pinyougou-topic-page-create，用于运营商后台生成商品详情静态页面-->
     <bean id="topicPageCreateDestination" class="org.apache.activemq.command.ActiveMQTopic">
         <constructor-arg value="pinyougou-topic-page-create"/>
+    </bean>
+
+    <!-- 消息监听容器，监听导入数据到 solr 的消息队列 -->
+    <bean class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="destination" ref="topicPageCreateDestination"/>
+        <property name="messageListener" ref="pageCreateListener"/>
     </bean>
 </beans>

@@ -7,10 +7,14 @@
         http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <dubbo:protocol name="dubbo" port="20884"></dubbo:protocol>
-    <dubbo:application name="pinyougou-page-service"/>
-    <dubbo:registry address="zookeeper://192.168.25.10:2181"/>
-    <dubbo:annotation package="com.lsf.pinyougou.page.service.impl"/>
+<!--    取消和 dubbo 的依赖-->
+<!--    <dubbo:protocol name="dubbo" port="20884"></dubbo:protocol>-->
+<!--    <dubbo:application name="pinyougou-page-service"/>-->
+<!--    <dubbo:registry address="zookeeper://192.168.25.10:2181"/>-->
+<!--    <dubbo:annotation package="com.lsf.pinyougou.page.service.impl"/>-->
+
+<!--    使用 spring 自带的包扫描-->
+    <context:component-scan base-package="com.lsf.pinyougou.page.service.impl" />
 
     <!-- 加载 page.properties 配置文件 -->
     <context:property-placeholder

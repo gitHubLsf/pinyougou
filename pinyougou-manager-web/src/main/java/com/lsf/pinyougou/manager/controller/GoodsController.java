@@ -2,7 +2,6 @@ package com.lsf.pinyougou.manager.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
-import com.lsf.pinyougou.page.service.ItemPageService;
 import com.lsf.pinyougou.pojo.TbGoods;
 import com.lsf.pinyougou.pojo.TbItem;
 import com.lsf.pinyougou.pojogroup.Goods;
@@ -20,7 +19,6 @@ import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -51,7 +49,7 @@ public class GoodsController {
      * 运营商批量修改商品的审核状态
      */
     @RequestMapping("/updateGoodStatus.do")
-    public Result updateGoodStatus(Long[] ids, String status) {
+    public Result updateGoodStatus(final Long[] ids, String status) {
         if (ids == null || ids.length == 0)
             return new Result(false, "修改失败");
         try {
@@ -60,7 +58,16 @@ public class GoodsController {
             // 同时生成商品详情页静态页面
             if ("1".equals(status)) {
                 // 生成商品详情页静态页面
-                itemPageService.getItemHtml(ids);
+                // 此处改为基于消息队列的静态调用
+                //itemPageService.getItemHtml(ids);
+
+                jmsTemplate.send(topicPageCreateDestination, new MessageCreator() {
+
+                    @Override
+                    public Message createMessage(Session session) throws JMSException {
+                        return session.createObjectMessage(ids);
+                    }
+                });
 
                 // 批量根据商品 SPU ID 查询商品 SKU，SKU 的 status 必须为 "1"，代表 SKU 状态正常
                 List<TbItem> itemList = goodsService.batchSearchItemByGoodId(ids, "1");
@@ -123,6 +130,16 @@ public class GoodsController {
     private Destination queueSolrImportDestination;
 
 
-    @Reference(timeout = 40000)
-    private ItemPageService itemPageService;
+    /**
+     * 此处改为基于消息队列的异步调用
+     */
+    //@Reference(timeout = 40000)
+    //private ItemPageService itemPageService;
+
+
+    /**
+     * activeMQ 中运营商后台生成商品详情静态页的队列
+     */
+    @Autowired
+    private Destination topicPageCreateDestination;
 }
