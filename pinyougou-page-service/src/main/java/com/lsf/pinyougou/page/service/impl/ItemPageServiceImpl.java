@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
@@ -86,6 +87,21 @@ public class ItemPageServiceImpl implements ItemPageService {
                         ex.printStackTrace();
                     }
                 }
+            }
+        }
+    }
+
+
+    /**
+     * 批量根据商品 SPU ID 删除生成的商品详情静态页
+     */
+    @Override
+    public void deleteItemHtml(Long[] ids) {
+        for (Long id : ids) {
+            File file = new File(pageDir + id + ".html");
+            if (file.exists() && file.isFile()) {
+                // 文件对象存在，且是文件而不是目录
+                file.delete();
             }
         }
     }

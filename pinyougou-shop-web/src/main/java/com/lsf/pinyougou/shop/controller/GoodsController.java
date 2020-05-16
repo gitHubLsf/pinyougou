@@ -88,7 +88,7 @@ public class GoodsController {
         // 出于安全考虑，在商户后台执行的商品修改，必须要校验提交的商品属于该商户
 
         // 判断商品的商家 ID 是否和当前在线商家一致
-        String selledId = SecurityContextHolder.getContext().getAuthentication().getName();
+        final String selledId = SecurityContextHolder.getContext().getAuthentication().getName();
 
         // 判断商品的商家 ID 是否和数据库中的商家 ID 一致
         Goods dbGoods = goodsService.findOne(goods.getTbGoods().getId());
@@ -118,6 +118,16 @@ public class GoodsController {
                 @Override
                 public Message createMessage(Session session) throws JMSException {
                     // 因为 ids 是 Long 类型的数组，是可序列化的对象，所以转换成对象类型的消息格式发送
+                    return session.createObjectMessage(ids);
+                }
+            });
+
+
+            // 基于消息队列，删除生成的商品详情静态页
+            jmsTemplate.send(topicPageDeleteDestination, new MessageCreator() {
+
+                @Override
+                public Message createMessage(Session session) throws JMSException {
                     return session.createObjectMessage(ids);
                 }
             });
@@ -159,6 +169,15 @@ public class GoodsController {
                 }
             });
 
+            // 基于消息队列删除生成的商品详情静态页
+            jmsTemplate.send(topicPageDeleteDestination, new MessageCreator() {
+
+                @Override
+                public Message createMessage(Session session) throws JMSException {
+                    return session.createObjectMessage(ids);
+                }
+            });
+
             return new Result(true, "删除成功");
         } catch (Exception e) {
             return new Result(false, "删除失败");
@@ -176,6 +195,7 @@ public class GoodsController {
         try {
             // 修改数据库中商品的上下架状态
             goodsService.updateGoodMarketable(ids, status);
+
             // 同步数据到 solr 中
             // 如果是上架商品
             if ("1".equals(status)) {
@@ -198,6 +218,16 @@ public class GoodsController {
                         return session.createTextMessage(itemListString);
                     }
                 });
+
+                // 基于消息队列生成商品详情静态页面
+                jmsTemplate.send(topicPageCreateDestination, new MessageCreator() {
+
+                    @Override
+                    public Message createMessage(Session session) throws JMSException {
+                        return session.createObjectMessage(ids);
+                    }
+                });
+
             } else if ("0".equals(status)) {
                 // 下架商品
                 // 删除 solr 中相关的 SKU
@@ -205,6 +235,15 @@ public class GoodsController {
                 //itemSearchService.batchDeleteItem(Arrays.asList(ids));
 
                 jmsTemplate.send(queueSolrDeleteDestination, new MessageCreator() {
+
+                    @Override
+                    public Message createMessage(Session session) throws JMSException {
+                        return session.createObjectMessage(ids);
+                    }
+                });
+
+                // 基于消息队列删除生成的商品详情静态页
+                jmsTemplate.send(topicPageDeleteDestination, new MessageCreator() {
 
                     @Override
                     public Message createMessage(Session session) throws JMSException {
@@ -247,5 +286,19 @@ public class GoodsController {
      */
     @Autowired
     private Destination queueSolrImportDestination;
+
+
+    /**
+     * activeMQ 上用于删除生成的商品详情静态页的消息队列
+     */
+    @Autowired
+    private Destination topicPageDeleteDestination;
+
+
+    /**
+     * activeMQ 上用于生成商品详情静态页的消息队列
+     */
+    @Autowired
+    private Destination topicPageCreateDestination;
 
 }

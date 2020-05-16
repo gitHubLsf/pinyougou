@@ -31,4 +31,15 @@
     <bean id="queueSolrImportDestination" class="org.apache.activemq.command.ActiveMQQueue">
         <constructor-arg value="pinyougou-queue-solr-import"/>
     </bean>
+
+    <!--这是发布订阅消息传递类型的队列，注册到 activeMQ 服务器上的队列名称为 pinyougou-topic-page-delete，
+        用于删除生成的商品详情静态页 -->
+    <bean id="topicPageDeleteDestination" class="org.apache.activemq.command.ActiveMQTopic">
+        <constructor-arg value="pinyougou-topic-page-delete"/>
+    </bean>
+
+    <!--发布订阅消息传递类型队列，队列的名称是 pinyougou-topic-page-create，用于生成商品详情静态页面-->
+    <bean id="topicPageCreateDestination" class="org.apache.activemq.command.ActiveMQTopic">
+        <constructor-arg value="pinyougou-topic-page-create"/>
+    </bean>
 </beans>

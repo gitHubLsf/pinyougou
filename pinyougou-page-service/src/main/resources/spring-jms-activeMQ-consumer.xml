@@ -26,4 +26,16 @@
         <property name="destination" ref="topicPageCreateDestination"/>
         <property name="messageListener" ref="pageCreateListener"/>
     </bean>
+
+    <!--发布订阅消息传递类型队列，队列的名称是 pinyougou-topic-page-delete，用于删除生成的商品详情静态页面-->
+    <bean id="topicPageDeleteDestination" class="org.apache.activemq.command.ActiveMQTopic">
+        <constructor-arg value="pinyougou-topic-page-delete"/>
+    </bean>
+
+    <!-- 消息监听容器，监听导入数据到 solr 的消息队列 -->
+    <bean class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="destination" ref="topicPageDeleteDestination"/>
+        <property name="messageListener" ref="pageDeleteListener"/>
+    </bean>
 </beans>

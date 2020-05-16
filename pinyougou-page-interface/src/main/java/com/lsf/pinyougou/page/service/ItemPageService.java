@@ -10,4 +10,9 @@ public interface ItemPageService {
      */
     void getItemHtml(Long[] ids);
 
+
+    /**
+     * 批量根据商品 SPU ID 删除生成的商品详情静态页
+     */
+    void deleteItemHtml(Long[] ids);
 }
