@@ -25,6 +25,7 @@
         <module>pinyougou-page-interface</module>
         <module>pinyougou-page-service</module>
         <module>pinyougou-page-web</module>
+        <module>smsService</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -41,6 +42,7 @@
         <zkclient.version>0.1</zkclient.version>
         <security.version>3.2.3.RELEASE</security.version>
         <ik.version>2012_u6</ik.version>
+        <java.version>1.7</java.version>
     </properties>
 
     <dependencies>

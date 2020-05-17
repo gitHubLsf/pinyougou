@@ -22,6 +22,7 @@
         <mybatis.paginator.version>1.2.15</mybatis.paginator.version>
         <mysql.version>5.1.32</mysql.version>
         <druid.version>1.0.9</druid.version>
+        <java.version>1.7</java.version>
     </properties>
 
     <dependencies>

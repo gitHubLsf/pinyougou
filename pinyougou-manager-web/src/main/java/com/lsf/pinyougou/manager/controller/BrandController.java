@@ -3,6 +3,7 @@ package com.lsf.pinyougou.manager.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.lsf.pinyougou.pojo.TbBrand;
 import com.lsf.pinyougou.sellergoods.service.BrandService;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +22,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/brand")
 public class BrandController {
+
 
     /**
      * 查询所有品牌
