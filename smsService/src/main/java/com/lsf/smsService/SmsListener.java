@@ -20,9 +20,9 @@ public class SmsListener {
 
     /**
      *  发送短信
-     *  从 sms-queue 队列中取消息后，再发送短信
+     *  从 smsCode-queue 队列中取消息后，再发送短信
      */
-    @JmsListener(destination = "sms-queue")
+    @JmsListener(destination = "smsCode-queue")
     public void sendMessage(Map<String, String> map) {
         try {
             smsUtil.sendSms(map.get("mobile"),

@@ -2,14 +2,7 @@
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="Spring" name="Spring">
-      <configuration>
-        <fileset id="fileset" name="ApplicationContext Service" removed="false">
-          <file>file://$MODULE_DIR$/src/main/resources/applicationContext-service.xml</file>
-        </fileset>
-        <fileset id="fileset2" name="ApplicationContext Tx" removed="false">
-          <file>file://$MODULE_DIR$/src/main/resources/applicationContext-tx.xml</file>
-        </fileset>
-      </configuration>
+      <configuration />
     </facet>
     <facet type="web" name="Web">
       <configuration>
@@ -66,7 +59,7 @@
     <orderEntry type="module-library">
       <library name="Maven: com.alibaba:jconsole:1.8.0">
         <CLASSES>
-          <root url="jar://D:/software/java/jdk/jdk_7/jdk_7/lib/jconsole.jar!/" />
+          <root url="jar://D:/software/java/jdk/jdk_8/lib/jconsole.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -75,7 +68,7 @@
     <orderEntry type="module-library">
       <library name="Maven: com.alibaba:tools:1.8.0">
         <CLASSES>
-          <root url="jar://D:/software/java/jdk/jdk_7/jdk_7/lib/tools.jar!/" />
+          <root url="jar://D:/software/java/jdk/jdk_8/lib/tools.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
