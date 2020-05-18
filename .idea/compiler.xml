@@ -8,19 +8,21 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="pinyougou-search-service" />
-        <module name="pinyougou-common" />
+        <module name="pinyougou-user-service" />
         <module name="pinyougou-content-service" />
         <module name="pinyougou-sellergoods-interface" />
         <module name="pinyougou-solr-util" />
-        <module name="pinyougou-page-web" />
+        <module name="pinyougou-common" />
         <module name="pinyougou-manager-web" />
+        <module name="pinyougou-dao" />
         <module name="pinyougou-page-interface" />
         <module name="pinyougou-sellergoods-service" />
         <module name="pinyougou-content-interface" />
         <module name="pinyougou-search-web" />
         <module name="pinyougou-page-service" />
-        <module name="pinyougou-dao" />
+        <module name="pinyougou-page-web" />
         <module name="pinyougou-portal-web" />
+        <module name="pinyougou-user-interface" />
         <module name="pinyougou-pojo" />
         <module name="pinyougou-search-interface" />
         <module name="smsService" />
@@ -46,6 +48,8 @@
       <module name="pinyougou-sellergoods-service" target="1.7" />
       <module name="pinyougou-shop-web" target="1.7" />
       <module name="pinyougou-solr-util" target="1.7" />
+      <module name="pinyougou-user-interface" target="1.7" />
+      <module name="pinyougou-user-service" target="1.7" />
       <module name="smsService" target="1.7" />
     </bytecodeTargetLevel>
   </component>

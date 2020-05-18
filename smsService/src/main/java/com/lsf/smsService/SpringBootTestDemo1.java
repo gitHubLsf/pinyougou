@@ -1,4 +1,4 @@
-//package com.lsf.smsService;//package com.lsf;
+package com.lsf.smsService;//package com.lsf.smsService;//package com.lsf;
 //
 //import org.junit.Test;
 //import org.junit.runner.RunWith;
