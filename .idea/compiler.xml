@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="pinyougou-search-service" />
         <module name="pinyougou-user-service" />
+        <module name="pinyougou-user-web" />
         <module name="pinyougou-content-service" />
         <module name="pinyougou-sellergoods-interface" />
         <module name="pinyougou-solr-util" />
@@ -50,6 +51,7 @@
       <module name="pinyougou-solr-util" target="1.7" />
       <module name="pinyougou-user-interface" target="1.7" />
       <module name="pinyougou-user-service" target="1.7" />
+      <module name="pinyougou-user-web" target="1.7" />
       <module name="smsService" target="1.7" />
     </bytecodeTargetLevel>
   </component>
