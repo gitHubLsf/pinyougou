@@ -15,6 +15,8 @@
 
 <!--    购物车前台首页不拦截-->
     <http pattern="/cart.html" security="none" />
+    <http pattern="/cart/findCartListFromCookie.do" security="none" />
+    <http pattern="/cart/addGoodsToCartList.do" security="none" />
 
     <!--   entry-point-ref  入口点引用 -->
     <http use-expressions="false" entry-point-ref="casProcessingFilterEntryPoint">
