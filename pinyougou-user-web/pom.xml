@@ -14,9 +14,6 @@
     <artifactId>pinyougou-user-web</artifactId>
     <packaging>war</packaging>
 
-    <properties>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>com.lsf.pinyougou</groupId>
