@@ -33,10 +33,6 @@ public class CartServiceImpl implements CartService {
         if (cartList == null)
             cartList = new ArrayList<Cart>();
 
-        // 如果购买数量 num 为 <= 0
-        if (num <= 0)
-            throw new RuntimeException("购买数量非法!");
-
         // 1.根据商品 SKU ID itemId 查询商品 SKU 对象
         TbItem item = tbItemDao.queryById(itemId);
         if (item == null || !item.getStatus().equals("1"))
@@ -100,6 +96,9 @@ public class CartServiceImpl implements CartService {
      * 创建新的明细对象 TbOrderItem 并返回
      */
     private TbOrderItem createOrderItem(TbItem item, Integer num) {
+        if (num <= 0)
+            throw new RuntimeException("购买数量非法");
+
         TbOrderItem newOrderItem = new TbOrderItem();
 
         newOrderItem.setGoodsId(item.getGoodsId());
