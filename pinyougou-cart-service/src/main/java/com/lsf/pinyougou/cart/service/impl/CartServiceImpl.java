@@ -7,6 +7,7 @@ import com.lsf.pinyougou.pojo.TbItem;
 import com.lsf.pinyougou.pojo.TbOrderItem;
 import com.lsf.pinyougou.pojogroup.Cart;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,8 @@ import java.util.List;
 public class CartServiceImpl implements CartService {
 
     /**
-     * 添加商品 SKU 到购物车
+     * 添加商品 SKU 到购物车列表 cartList
+     * 这是通用方法，适用于 cookie 存储购物车和 redis 存储购物车
      *
      * @param cartList  旧的购物车列表
      * @param itemId    商品 SKU ID
@@ -93,6 +95,34 @@ public class CartServiceImpl implements CartService {
 
 
     /**
+     * 从 redis 中读取用户 userName 的购物车列表
+     *
+     * @param userName  用户名
+     */
+    @Override
+    public List<Cart> findCartListFromRedis(String userName) {
+        List<Cart> cartList = (List<Cart>)redisTemplate.boundHashOps("cartList").get(userName);
+
+        if (cartList == null)
+            cartList = new ArrayList<>();
+
+        return cartList;
+    }
+
+
+    /**
+     * 将购物车列表 cartList 保存到 redis 中
+     *
+     * @param cartList  购物车列表
+     * @param userName  用户名
+     */
+    @Override
+    public void saveCartListToRedis(List<Cart> cartList, String userName) {
+        redisTemplate.boundHashOps("cartList").put(userName, cartList);
+    }
+
+
+    /**
      * 创建新的明细对象 TbOrderItem 并返回
      */
     private TbOrderItem createOrderItem(TbItem item, Integer num) {
@@ -145,4 +175,7 @@ public class CartServiceImpl implements CartService {
 
     @Autowired
     private TbItemDao tbItemDao;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 }

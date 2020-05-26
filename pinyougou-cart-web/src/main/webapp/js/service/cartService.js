@@ -3,7 +3,7 @@ pyg.service('cartService', function ($http) {
 
     // 查询 cookie 中存储的购物车列表
     this.findCartListFromCookie = function () {
-        return $http.get('cart/findCartListFromCookie.do');
+        return $http.get('cart/findCartList.do');
     };
 
 

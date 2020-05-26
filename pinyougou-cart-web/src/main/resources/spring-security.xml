@@ -15,11 +15,21 @@
 
 <!--    购物车前台首页不拦截-->
     <http pattern="/cart.html" security="none" />
+
+    <!--
     <http pattern="/cart/findCartListFromCookie.do" security="none" />
     <http pattern="/cart/addGoodsToCartList.do" security="none" />
+    -->
 
     <!--   entry-point-ref  入口点引用 -->
     <http use-expressions="false" entry-point-ref="casProcessingFilterEntryPoint">
+        <intercept-url pattern="/cart/findCartList.do" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <intercept-url pattern="/cart/addGoodsToCartList.do" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+<!--        上述两个地址会被 springSecurity 拦截，生产 security 上下文对象，-->
+<!--        但是不会要求用户登录，通过 security 上下文获取的在线用户名是 anonymousUser-->
+<!--        如果将这两个地址写在 http pattern="o" security="none" 中放行，那么就不会被 springSecurity 拦截，-->
+<!--        不会有 security 上下文对象，那么尝试获取在线用户名时，会报上下文对象空指针异常-->
+
         <intercept-url pattern="/**" access="ROLE_USER"/>
         <csrf disabled="true"/>
         <!-- custom-filter为过滤器，
