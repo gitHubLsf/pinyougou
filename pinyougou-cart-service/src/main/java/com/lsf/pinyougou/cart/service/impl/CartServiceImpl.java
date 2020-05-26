@@ -123,6 +123,25 @@ public class CartServiceImpl implements CartService {
 
 
     /**
+     * 合并两个购物车列表，并返回合并后的新购物车列表
+     */
+    @Override
+    public List<Cart> mergeCartList(List<Cart> cartList_1, List<Cart> cartList_2) {
+        // 遍历 cartList_2，将其中的每个 orderItem 的 itemId 和 num 都取出来
+        // 相当于重新获取一个商品 SKU 的 ID 和购买数量 num
+        // 然后复用之前的 addGoodsToCartList 方法，将商品 SKU 添加到 cartList_1 中
+        // 那么合并后的新的购物车列表就是 cartList_1
+        for (Cart cart : cartList_2) {
+            for (TbOrderItem orderItem : cart.getOrderItemList()) {
+                cartList_1 = addGoodsToCartList(cartList_1, orderItem.getItemId(), orderItem.getNum());
+            }
+        }
+
+        return cartList_1;
+    }
+
+
+    /**
      * 创建新的明细对象 TbOrderItem 并返回
      */
     private TbOrderItem createOrderItem(TbItem item, Integer num) {

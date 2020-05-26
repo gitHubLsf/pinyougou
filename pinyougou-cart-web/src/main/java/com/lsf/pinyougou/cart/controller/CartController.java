@@ -32,23 +32,38 @@ public class CartController {
         // 尝试获取登录用户名
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        List<Cart> cartList = null;
+        // 从 cookie 中查询购物车列表
+        String stringCartList = CookieUtil.getCookieValue(request, "cartList", "UTF-8");
+        if (stringCartList == null || "".equals(stringCartList))
+            stringCartList = "[]";
+        List<Cart> cookieCartList = JSON.parseArray(stringCartList, Cart.class);
 
         // 如果用户未登录
         if ("anonymousUser".equals(userName)) {
-            // 从 cookie 中查询购物车列表
-            String stringCartList = CookieUtil.getCookieValue(request, "cartList", "UTF-8");
-
-            if (stringCartList == null || "".equals(stringCartList))
-                stringCartList = "[]";
-
-            cartList = JSON.parseArray(stringCartList, Cart.class);
+            // 直接返回 cookie 中查询到的购物车列表
+            return cookieCartList;
         } else {
             // 用户已登录，从 redis 中查询购物车列表
-            cartList = cartService.findCartListFromRedis(userName);
-        }
+            List<Cart> redisCartList = cartService.findCartListFromRedis(userName);
 
-        return cartList;
+            // 判断 cookie 中的购物车列表是否有数据，如果有才需要进行合并
+            // 如果没有，直接返回 redis 中查到的购物车列表
+            if (cookieCartList.size() > 0) {
+                // 合并 cookie 中的购物车和 redis 中的购物车
+                List<Cart> mergeCartList = cartService.mergeCartList(cookieCartList, redisCartList);
+
+                // 将合并后的购物车列表保存到 redis
+                cartService.saveCartListToRedis(mergeCartList, userName);
+
+                // 清空 cookie 中的购物车列表
+                CookieUtil.deleteCookie(request, response, "cartList");
+
+                // 返回合并后的购物车列表
+                return mergeCartList;
+            }
+
+            return redisCartList;
+        }
     }
 
 
