@@ -72,10 +72,10 @@ public class SolrUtil {
         // 查询所有 SKU
         //solrUtil.queryAllItem();
 
-        //solrUtil.delete();
+        solrUtil.delete();
 
         // 批量导入 SKU 到 solr 中
-        solrUtil.batchImportItemToSolr();
+        //solrUtil.batchImportItemToSolr();
     }
 
 

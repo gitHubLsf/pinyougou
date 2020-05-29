@@ -1,4 +1,4 @@
-pyg.controller('itemPageController', function ($scope) {
+pyg.controller('itemPageController', function ($scope, itemPageService) {
 
     // 记录购买数量,默认为 1
     $scope.num = 1;
@@ -71,8 +71,19 @@ pyg.controller('itemPageController', function ($scope) {
 
 
     // 添加商品到购物车
+    // 此处需要跨域请求购物车前台工程
     $scope.addToCar = function () {
-        alert("SKU_ID:" + $scope.sku.id);
-    }
+        //alert("SKU_ID:" + $scope.sku.id);
+        itemPageService.addGoodsToCartList($scope.sku.id, $scope.num).success(
+            function (response) {
+                if (response.success) {
+                    // 添加成功，跳转到购物车前台的 cart.html 页面
+                    location.href = 'http://localhost:9107/cart.html';
+                } else {
+                    alert(response.message);
+                }
+            }
+        );
+    };
 
 });

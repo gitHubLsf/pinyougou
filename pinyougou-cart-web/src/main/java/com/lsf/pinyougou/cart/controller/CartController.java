@@ -8,6 +8,7 @@ import com.lsf.pinyougou.pojogroup.Cart;
 import com.lsf.pinyougou.util.CookieUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vo.Result;
@@ -34,8 +35,9 @@ public class CartController {
 
         // 从 cookie 中查询购物车列表
         String stringCartList = CookieUtil.getCookieValue(request, "cartList", "UTF-8");
-        if (stringCartList == null || "".equals(stringCartList))
+        if (stringCartList == null || "".equals(stringCartList)) {
             stringCartList = "[]";
+        }
         List<Cart> cookieCartList = JSON.parseArray(stringCartList, Cart.class);
 
         // 如果用户未登录
@@ -74,7 +76,21 @@ public class CartController {
      * @param num    购买数量
      */
     @RequestMapping("/addGoodsToCartList.do")
+    //@CrossOrigin(origins = "http://localhost:9105", allowCredentials = "true")
+    //@CrossOrigin(origins = "http://localhost:9105")
     public Result addGoodsToCartList(Long itemId, Integer num) {
+
+//        允许接收来自 http://localhost:9105 域（商品详情页前台）的跨域请求
+//        response.setHeader("Access-Control-Allow-Origin", "*");
+//        如果设置为 *，表示允许接受来自任何域的跨域请求
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:9105");
+
+        // 允许其他域的跨域请求携带本域设置的 cookie
+        // 如果此方法涉及到跨域且需要操作 cookie，就必须写下面这句话
+        // 同时前台的 AJAX 请求必须设置 {'withCredentials': true}
+        // 但是如果设置了下面这句话，那么 response.setHeader("Access-Control-Allow-Origin", "*"); 就不能设置为 *
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+
         try {
             // 1.先查询购物车列表 cartList
             List<Cart> cartList = findCartList();

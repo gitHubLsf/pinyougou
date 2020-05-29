@@ -21,6 +21,7 @@ import java.util.List;
  */
 public class UserDetailServiceImpl implements UserDetailsService {
 
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         // 构建角色集合

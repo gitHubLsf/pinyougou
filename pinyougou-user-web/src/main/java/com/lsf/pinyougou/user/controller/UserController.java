@@ -58,8 +58,9 @@ public class UserController {
     @RequestMapping("/add.do")
     public Result add(@RequestBody TbUser user, String smsCode) {
         // 判断验证码是否正确
-        if (!userService.checkSmsCode(user.getPhone(), smsCode))
+        if (!userService.checkSmsCode(user.getPhone(), smsCode)) {
             return new Result(false, "验证码错误");
+        }
 
         try {
             userService.add(user);

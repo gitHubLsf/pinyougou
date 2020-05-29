@@ -55,11 +55,14 @@
           <element id="archive" name="pinyougou-sellergoods-interface-1.0-SNAPSHOT.jar">
             <element id="module-output" name="pinyougou-sellergoods-interface" />
           </element>
-          <element id="library" level="project" name="Maven: org.springframework:spring-context:4.2.4.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-aop:4.2.4.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-web:4.1.0.RELEASE" />
           <element id="library" level="project" name="Maven: aopalliance:aopalliance:1.0" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-core:4.2.4.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-expression:4.2.4.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-core:4.1.0.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-core:4.2.5.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-expression:4.2.5.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-config:4.1.0.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-aop:4.2.5.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-context:4.2.4.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-beans:4.2.4.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-web:4.2.4.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:4.2.4.RELEASE" />

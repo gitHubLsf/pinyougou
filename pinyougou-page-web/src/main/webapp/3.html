@@ -14,46 +14,17 @@
 
     <script type="text/javascript" src="plugins/angularjs/angular.min.js"></script>
     <script src="js/base.js"></script>
+    <script src="js/service/itemPageService.js"></script>
     <script src="js/controller/itemPageController.js"></script>
 
     <script type="text/javascript">
         // 商品 SKU 列表
         var skuList=[
                         {
-                "id":3,
-                "title":"小米手机 联通4G 64G",
-                "price":309,
-                "spec": {"网络制式":"联通4G","机身内存":"64G"}
-            },
-            {
                 "id":4,
-                "title":"小米手机 联通4G 32G",
-                "price":249,
-                "spec": {"网络制式":"联通4G","机身内存":"32G"}
-            },
-            {
-                "id":11,
-                "title":"小米手机 联通4G 16G",
-                "price":1525,
-                "spec": {"网络制式":"联通4G","机身内存":"16G"}
-            },
-            {
-                "id":12,
-                "title":"小米手机 移动3G 64G",
-                "price":1524,
-                "spec": {"网络制式":"移动3G","机身内存":"64G"}
-            },
-            {
-                "id":13,
-                "title":"小米手机 移动3G 32G",
-                "price":4547,
-                "spec": {"网络制式":"移动3G","机身内存":"32G"}
-            },
-            {
-                "id":14,
-                "title":"小米手机 移动3G 16G",
-                "price":4587,
-                "spec": {"网络制式":"移动3G","机身内存":"16G"}
+                "title":"华为手机 8G 电信",
+                "price":121,
+                "spec": {"内存":"8G","网络制式":"电信"}
             },
         ];
     </script>
@@ -180,7 +151,7 @@
                     <a href="#">电子产品</a>
                 </li>
                 <li>
-                    <a href="#">通信</a>
+                    <a href="#">智能电子</a>
                 </li>
                 <li>
                     <a href="#">手机</a>
@@ -197,7 +168,7 @@
                     <!--默认第一个预览，默认显示第一张图片-->
                     <div id="preview" class="spec-preview">
                         <span class="jqzoom">
-                                <img jqimg="http://192.168.25.133/group1/M00/00/00/wKgZhV5fsLeACj1OAAAiMJmuHNQ854.jpg" src="http://192.168.25.133/group1/M00/00/00/wKgZhV5fsLeACj1OAAAiMJmuHNQ854.jpg" />
+                                <img jqimg="" src="" />
                         </span>
                     </div>
 
@@ -207,7 +178,7 @@
                         <!--左右按钮-->
                         <div class="items">
                             <ul>
-                                <li><img src="http://192.168.25.133/group1/M00/00/00/wKgZhV5fsLeACj1OAAAiMJmuHNQ854.jpg" bimg="http://192.168.25.133/group1/M00/00/00/wKgZhV5fsLeACj1OAAAiMJmuHNQ854.jpg" onmousemove="preview(this)"/></li>
+                                <li><img src="" bimg="" onmousemove="preview(this)"/></li>
                             </ul>
                         </div>
                         <a class="next">&gt;</a>
@@ -222,7 +193,7 @@
                 </div>
 
                 <div class="news">
-                    <span>小米大电量手机</span>
+                    <span>华为手机促销</span>
                 </div>
 
                 <div class="summary">
@@ -273,22 +244,14 @@
                             <dl>
                                 <dt>
                                     <div class="fl title">
-                                        <i>网络制式</i>
+                                        <i>内存</i>
                                     </div>
                                 </dt>
                                     <dd>
                                         <a href="javascript:;"
-                                           ng-click="selectSpec('网络制式', '移动3G')"
-                                           class="{{ specItems['网络制式'] == '移动3G' ? 'selected' : '' }}">
-                                            移动3G
-                                            <span title="点击取消选择">&nbsp;</span>
-                                        </a>
-                                    </dd>
-                                    <dd>
-                                        <a href="javascript:;"
-                                           ng-click="selectSpec('网络制式', '联通4G')"
-                                           class="{{ specItems['网络制式'] == '联通4G' ? 'selected' : '' }}">
-                                            联通4G
+                                           ng-click="selectSpec('内存', '8G')"
+                                           class="{{ specItems['内存'] == '8G' ? 'selected' : '' }}">
+                                            8G
                                             <span title="点击取消选择">&nbsp;</span>
                                         </a>
                                     </dd>
@@ -296,30 +259,14 @@
                             <dl>
                                 <dt>
                                     <div class="fl title">
-                                        <i>机身内存</i>
+                                        <i>网络制式</i>
                                     </div>
                                 </dt>
                                     <dd>
                                         <a href="javascript:;"
-                                           ng-click="selectSpec('机身内存', '16G')"
-                                           class="{{ specItems['机身内存'] == '16G' ? 'selected' : '' }}">
-                                            16G
-                                            <span title="点击取消选择">&nbsp;</span>
-                                        </a>
-                                    </dd>
-                                    <dd>
-                                        <a href="javascript:;"
-                                           ng-click="selectSpec('机身内存', '32G')"
-                                           class="{{ specItems['机身内存'] == '32G' ? 'selected' : '' }}">
-                                            32G
-                                            <span title="点击取消选择">&nbsp;</span>
-                                        </a>
-                                    </dd>
-                                    <dd>
-                                        <a href="javascript:;"
-                                           ng-click="selectSpec('机身内存', '64G')"
-                                           class="{{ specItems['机身内存'] == '64G' ? 'selected' : '' }}">
-                                            64G
+                                           ng-click="selectSpec('网络制式', '电信')"
+                                           class="{{ specItems['网络制式'] == '电信' ? 'selected' : '' }}">
+                                            电信
                                             <span title="点击取消选择">&nbsp;</span>
                                         </a>
                                     </dd>
@@ -339,7 +286,7 @@
                         <div class="fl">
                             <ul class="btn-choose unstyled">
                                 <li>
-                                    <a href="#" class="sui-btn btn-danger addshopcar" ng-click="addToCar()">
+                                    <a class="sui-btn btn-danger addshopcar" ng-click="addToCar()">
                                         加入购物车
                                     </a>
                                 </li>
@@ -563,11 +510,10 @@
                         <div id="one" class="tab-pane active">
 
                             <ul class="goods-intro unstyled">
-                                        <li>电量：200小时续航</li>
                             </ul>
 
                             <div class="intro-detail">
-                                小米手机
+                                华为手机大促销
                             </div>
 
                         </div>

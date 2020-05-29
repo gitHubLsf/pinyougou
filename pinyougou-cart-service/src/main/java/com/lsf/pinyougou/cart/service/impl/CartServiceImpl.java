@@ -32,13 +32,15 @@ public class CartServiceImpl implements CartService {
     @Override
     public List<Cart> addGoodsToCartList(List<Cart> cartList, Long itemId, Integer num) {
         // 如果旧的 cartList 列表为 null，就创建一个空的列表给它
-        if (cartList == null)
+        if (cartList == null) {
             cartList = new ArrayList<Cart>();
+        }
 
         // 1.根据商品 SKU ID itemId 查询商品 SKU 对象
         TbItem item = tbItemDao.queryById(itemId);
-        if (item == null || !item.getStatus().equals("1"))
+        if (item == null || !item.getStatus().equals("1")) {
             throw new RuntimeException("商品不存在!");
+        }
 
         // 2.从查询到的商品 SKU 对象中获取商家 ID
         String sellerId = item.getSellerId();
@@ -103,8 +105,9 @@ public class CartServiceImpl implements CartService {
     public List<Cart> findCartListFromRedis(String userName) {
         List<Cart> cartList = (List<Cart>)redisTemplate.boundHashOps("cartList").get(userName);
 
-        if (cartList == null)
+        if (cartList == null) {
             cartList = new ArrayList<>();
+        }
 
         return cartList;
     }
