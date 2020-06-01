@@ -2,7 +2,7 @@
 pyg.service('cartService', function ($http) {
 
     // 查询 cookie 中存储的购物车列表
-    this.findCartListFromCookie = function () {
+    this.findCartList = function () {
         return $http.get('cart/findCartList.do');
     };
 
@@ -28,17 +28,5 @@ pyg.service('cartService', function ($http) {
 
         return totalValue;
     };
-
-
-    // 查询当前在线用户所有的地址
-    this.findAddressListByUserName = function () {
-        return $http.get('address/findAddressListByUserName.do');
-    };
-
-
-    // 添加地址
-    this.addAddress = function (address) {
-        return $http.post('address/addAddress.do', address);
-    }
 
 });

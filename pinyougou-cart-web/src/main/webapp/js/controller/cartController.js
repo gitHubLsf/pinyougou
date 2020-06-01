@@ -3,9 +3,9 @@ pyg.controller('cartController', function ($scope,
                                            cartService,
                                            addressService) {
 
-    // 从 cookie 中查询购物车列表
-    $scope.findCartListFromCookie = function () {
-        cartService.findCartListFromCookie().success(
+    // 查询购物车列表
+    $scope.findCartList = function () {
+        cartService.findCartList().success(
             function (response) {
                 $scope.cartList = response;
                 $scope.totalValue = cartService.countTotalValue($scope.cartList);   // 计算商品总数量和总价
