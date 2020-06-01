@@ -7,6 +7,8 @@ import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
+import com.lsf.pinyougou.dao.TbAddressDao;
+import com.lsf.pinyougou.pojo.TbAddress;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.dubbo.config.annotation.Service;
@@ -28,13 +30,6 @@ import javax.jms.*;
  */
 @Service
 public class UserServiceImpl implements UserService {
-
-    /**
-     * 此处依赖的 dao 对象是本地调用,使用本地依赖注入即可
-     */
-    @Autowired
-    private TbUserDao tbUserDao;
-
 
     /**
      * 查询全部
@@ -177,6 +172,10 @@ public class UserServiceImpl implements UserService {
         // 找到手机号对应的验证码，进行比较
         return trueSmsCode.equals(smsCode);
     }
+
+
+    @Autowired
+    private TbUserDao tbUserDao;
 
 
     @Autowired

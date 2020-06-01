@@ -32,6 +32,9 @@
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.6.0" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.6.7" />
           <element id="library" level="project" name="Maven: org.projectlombok:lombok:1.18.8" />
+          <element id="archive" name="pinyougou-user-interface-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="pinyougou-user-interface" />
+          </element>
           <element id="archive" name="pinyougou-common-1.0-SNAPSHOT.jar">
             <element id="module-output" name="pinyougou-common" />
           </element>

@@ -1,6 +1,8 @@
 package com.lsf.pinyougou.user.service;
 
 import java.util.List;
+
+import com.lsf.pinyougou.pojo.TbAddress;
 import com.lsf.pinyougou.pojo.TbUser;
 import vo.PageResult;
 
@@ -62,5 +64,7 @@ public interface UserService {
 	 * 判断手机号 phone 对应的验证码是否正确
 	 */
 	boolean checkSmsCode(String phone, String smsCode);
-	
+
+
+
 }
