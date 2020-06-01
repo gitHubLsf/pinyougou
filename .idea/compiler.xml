@@ -11,13 +11,14 @@
         <module name="pinyougou-user-service" />
         <module name="pinyougou-cart-web" />
         <module name="pinyougou-user-web" />
-        <module name="pinyougou-page-web" />
+        <module name="pinyougou-common" />
         <module name="pinyougou-content-service" />
         <module name="pinyougou-sellergoods-interface" />
         <module name="pinyougou-solr-util" />
-        <module name="pinyougou-common" />
+        <module name="pinyougou-page-web" />
+        <module name="pinyougou-order-interface" />
         <module name="pinyougou-manager-web" />
-        <module name="pinyougou-cart-interface" />
+        <module name="pinyougou-order-service" />
         <module name="pinyougou-page-interface" />
         <module name="pinyougou-sellergoods-service" />
         <module name="pinyougou-content-interface" />
@@ -25,12 +26,13 @@
         <module name="pinyougou-page-service" />
         <module name="pinyougou-dao" />
         <module name="pinyougou-portal-web" />
-        <module name="smsService" />
-        <module name="pinyougou-pojo" />
-        <module name="pinyougou-search-interface" />
         <module name="pinyougou-user-interface" />
+        <module name="pinyougou-cart-interface" />
+        <module name="pinyougou-search-interface" />
+        <module name="smsService" />
         <module name="pinyougou-cart-service" />
         <module name="pinyougou-shop-web" />
+        <module name="pinyougou-pojo" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -42,6 +44,8 @@
       <module name="pinyougou-content-service" target="1.7" />
       <module name="pinyougou-dao" target="1.7" />
       <module name="pinyougou-manager-web" target="1.7" />
+      <module name="pinyougou-order-interface" target="1.7" />
+      <module name="pinyougou-order-service" target="1.7" />
       <module name="pinyougou-page-interface" target="1.7" />
       <module name="pinyougou-page-service" target="1.7" />
       <module name="pinyougou-page-web" target="1.7" />
