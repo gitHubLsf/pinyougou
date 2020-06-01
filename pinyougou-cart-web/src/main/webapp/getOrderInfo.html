@@ -78,7 +78,7 @@
 <!--								联系人-->
                                 <div class="con name {{ chooseAddress == address ? 'selected' : ''}}">
 									<a ng-click="selectAddress(address)">{{ address.contact }}
-                                        <span title="点击取消选择">&nbsp
+                                        <span title="点击取消选择">&nbsp</span>
                                     </a>
                                 </div>
 
@@ -156,26 +156,36 @@
                 <div class="hr"></div>
 
             </div>
+
             <div class="hr"></div>
+
             <!--支付和送货-->
             <div class="payshipInfo">
                 <div class="step-tit">
                     <h5>支付方式</h5>
                 </div>
+
                 <div class="step-cont">
                     <ul class="payType">
-                        <li class="selected">微信付款<span title="点击取消选择"></span></li>
-                        <li>货到付款<span title="点击取消选择"></span></li>
+                        <li class="selected" ng-click="selectPaymentType('1')">微信付款
+                            <span title="点击取消选择"></span>
+                        </li>
+
+                        <li ng-click="selectPaymentType('2')">货到付款
+                            <span title="点击取消选择"></span>
+                        </li>
                     </ul>
                 </div>
+
                 <div class="hr"></div>
+
                 <div class="step-tit">
                     <h5>送货清单</h5>
                 </div>
+
                 <div class="step-cont">
                     <ul class="send-detail">
                         <li>
-
                             <div class="sendGoods">
 
                                 <ul class="yui3-g">

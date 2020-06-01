@@ -69,4 +69,14 @@ pyg.controller('cartController', function ($scope,
     };
 
 
+    // 订单对象，对应后台的 TbOrder 类，数据库的 tb_order 表
+    // 默认的支付方式 paymentType 为 '1'，表示在线支付，'2' 表示线下支付
+    $scope.order = { paymentType:'1' };
+
+    // 修改支付方式
+    $scope.selectPaymentType = function (type) {
+        $scope.order.paymentType = type;
+    };
+
+
 });	
