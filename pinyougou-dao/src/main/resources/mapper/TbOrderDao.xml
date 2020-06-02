@@ -129,11 +129,11 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="orderId" useGeneratedKeys="true">
-        insert into pinyougoudb.tb_order(payment, payment_type, post_fee, status, create_time, update_time,
+        insert into pinyougoudb.tb_order(order_id, payment, payment_type, post_fee, status, create_time, update_time,
         payment_time, consign_time, end_time, close_time, shipping_name, shipping_code, user_id, buyer_message,
         buyer_nick, buyer_rate, receiver_area_name, receiver_mobile, receiver_zip_code, receiver, expire, invoice_type,
         source_type, seller_id)
-        values (#{payment}, #{paymentType}, #{postFee}, #{status}, #{createTime}, #{updateTime}, #{paymentTime},
+        values (#{orderId}, #{payment}, #{paymentType}, #{postFee}, #{status}, #{createTime}, #{updateTime}, #{paymentTime},
         #{consignTime}, #{endTime}, #{closeTime}, #{shippingName}, #{shippingCode}, #{userId}, #{buyerMessage},
         #{buyerNick}, #{buyerRate}, #{receiverAreaName}, #{receiverMobile}, #{receiverZipCode}, #{receiver}, #{expire},
         #{invoiceType}, #{sourceType}, #{sellerId})

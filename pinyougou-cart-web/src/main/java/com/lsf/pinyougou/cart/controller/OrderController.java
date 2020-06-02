@@ -2,6 +2,7 @@ package com.lsf.pinyougou.cart.controller;
 import java.util.List;
 
 import com.lsf.pinyougou.order.service.OrderService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,14 +48,23 @@ public class OrderController {
 	
 	
 	/**
-	 * 添加
+	 * 添加订单
 	 */
 	@RequestMapping("/add.do")
 	public Result add(@RequestBody TbOrder order){
+		// 获取当前在线用户
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+		order.setUserId(username);
+		order.setSourceType("2");	// 订单来源，"2" 代表用户从 PC 端下单
+		// 上述要做订单来源的合法性判断
+
 		try {
 			orderService.add(order);
+
 			return new Result(true, "添加成功");
 		} catch (Exception e) {
+			e.printStackTrace();
 			return new Result(false, "添加失败");
 		}
 	}

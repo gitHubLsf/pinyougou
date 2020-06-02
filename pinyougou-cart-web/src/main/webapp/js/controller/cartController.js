@@ -1,7 +1,8 @@
 // 购物车控制层
 pyg.controller('cartController', function ($scope,
                                            cartService,
-                                           addressService) {
+                                           addressService,
+                                           orderService) {
 
     // 查询购物车列表
     $scope.findCartList = function () {
@@ -71,12 +72,39 @@ pyg.controller('cartController', function ($scope,
 
     // 订单对象，对应后台的 TbOrder 类，数据库的 tb_order 表
     // 默认的支付方式 paymentType 为 '1'，表示在线支付，'2' 表示线下支付
-    $scope.order = { paymentType:'1' };
+    $scope.order = {paymentType: '1'};
 
     // 修改支付方式
     $scope.selectPaymentType = function (type) {
         $scope.order.paymentType = type;
     };
 
+
+    // 添加订单
+    $scope.addOrder = function () {
+        // 设置收件人信息
+        $scope.order.receiverAreaName = $scope.chooseAddress.address;   // 地址
+        $scope.order.receiverMobile = $scope.chooseAddress.mobile;  // 手机
+        $scope.order.receiver = $scope.chooseAddress.contact;   // 联系人
+
+        orderService.addOrder($scope.order).success(
+            function (response) {
+                if (response.success) {
+                    // 添加订单成功，跳转到支付页面
+
+                    if ($scope.order.paymentType === '1') { // 如果是在线支付
+                        location.href = "pay.html";
+                    } else if ($scope.order.paymentType === '2') {    // 如果是货到付款
+                        alert('添加成功，货到付款');
+                    } else {
+                        alert('添加成功，但是支付类型异常');
+                    }
+
+                } else {
+                    alert(response.message);
+                }
+            }
+        );
+    };
 
 });	

@@ -65,9 +65,9 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into pinyougoudb.tb_order_item(item_id, goods_id, order_id, title, price, num, total_fee, pic_path,
+        insert into pinyougoudb.tb_order_item(id, item_id, goods_id, order_id, title, price, num, total_fee, pic_path,
         seller_id)
-        values (#{itemId}, #{goodsId}, #{orderId}, #{title}, #{price}, #{num}, #{totalFee}, #{picPath}, #{sellerId})
+        values (#{id}, #{itemId}, #{goodsId}, #{orderId}, #{title}, #{price}, #{num}, #{totalFee}, #{picPath}, #{sellerId})
     </insert>
 
     <!--通过主键修改数据-->

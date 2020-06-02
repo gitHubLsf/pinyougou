@@ -16,4 +16,15 @@
     <dubbo:application name="pinyougou-order-service"/>
     <dubbo:registry address="zookeeper://192.168.25.10:2181"/>
     <dubbo:annotation package="com.lsf.pinyougou.order.service.impl"/>
+
+<!--    分布式 ID 生成器-->
+    <bean id="idWorker" class="com.lsf.pinyougou.util.IdWorker">
+<!--        机器 ID-->
+        <constructor-arg index="0" value="0" />
+
+<!--        数据中心 ID-->
+        <constructor-arg index="1" value="0" />
+
+<!--        上述两个值可以自定义，但不要和其他的 bean 的配置重复-->
+    </bean>
 </beans>
