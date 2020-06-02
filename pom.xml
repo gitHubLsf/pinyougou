@@ -35,6 +35,8 @@
         <module>pinyougou-cart-web</module>
         <module>pinyougou-order-interface</module>
         <module>pinyougou-order-service</module>
+        <module>pinyougou-pay-interface</module>
+        <module>pinyougou-pay-service</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -164,11 +166,6 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore</artifactId>
             <version>4.4.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.3</version>
         </dependency>
         <dependency>
             <groupId>dom4j</groupId>

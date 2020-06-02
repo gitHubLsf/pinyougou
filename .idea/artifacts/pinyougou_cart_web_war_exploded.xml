@@ -38,6 +38,9 @@
           <element id="archive" name="pinyougou-order-interface-1.0-SNAPSHOT.jar">
             <element id="module-output" name="pinyougou-order-interface" />
           </element>
+          <element id="archive" name="pinyougou-pay-interface-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="pinyougou-pay-interface" />
+          </element>
           <element id="archive" name="pinyougou-common-1.0-SNAPSHOT.jar">
             <element id="module-output" name="pinyougou-common" />
           </element>
@@ -50,6 +53,8 @@
           <element id="library" level="project" name="Maven: org.springframework.data:spring-data-keyvalue:1.1.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-oxm:4.2.6.RELEASE" />
           <element id="library" level="project" name="Maven: org.slf4j:jcl-over-slf4j:1.7.21" />
+          <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpclient:4.5.3" />
+          <element id="library" level="project" name="Maven: commons-logging:commons-logging:1.2" />
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-web:4.2.4.RELEASE" />
           <element id="library" level="project" name="Maven: aopalliance:aopalliance:1.0" />
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-core:4.2.4.RELEASE" />
@@ -109,8 +114,6 @@
           <element id="library" level="project" name="Maven: org.apache.lucene:lucene-sandbox:4.7.2" />
           <element id="library" level="project" name="Maven: org.apache.lucene:lucene-analyzers-common:4.7.2" />
           <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpcore:4.4.4" />
-          <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpclient:4.5.3" />
-          <element id="library" level="project" name="Maven: commons-logging:commons-logging:1.2" />
           <element id="library" level="project" name="Maven: dom4j:dom4j:1.6.1" />
           <element id="library" level="project" name="Maven: xml-apis:xml-apis:1.4.01" />
         </element>
