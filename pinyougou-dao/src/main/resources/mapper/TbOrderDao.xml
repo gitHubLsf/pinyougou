@@ -219,6 +219,19 @@
         where order_id = #{orderId}
     </update>
 
+<!--    批量修改订单主表中的状态-->
+    <update id="batchUpdateStatusByOrderId">
+        update
+            pinyougoudb.tb_order
+        set
+            status = #{status}
+        where
+            order_id in
+        <foreach collection="orderIds" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </update>
+
     <!--通过主键删除-->
     <delete id="deleteById">
         delete from pinyougoudb.tb_order where order_id = #{orderId}

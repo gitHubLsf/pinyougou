@@ -2,6 +2,7 @@ package com.lsf.pinyougou.order.service;
 
 import java.util.List;
 import com.lsf.pinyougou.pojo.TbOrder;
+import com.lsf.pinyougou.pojo.TbPayLog;
 import vo.PageResult;
 
 
@@ -53,5 +54,22 @@ public interface OrderService {
 	 * 批量删除
 	 */
 	void batchDelete(Long[] ids);
-	
+
+
+	/**
+	 * 根据用户 ID 查询 redis 中缓存的支付日志对象
+	 *
+	 * @param userId	用户 ID
+	 */
+	TbPayLog searchPayLogFromRedis(String userId);
+
+
+	/**
+	 * 用户支付成功后，修改订单主表和支付日志表的信息
+	 *
+	 * @param outTradeNo	支付订单号
+	 * @param transactionId	微信返回的交易流水号
+	 */
+	void updateOrderStatus(String outTradeNo,String transactionId);
+
 }

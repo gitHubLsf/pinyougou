@@ -20,7 +20,7 @@ pyg.controller('cartController', function ($scope,
         cartService.addGoodsToCartList(itemId, num).success(
             function (response) {
                 if (response.success) {
-                    $scope.findCartListFromCookie();	// 刷新购物车列表
+                    $scope.findCartList();	// 刷新购物车列表
                     $scope.totalValue = cartService.countTotalValue($scope.cartList);   // 计算商品总数量和总价
                 } else {
                     alert(response.message);//弹出错误提示
