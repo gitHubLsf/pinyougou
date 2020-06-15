@@ -1,21 +1,14 @@
 package com.lsf.pinyougou.user.service.impl;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import com.alibaba.fastjson.JSON;
-import com.github.pagehelper.PageInfo;
-import com.lsf.pinyougou.dao.TbAddressDao;
-import com.lsf.pinyougou.pojo.TbAddress;
-import org.apache.commons.codec.digest.DigestUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.dubbo.config.annotation.Service;
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.lsf.pinyougou.dao.TbUserDao;
 import com.lsf.pinyougou.pojo.TbUser;
-import com.lsf.pinyougou.user.service.UserService;
+import com.lsf.pinyougou.service.interfaces.user.UserService;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.jms.core.JmsTemplate;
@@ -23,6 +16,10 @@ import org.springframework.jms.core.MessageCreator;
 import vo.PageResult;
 
 import javax.jms.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -39,17 +36,6 @@ public class UserServiceImpl implements UserService {
         return tbUserDao.queryAll(null);
     }
 
-
-    /**
-     * 无条件分页查询
-     */
-    @Override
-    public PageResult findPage(int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<TbUser> list = tbUserDao.queryAll(null);
-        PageInfo<TbUser> pageInfo = new PageInfo<>(list);
-        return new PageResult(pageInfo.getTotal(), pageInfo.getList());
-    }
 
 
     /**

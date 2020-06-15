@@ -14,8 +14,8 @@
           <element id="module-output" name="pinyougou-user-web" />
         </element>
         <element id="directory" name="lib">
-          <element id="archive" name="pinyougou-user-interface-1.0-SNAPSHOT.jar">
-            <element id="module-output" name="pinyougou-user-interface" />
+          <element id="archive" name="pinyougou-service-interface-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="pinyougou-service-interface" />
           </element>
           <element id="archive" name="pinyougou-pojo-1.0-SNAPSHOT.jar">
             <element id="module-output" name="pinyougou-pojo" />

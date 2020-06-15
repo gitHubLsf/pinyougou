@@ -29,7 +29,7 @@
 
         <dependency>
             <groupId>com.lsf.pinyougou</groupId>
-            <artifactId>pinyougou-order-interface</artifactId>
+            <artifactId>pinyougou-service-interface</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>

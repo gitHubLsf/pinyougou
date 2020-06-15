@@ -1,16 +1,16 @@
 package com.lsf.pinyougou.content.service.impl;
 
-import java.util.List;
-
-import com.github.pagehelper.PageInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.lsf.pinyougou.dao.TbContentDao;
 import com.lsf.pinyougou.pojo.TbContent;
-import com.lsf.pinyougou.content.service.ContentService;
+import com.lsf.pinyougou.service.interfaces.content.ContentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import vo.PageResult;
+
+import java.util.List;
 
 
 /**

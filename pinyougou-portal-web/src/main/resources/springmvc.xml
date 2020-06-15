@@ -8,9 +8,6 @@
         http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<!-- 引用 classpath/config 目录下的一些配置文件使用 -->
-	<context:property-placeholder location="classpath:config/application.properties" />
-
 	<!-- fastJson 转换器 -->
 	<mvc:annotation-driven>
 	  <mvc:message-converters register-defaults="true">

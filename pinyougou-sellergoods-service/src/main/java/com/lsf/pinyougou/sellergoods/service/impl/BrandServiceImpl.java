@@ -5,7 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.lsf.pinyougou.dao.TbBrandDao;
 import com.lsf.pinyougou.pojo.TbBrand;
-import com.lsf.pinyougou.sellergoods.service.BrandService;
+import com.lsf.pinyougou.service.interfaces.sellergoods.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import vo.PageResult;
 
@@ -24,24 +24,6 @@ public class BrandServiceImpl implements BrandService {
     @Override
     public List<TbBrand> findAll() {
         return tbBrandDao.queryAll(null);
-    }
-
-
-    /**
-     * 品牌分页
-     * @param pageNum   当前页码
-     * @param pageSize  每页记录数
-     */
-    @Override
-    public PageResult findPage(int pageNum, int pageSize) {
-        // 开启分页
-        PageHelper.startPage(pageNum, pageSize);
-        // 查询所有数据
-        List<TbBrand> list = tbBrandDao.queryAll(null);
-        // 获取分页结果
-        PageInfo<TbBrand> pageInfo = new PageInfo<>(list);
-        // 返回分页结果类对象
-        return new PageResult(pageInfo.getTotal(), pageInfo.getList());
     }
 
 

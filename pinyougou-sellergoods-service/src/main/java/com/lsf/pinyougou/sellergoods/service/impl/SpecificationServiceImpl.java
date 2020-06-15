@@ -1,20 +1,20 @@
 package com.lsf.pinyougou.sellergoods.service.impl;
 
-import java.util.List;
-import java.util.Map;
-
-import com.github.pagehelper.PageInfo;
-import com.lsf.pinyougou.dao.TbSpecificationOptionDao;
-import com.lsf.pinyougou.pojo.TbSpecificationOption;
-import com.lsf.pinyougou.pojogroup.Specification;
-import com.lsf.pinyougou.sellergoods.service.SpecificationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.lsf.pinyougou.dao.TbSpecificationDao;
+import com.lsf.pinyougou.dao.TbSpecificationOptionDao;
 import com.lsf.pinyougou.pojo.TbSpecification;
+import com.lsf.pinyougou.pojo.TbSpecificationOption;
+import com.lsf.pinyougou.pojogroup.Specification;
+import com.lsf.pinyougou.service.interfaces.sellergoods.SpecificationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import vo.PageResult;
+
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -31,17 +31,6 @@ public class SpecificationServiceImpl implements SpecificationService {
         return tbSpecificationDao.queryAll(null);
     }
 
-
-    /**
-     * 无条件分页查询
-     */
-    @Override
-    public PageResult findPage(int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<TbSpecification> list = tbSpecificationDao.queryAll(null);
-        PageInfo<TbSpecification> pageInfo = new PageInfo<>(list);
-        return new PageResult(pageInfo.getTotal(), pageInfo.getList());
-    }
 
 
     /**

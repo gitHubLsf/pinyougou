@@ -1,16 +1,16 @@
 package com.lsf.pinyougou.cart.controller;
-import java.util.List;
 
-import com.lsf.pinyougou.order.service.OrderService;
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.lsf.pinyougou.pojo.TbOrder;
+import com.lsf.pinyougou.service.interfaces.order.OrderService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.lsf.pinyougou.pojo.TbOrder;
-
 import vo.PageResult;
 import vo.Result;
+
+import java.util.List;
 
 
 /**
@@ -27,16 +27,7 @@ public class OrderController {
 	public List<TbOrder> findAll(){			
 		return orderService.findAll();
 	}
-	
-	
-	/**
-	 * 无条件分页查询
-	 */
-	@RequestMapping("/findPage.do")
-	public PageResult  findPage(int page,int size){			
-		return orderService.findPage(page, size);
-	}
-	
+
 	
 	/**
 	 * 多条件分页查询
@@ -92,8 +83,7 @@ public class OrderController {
 		return orderService.findOne(id);		
 	}
 	
-	
-	
+
 	/**
 	 * 批量删除
 	 */
@@ -106,6 +96,7 @@ public class OrderController {
 			return new Result(false, "删除失败");
 		}
 	}
+
 
 
 	@Reference

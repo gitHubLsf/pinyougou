@@ -24,7 +24,7 @@
 
         <dependency>
             <groupId>com.lsf.pinyougou</groupId>
-            <artifactId>pinyougou-pay-interface</artifactId>
+            <artifactId>pinyougou-service-interface</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 

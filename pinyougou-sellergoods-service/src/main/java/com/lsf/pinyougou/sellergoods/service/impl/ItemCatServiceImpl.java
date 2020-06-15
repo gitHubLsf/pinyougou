@@ -1,19 +1,18 @@
 package com.lsf.pinyougou.sellergoods.service.impl;
 
-import java.util.List;
-
-import com.github.pagehelper.PageInfo;
-import com.lsf.pinyougou.pojogroup.TbItemCats;
-import com.lsf.pinyougou.sellergoods.service.ItemCatService;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.lsf.pinyougou.dao.TbItemCatDao;
 import com.lsf.pinyougou.pojo.TbItemCat;
+import com.lsf.pinyougou.pojogroup.TbItemCats;
+import com.lsf.pinyougou.service.interfaces.sellergoods.ItemCatService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import vo.PageResult;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 
 
 /**
@@ -40,18 +39,6 @@ public class ItemCatServiceImpl implements ItemCatService {
     @Override
     public List<TbItemCat> findAll() {
         return tbItemCatDao.queryAll(null);
-    }
-
-
-    /**
-     * 无条件分页查询
-     */
-    @Override
-    public PageResult findPage(int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<TbItemCat> list = tbItemCatDao.queryAll(null);
-        PageInfo<TbItemCat> pageInfo = new PageInfo<>(list);
-        return new PageResult(pageInfo.getTotal(), pageInfo.getList());
     }
 
 

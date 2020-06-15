@@ -1,7 +1,7 @@
 package com.lsf.pinyougou.shop.service;
 
 import com.lsf.pinyougou.pojo.TbSeller;
-import com.lsf.pinyougou.sellergoods.service.SellerService;
+import com.lsf.pinyougou.service.interfaces.sellergoods.SellerService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;

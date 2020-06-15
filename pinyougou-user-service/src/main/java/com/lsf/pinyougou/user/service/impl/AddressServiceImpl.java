@@ -1,16 +1,15 @@
 package com.lsf.pinyougou.user.service.impl;
 
-import java.util.List;
-
-import com.github.pagehelper.PageInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.dubbo.config.annotation.Service;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.lsf.pinyougou.dao.TbAddressDao;
 import com.lsf.pinyougou.pojo.TbAddress;
-import com.lsf.pinyougou.user.service.AddressService;
+import com.lsf.pinyougou.service.interfaces.user.AddressService;
+import org.springframework.beans.factory.annotation.Autowired;
 import vo.PageResult;
+
+import java.util.List;
 
 
 /**
@@ -33,18 +32,7 @@ public class AddressServiceImpl implements AddressService {
 	public List<TbAddress> findAll() {
 		return tbAddressDao.queryAll(null);
 	}
-	
 
-	/**
-	 * 无条件分页查询
-	 */
-	@Override
-	public PageResult findPage(int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<TbAddress> list = tbAddressDao.queryAll(null);
-        PageInfo<TbAddress> pageInfo = new PageInfo<>(list);
-        return new PageResult(pageInfo.getTotal(), pageInfo.getList());
-	}
 	
 	
 	/**

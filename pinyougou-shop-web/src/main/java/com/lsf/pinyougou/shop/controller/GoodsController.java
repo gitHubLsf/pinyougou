@@ -1,11 +1,11 @@
 package com.lsf.pinyougou.shop.controller;
 
-import java.util.List;
-
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
+import com.lsf.pinyougou.pojo.TbGoods;
 import com.lsf.pinyougou.pojo.TbItem;
 import com.lsf.pinyougou.pojogroup.Goods;
-import com.lsf.pinyougou.sellergoods.service.GoodsService;
+import com.lsf.pinyougou.service.interfaces.sellergoods.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
@@ -13,9 +13,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.lsf.pinyougou.pojo.TbGoods;
-
 import vo.PageResult;
 import vo.Result;
 
@@ -23,6 +20,7 @@ import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
+import java.util.List;
 
 
 @RestController
@@ -35,15 +33,6 @@ public class GoodsController {
     @RequestMapping("/findAll.do")
     public List<TbGoods> findAll() {
         return goodsService.findAll();
-    }
-
-
-    /**
-     * 无条件分页查询
-     */
-    @RequestMapping("/findPage.do")
-    public PageResult findPage(int page, int rows) {
-        return goodsService.findPage(page, rows);
     }
 
 

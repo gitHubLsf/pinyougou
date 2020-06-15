@@ -1,15 +1,15 @@
 package com.lsf.pinyougou.sellergoods.service.impl;
 
-import java.util.List;
-
-import com.github.pagehelper.PageInfo;
-import com.lsf.pinyougou.sellergoods.service.GoodsDescService;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.lsf.pinyougou.dao.TbGoodsDescDao;
 import com.lsf.pinyougou.pojo.TbGoodsDesc;
+import com.lsf.pinyougou.service.interfaces.sellergoods.GoodsDescService;
+import org.springframework.beans.factory.annotation.Autowired;
 import vo.PageResult;
+
+import java.util.List;
 
 
 /**
@@ -24,18 +24,6 @@ public class GoodsDescServiceImpl implements GoodsDescService {
     @Override
     public List<TbGoodsDesc> findAll() {
         return tbGoodsDescDao.queryAll(null);
-    }
-
-
-    /**
-     * 无条件分页查询
-     */
-    @Override
-    public PageResult findPage(int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<TbGoodsDesc> list = tbGoodsDescDao.queryAll(null);
-        PageInfo<TbGoodsDesc> pageInfo = new PageInfo<>(list);
-        return new PageResult(pageInfo.getTotal(), pageInfo.getList());
     }
 
 

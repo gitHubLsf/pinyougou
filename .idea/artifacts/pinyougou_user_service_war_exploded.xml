@@ -54,8 +54,8 @@
           <element id="library" level="project" name="Maven: com.github.miemiedev:mybatis-paginator:1.2.15" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.32" />
           <element id="library" level="project" name="Maven: com.alibaba:druid:1.0.9" />
-          <element id="archive" name="pinyougou-user-interface-1.0-SNAPSHOT.jar">
-            <element id="module-output" name="pinyougou-user-interface" />
+          <element id="archive" name="pinyougou-service-interface-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="pinyougou-service-interface" />
           </element>
           <element id="library" level="project" name="Maven: org.apache.activemq:activemq-client:5.11.2" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.10" />

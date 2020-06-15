@@ -1,17 +1,16 @@
 package com.lsf.pinyougou.manager.controller;
 
-import java.util.List;
-import java.util.Map;
-
-import com.lsf.pinyougou.sellergoods.service.TypeTemplateService;
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.lsf.pinyougou.pojo.TbTypeTemplate;
+import com.lsf.pinyougou.service.interfaces.sellergoods.TypeTemplateService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.lsf.pinyougou.pojo.TbTypeTemplate;
-
 import vo.PageResult;
 import vo.Result;
+
+import java.util.List;
+import java.util.Map;
 
 
 @RestController

@@ -24,6 +24,18 @@
         <option value="$PROJECT_DIR$/smsService/pom.xml" />
       </list>
     </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/pinyougou-cart-interface/pom.xml" />
+        <option value="$PROJECT_DIR$/pinyougou-content-interface/pom.xml" />
+        <option value="$PROJECT_DIR$/pinyougou-order-interface/pom.xml" />
+        <option value="$PROJECT_DIR$/pinyougou-page-interface/pom.xml" />
+        <option value="$PROJECT_DIR$/pinyougou-pay-interface/pom.xml" />
+        <option value="$PROJECT_DIR$/pinyougou-search-interface/pom.xml" />
+        <option value="$PROJECT_DIR$/pinyougou-sellergoods-interface/pom.xml" />
+        <option value="$PROJECT_DIR$/pinyougou-user-interface/pom.xml" />
+      </set>
+    </option>
   </component>
   <component name="ProjectResources">
     <resource url="http://code.alibabatech.com/schema/dubbo/dubbo.xsd " location="$PROJECT_DIR$/../Dubbox/dubbo.xsd" />

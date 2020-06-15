@@ -1,22 +1,21 @@
 package com.lsf.pinyougou.sellergoods.service.impl;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
+import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.lsf.pinyougou.dao.*;
 import com.lsf.pinyougou.pojo.*;
 import com.lsf.pinyougou.pojogroup.Goods;
 import com.lsf.pinyougou.pojogroup.TbItemCats;
-import com.lsf.pinyougou.sellergoods.service.GoodsService;
+import com.lsf.pinyougou.service.interfaces.sellergoods.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.alibaba.dubbo.config.annotation.Service;
-import com.github.pagehelper.PageHelper;
-
 import org.springframework.transaction.annotation.Transactional;
 import vo.PageResult;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -31,18 +30,6 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public List<TbGoods> findAll() {
         return tbGoodsDao.queryAll(null);
-    }
-
-
-    /**
-     * 无条件分页查询
-     */
-    @Override
-    public PageResult findPage(int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<TbGoods> list = tbGoodsDao.queryAll(null);
-        PageInfo<TbGoods> pageInfo = new PageInfo<>(list);
-        return new PageResult(pageInfo.getTotal(), pageInfo.getList());
     }
 
 

@@ -2,7 +2,7 @@ package com.lsf.pinyougou.shop.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.lsf.pinyougou.pojo.TbTypeTemplate;
-import com.lsf.pinyougou.sellergoods.service.TypeTemplateService;
+import com.lsf.pinyougou.service.interfaces.sellergoods.TypeTemplateService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,15 +23,6 @@ public class TypeTemplateController {
     @RequestMapping("/findAll.do")
     public List<TbTypeTemplate> findAll() {
         return typeTemplateService.findAll();
-    }
-
-
-    /**
-     * 无条件分页查询
-     */
-    @RequestMapping("/findPage.do")
-    public PageResult findPage(int page, int rows) {
-        return typeTemplateService.findPage(page, rows);
     }
 
 

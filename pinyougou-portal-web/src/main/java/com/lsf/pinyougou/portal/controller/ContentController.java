@@ -1,8 +1,8 @@
 package com.lsf.pinyougou.portal.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.lsf.pinyougou.content.service.ContentService;
 import com.lsf.pinyougou.pojo.TbContent;
+import com.lsf.pinyougou.service.interfaces.content.ContentService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

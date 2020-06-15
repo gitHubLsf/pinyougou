@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSON;
 import com.lsf.pinyougou.pojo.TbGoods;
 import com.lsf.pinyougou.pojo.TbItem;
 import com.lsf.pinyougou.pojogroup.Goods;
-import com.lsf.pinyougou.sellergoods.service.GoodsService;
+import com.lsf.pinyougou.service.interfaces.sellergoods.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;

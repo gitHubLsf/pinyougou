@@ -1,17 +1,16 @@
 package com.lsf.pinyougou.user.controller;
 
-import java.util.List;
-
-import com.lsf.pinyougou.user.service.UserService;
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.lsf.pinyougou.pojo.TbUser;
+import com.lsf.pinyougou.service.interfaces.user.UserService;
 import com.lsf.pinyougou.util.PhoneFormatCheckUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.lsf.pinyougou.pojo.TbUser;
-
 import vo.PageResult;
 import vo.Result;
+
+import java.util.List;
 
 
 /**
@@ -33,14 +32,6 @@ public class UserController {
         return userService.findAll();
     }
 
-
-    /**
-     * 无条件分页查询
-     */
-    @RequestMapping("/findPage.do")
-    public PageResult findPage(int page, int size) {
-        return userService.findPage(page, size);
-    }
 
 
     /**

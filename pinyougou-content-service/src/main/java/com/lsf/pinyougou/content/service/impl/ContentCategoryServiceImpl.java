@@ -4,14 +4,13 @@ package com.lsf.pinyougou.content.service.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.lsf.pinyougou.content.service.ContentCategoryService;
 import com.lsf.pinyougou.dao.TbContentCategoryDao;
 import com.lsf.pinyougou.pojo.TbContentCategory;
+import com.lsf.pinyougou.service.interfaces.content.ContentCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import vo.PageResult;
 
 import java.util.List;
-import java.util.Objects;
 
 
 /**

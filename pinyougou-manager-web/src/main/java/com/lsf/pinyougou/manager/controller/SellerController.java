@@ -2,7 +2,7 @@ package com.lsf.pinyougou.manager.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.lsf.pinyougou.pojo.TbSeller;
-import com.lsf.pinyougou.sellergoods.service.SellerService;
+import com.lsf.pinyougou.service.interfaces.sellergoods.SellerService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,15 +25,6 @@ public class SellerController {
     @RequestMapping("/findAll.do")
     public List<TbSeller> findAll() {
         return sellerService.findAll();
-    }
-
-
-    /**
-     * 无条件分页查询
-     */
-    @RequestMapping("/findPage.do")
-    public PageResult findPage(int page, int rows) {
-        return sellerService.findPage(page, rows);
     }
 
 

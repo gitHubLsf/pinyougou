@@ -1,11 +1,11 @@
 package com.lsf.pinyougou.cart.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.lsf.pinyougou.cart.service.CartService;
 import com.lsf.pinyougou.dao.TbItemDao;
 import com.lsf.pinyougou.pojo.TbItem;
 import com.lsf.pinyougou.pojo.TbOrderItem;
 import com.lsf.pinyougou.pojogroup.Cart;
+import com.lsf.pinyougou.service.interfaces.cart.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 
@@ -197,6 +197,7 @@ public class CartServiceImpl implements CartService {
 
     @Autowired
     private TbItemDao tbItemDao;
+
 
     @Autowired
     private RedisTemplate redisTemplate;

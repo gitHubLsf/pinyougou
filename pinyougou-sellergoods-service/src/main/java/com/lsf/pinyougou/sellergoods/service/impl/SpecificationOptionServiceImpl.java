@@ -1,15 +1,15 @@
 package com.lsf.pinyougou.sellergoods.service.impl;
 
-import java.util.List;
-
-import com.github.pagehelper.PageInfo;
-import com.lsf.pinyougou.sellergoods.service.SpecificationOptionService;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.lsf.pinyougou.dao.TbSpecificationOptionDao;
 import com.lsf.pinyougou.pojo.TbSpecificationOption;
+import com.lsf.pinyougou.service.interfaces.sellergoods.SpecificationOptionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import vo.PageResult;
+
+import java.util.List;
 
 
 /**
@@ -24,18 +24,6 @@ public class SpecificationOptionServiceImpl implements SpecificationOptionServic
     @Override
     public List<TbSpecificationOption> findAll() {
         return tbSpecificationOptionDao.queryAll(null);
-    }
-
-
-    /**
-     * 无条件分页查询
-     */
-    @Override
-    public PageResult findPage(int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<TbSpecificationOption> list = tbSpecificationOptionDao.queryAll(null);
-        PageInfo<TbSpecificationOption> pageInfo = new PageInfo<>(list);
-        return new PageResult(pageInfo.getTotal(), pageInfo.getList());
     }
 
 

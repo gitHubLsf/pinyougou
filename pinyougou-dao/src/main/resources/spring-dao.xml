@@ -27,9 +27,6 @@
         <!-- 数据库连接池 -->
         <property name="dataSource" ref="dataSource"/>
 
-        <!-- 加载 mybatis 的全局配置文件 -->
-        <property name="configLocation" value="classpath:sqlMapConfig.xml"/>
-
         <!-- 加载 sql 语句的配置文件 -->
         <property name="mapperLocations">
             <list>

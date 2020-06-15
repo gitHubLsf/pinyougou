@@ -2,7 +2,7 @@ package com.lsf.pinyougou.search.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.lsf.pinyougou.pojo.TbItem;
-import com.lsf.pinyougou.search.service.ItemSearchService;
+import com.lsf.pinyougou.service.interfaces.search.ItemSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

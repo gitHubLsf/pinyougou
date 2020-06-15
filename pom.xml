@@ -13,30 +13,23 @@
         <module>pinyougou-pojo</module>
         <module>pinyougou-common</module>
         <module>pinyougou-dao</module>
-        <module>pinyougou-sellergoods-interface</module>
         <module>pinyougou-sellergoods-service</module>
         <module>pinyougou-manager-web</module>
         <module>pinyougou-shop-web</module>
-        <module>pinyougou-content-interface</module>
         <module>pinyougou-content-service</module>
         <module>pinyougou-portal-web</module>
         <module>pinyougou-solr-util</module>
-        <module>pinyougou-search-interface</module>
         <module>pinyougou-search-service</module>
         <module>pinyougou-search-web</module>
-        <module>pinyougou-page-interface</module>
         <module>pinyougou-page-service</module>
         <module>pinyougou-page-web</module>
-        <module>pinyougou-user-interface</module>
         <module>pinyougou-user-service</module>
         <module>pinyougou-user-web</module>
-        <module>pinyougou-cart-interface</module>
         <module>pinyougou-cart-service</module>
         <module>pinyougou-cart-web</module>
-        <module>pinyougou-order-interface</module>
         <module>pinyougou-order-service</module>
-        <module>pinyougou-pay-interface</module>
         <module>pinyougou-pay-service</module>
+        <module>pinyougou-service-interface</module>
     </modules>
     <packaging>pom</packaging>
 

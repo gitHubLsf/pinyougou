@@ -29,8 +29,8 @@
           <element id="library" level="project" name="Maven: org.slf4j:jcl-over-slf4j:1.7.21" />
           <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpclient:4.5.3" />
           <element id="library" level="project" name="Maven: commons-logging:commons-logging:1.2" />
-          <element id="archive" name="pinyougou-sellergoods-interface-1.0-SNAPSHOT.jar">
-            <element id="module-output" name="pinyougou-sellergoods-interface" />
+          <element id="archive" name="pinyougou-service-interface-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="pinyougou-service-interface" />
           </element>
           <element id="archive" name="pinyougou-pojo-1.0-SNAPSHOT.jar">
             <element id="module-output" name="pinyougou-pojo" />

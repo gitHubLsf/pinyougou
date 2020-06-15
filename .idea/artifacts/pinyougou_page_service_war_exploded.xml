@@ -14,11 +14,8 @@
           <element id="module-output" name="pinyougou-page-service" />
         </element>
         <element id="directory" name="lib">
-          <element id="archive" name="pinyougou-page-interface-1.0-SNAPSHOT.jar">
-            <element id="module-output" name="pinyougou-page-interface" />
-          </element>
-          <element id="archive" name="pinyougou-dao-1.0-SNAPSHOT.jar">
-            <element id="module-output" name="pinyougou-dao" />
+          <element id="archive" name="pinyougou-service-interface-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="pinyougou-service-interface" />
           </element>
           <element id="archive" name="pinyougou-pojo-1.0-SNAPSHOT.jar">
             <element id="module-output" name="pinyougou-pojo" />
@@ -39,6 +36,9 @@
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.6.7" />
           <element id="library" level="project" name="Maven: org.slf4j:jcl-over-slf4j:1.7.21" />
           <element id="library" level="project" name="Maven: org.projectlombok:lombok:1.18.8" />
+          <element id="archive" name="pinyougou-dao-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="pinyougou-dao" />
+          </element>
           <element id="library" level="project" name="Maven: com.github.pagehelper:pagehelper:5.1.2" />
           <element id="library" level="project" name="Maven: com.github.jsqlparser:jsqlparser:1.0" />
           <element id="library" level="project" name="Maven: org.mybatis:mybatis:3.2.8" />

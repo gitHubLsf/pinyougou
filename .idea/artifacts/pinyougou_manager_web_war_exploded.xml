@@ -29,8 +29,8 @@
           <element id="library" level="project" name="Maven: org.slf4j:jcl-over-slf4j:1.7.21" />
           <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpclient:4.5.3" />
           <element id="library" level="project" name="Maven: commons-logging:commons-logging:1.2" />
-          <element id="archive" name="pinyougou-sellergoods-interface-1.0-SNAPSHOT.jar">
-            <element id="module-output" name="pinyougou-sellergoods-interface" />
+          <element id="archive" name="pinyougou-service-interface-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="pinyougou-service-interface" />
           </element>
           <element id="archive" name="pinyougou-pojo-1.0-SNAPSHOT.jar">
             <element id="module-output" name="pinyougou-pojo" />
@@ -47,9 +47,6 @@
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.6.0" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.6.7" />
           <element id="library" level="project" name="Maven: org.projectlombok:lombok:1.18.8" />
-          <element id="archive" name="pinyougou-content-interface-1.0-SNAPSHOT.jar">
-            <element id="module-output" name="pinyougou-content-interface" />
-          </element>
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-web:4.2.4.RELEASE" />
           <element id="library" level="project" name="Maven: aopalliance:aopalliance:1.0" />
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-core:4.2.4.RELEASE" />

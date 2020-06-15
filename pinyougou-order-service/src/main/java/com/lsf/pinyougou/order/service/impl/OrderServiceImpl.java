@@ -1,26 +1,25 @@
 package com.lsf.pinyougou.order.service.impl;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
+import com.alibaba.dubbo.config.annotation.Service;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.lsf.pinyougou.dao.TbOrderDao;
 import com.lsf.pinyougou.dao.TbOrderItemDao;
 import com.lsf.pinyougou.dao.TbPayLogDao;
-import com.lsf.pinyougou.order.service.OrderService;
+import com.lsf.pinyougou.pojo.TbOrder;
 import com.lsf.pinyougou.pojo.TbOrderItem;
 import com.lsf.pinyougou.pojo.TbPayLog;
 import com.lsf.pinyougou.pojogroup.Cart;
+import com.lsf.pinyougou.service.interfaces.order.OrderService;
 import com.lsf.pinyougou.util.IdWorker;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.alibaba.dubbo.config.annotation.Service;
-import com.github.pagehelper.PageHelper;
-import com.lsf.pinyougou.dao.TbOrderDao;
-import com.lsf.pinyougou.pojo.TbOrder;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import vo.PageResult;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -35,18 +34,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<TbOrder> findAll() {
         return tbOrderDao.queryAll(null);
-    }
-
-
-    /**
-     * 无条件分页查询
-     */
-    @Override
-    public PageResult findPage(int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<TbOrder> list = tbOrderDao.queryAll(null);
-        PageInfo<TbOrder> pageInfo = new PageInfo<>(list);
-        return new PageResult(pageInfo.getTotal(), pageInfo.getList());
     }
 
 

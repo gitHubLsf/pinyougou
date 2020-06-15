@@ -1,6 +1,6 @@
 package com.lsf.pinyougou.page.service.impl;
 
-import com.lsf.pinyougou.page.service.ItemPageService;
+import com.lsf.pinyougou.service.interfaces.page.ItemPageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -2,8 +2,7 @@ package com.lsf.pinyougou.manager.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.lsf.pinyougou.pojo.TbBrand;
-import com.lsf.pinyougou.sellergoods.service.BrandService;
-import org.springframework.core.env.Environment;
+import com.lsf.pinyougou.service.interfaces.sellergoods.BrandService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,18 +31,6 @@ public class BrandController {
     @RequestMapping("/findAll.do")
     public List<TbBrand> findAll() {
         return brandService.findAll();
-    }
-
-
-    /**
-     * 品牌分页
-     *
-     * @param page  当前页码
-     * @param size  每页记录数
-     */
-    @RequestMapping("/findPage.do")
-    public PageResult findPage(int page, int size) {
-        return brandService.findPage(page, size);
     }
 
 

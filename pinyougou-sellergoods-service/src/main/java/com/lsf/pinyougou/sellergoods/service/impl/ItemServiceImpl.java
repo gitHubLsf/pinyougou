@@ -5,7 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.lsf.pinyougou.dao.TbItemDao;
 import com.lsf.pinyougou.pojo.TbItem;
-import com.lsf.pinyougou.sellergoods.service.ItemService;
+import com.lsf.pinyougou.service.interfaces.sellergoods.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import vo.PageResult;
 
@@ -26,17 +26,6 @@ public class ItemServiceImpl implements ItemService {
         return tbItemDao.queryAll(null);
     }
 
-
-    /**
-     * 无条件分页查询
-     */
-    @Override
-    public PageResult findPage(int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<TbItem> list = tbItemDao.queryAll(null);
-        PageInfo<TbItem> pageInfo = new PageInfo<>(list);
-        return new PageResult(pageInfo.getTotal(), pageInfo.getList());
-    }
 
 
     /**

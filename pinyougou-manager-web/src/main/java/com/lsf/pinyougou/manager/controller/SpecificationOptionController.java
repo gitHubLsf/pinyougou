@@ -1,16 +1,15 @@
 package com.lsf.pinyougou.manager.controller;
 
-import java.util.List;
-
-import com.lsf.pinyougou.sellergoods.service.SpecificationOptionService;
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.lsf.pinyougou.pojo.TbSpecificationOption;
+import com.lsf.pinyougou.service.interfaces.sellergoods.SpecificationOptionService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.lsf.pinyougou.pojo.TbSpecificationOption;
-
 import vo.PageResult;
 import vo.Result;
+
+import java.util.List;
 
 
 @RestController
@@ -23,15 +22,6 @@ public class SpecificationOptionController {
     @RequestMapping("/findAll.do")
     public List<TbSpecificationOption> findAll() {
         return specificationOptionService.findAll();
-    }
-
-
-    /**
-     * 无条件分页查询
-     */
-    @RequestMapping("/findPage.do")
-    public PageResult findPage(int page, int rows) {
-        return specificationOptionService.findPage(page, rows);
     }
 
 

@@ -1,16 +1,15 @@
 package com.lsf.pinyougou.manager.controller;
 
-import java.util.List;
-
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.lsf.pinyougou.pojo.TbItem;
-import com.lsf.pinyougou.sellergoods.service.ItemService;
+import com.lsf.pinyougou.service.interfaces.sellergoods.ItemService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.alibaba.dubbo.config.annotation.Reference;
-
 import vo.PageResult;
 import vo.Result;
+
+import java.util.List;
 
 
 @RestController
@@ -23,15 +22,6 @@ public class ItemController {
     @RequestMapping("/findAll.do")
     public List<TbItem> findAll() {
         return itemService.findAll();
-    }
-
-
-    /**
-     * 无条件分页查询
-     */
-    @RequestMapping("/findPage.do")
-    public PageResult findPage(int page, int rows) {
-        return itemService.findPage(page, rows);
     }
 
 

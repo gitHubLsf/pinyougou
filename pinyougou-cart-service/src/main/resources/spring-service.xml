@@ -2,16 +2,11 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
-       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <!-- 引用 classpath/config 目录下的一些配置文件使用 -->
-    <context:property-placeholder location="classpath:config/application.properties" />
-
-
-	<!-- 这是本地服务的端口,如果一条机器上跑多个服务,且都要连接注册中心,被 dubbox 管理,端口就不能冲突
-	 	如果一台机器只跑一个服务,则不用配置 dubbo:protocol,默认端口是 20880 -->
+    <!-- 这是本地服务的端口,如果一条机器上跑多个服务,且都要连接注册中心,被 dubbox 管理,端口就不能冲突
+         如果一台机器只跑一个服务,则不用配置 dubbo:protocol,默认端口是 20880 -->
     <dubbo:protocol name="dubbo" port="20886"></dubbo:protocol>
     <dubbo:application name="pinyougou-cart-service"/>
     <dubbo:registry address="zookeeper://192.168.25.10:2181"/>

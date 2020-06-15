@@ -1,17 +1,17 @@
 package com.lsf.pinyougou.sellergoods.service.impl;
 
-import java.util.Date;
-import java.util.List;
-
-import com.github.pagehelper.PageInfo;
-import com.lsf.pinyougou.sellergoods.service.SellerService;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.lsf.pinyougou.dao.TbSellerDao;
 import com.lsf.pinyougou.pojo.TbSeller;
+import com.lsf.pinyougou.service.interfaces.sellergoods.SellerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import vo.PageResult;
+
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -26,18 +26,6 @@ public class SellerServiceImpl implements SellerService {
     @Override
     public List<TbSeller> findAll() {
         return tbSellerDao.queryAll(null);
-    }
-
-
-    /**
-     * 无条件分页查询
-     */
-    @Override
-    public PageResult findPage(int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<TbSeller> list = tbSellerDao.queryAll(null);
-        PageInfo<TbSeller> pageInfo = new PageInfo<>(list);
-        return new PageResult(pageInfo.getTotal(), pageInfo.getList());
     }
 
 

@@ -2,7 +2,7 @@ package com.lsf.pinyougou.cart.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.lsf.pinyougou.pojo.TbAddress;
-import com.lsf.pinyougou.user.service.AddressService;
+import com.lsf.pinyougou.service.interfaces.user.AddressService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

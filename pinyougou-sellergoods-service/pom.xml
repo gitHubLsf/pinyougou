@@ -15,6 +15,12 @@
     <packaging>war</packaging>
 
     <dependencies>
+        <dependency>
+            <groupId>com.lsf.pinyougou</groupId>
+            <artifactId>pinyougou-service-interface</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
         <!-- 依赖 pinyougou-common 通用工具模块 -->
         <dependency>
             <groupId>com.lsf.pinyougou</groupId>
@@ -26,13 +32,6 @@
         <dependency>
             <groupId>com.lsf.pinyougou</groupId>
             <artifactId>pinyougou-dao</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
-        <!-- 依赖 pinyougou-sellergoods-interface 商家商品服务接口层模块 -->
-        <dependency>
-            <groupId>com.lsf.pinyougou</groupId>
-            <artifactId>pinyougou-sellergoods-interface</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 

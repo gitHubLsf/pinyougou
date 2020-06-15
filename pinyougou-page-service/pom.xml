@@ -20,10 +20,9 @@
     </properties>
 
     <dependencies>
-<!--        依赖商品详情页接口模块-->
         <dependency>
             <groupId>com.lsf.pinyougou</groupId>
-            <artifactId>pinyougou-page-interface</artifactId>
+            <artifactId>pinyougou-service-interface</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 

@@ -1,13 +1,10 @@
 package com.lsf.pinyougou.pay.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.github.wxpay.sdk.WXPayUtil;
-import com.lsf.pinyougou.pay.service.WeChatPayService;
-import com.lsf.pinyougou.util.HttpClient;
+import com.lsf.pinyougou.service.interfaces.pay.WeChatPayService;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 
 /**
@@ -115,30 +112,30 @@ public class WeChatPayServiceImpl implements WeChatPayService {
     }
 
 
-    /**
-     * 公众号 ID
-     */
+//    /**
+//     * 公众号 ID
+//     */
 //    @Value("${appId}")
 //    private String appId;
 
 
-    /**
-     * 商家账户
-     */
+//    /**
+//     * 商家账户
+//     */
 //    @Value("${partner}")
 //    private String partner;
 
 
-    /**
-     * 商家账户密钥
-     */
+//    /**
+//     * 商家账户密钥
+//     */
 //    @Value("${partnerKey}")
 //    private String partnerKey;
 
 
-    /**
-     * 回调地址
-     */
+//    /**
+//     * 回调地址
+//     */
 //    @Value("${notifyUrl}")
 //    private String notifyUrl;
 

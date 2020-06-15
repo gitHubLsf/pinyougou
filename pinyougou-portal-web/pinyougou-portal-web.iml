@@ -25,7 +25,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="pinyougou-content-interface" />
+    <orderEntry type="module" module-name="pinyougou-service-interface" />
     <orderEntry type="module" module-name="pinyougou-pojo" />
     <orderEntry type="library" name="Maven: org.springframework.data:spring-data-solr:1.5.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.data:spring-data-commons:1.11.5.RELEASE" level="project" />

@@ -3,12 +3,11 @@ package com.lsf.pinyougou.cart.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
-import com.lsf.pinyougou.cart.service.CartService;
 import com.lsf.pinyougou.pojogroup.Cart;
+import com.lsf.pinyougou.service.interfaces.cart.CartService;
 import com.lsf.pinyougou.util.CookieUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vo.Result;
@@ -138,10 +137,11 @@ public class CartController {
     @Reference(timeout = 6000)
     private CartService cartService;
 
+
     @Autowired
     private HttpServletRequest request;
 
+
     @Autowired
     private HttpServletResponse response;
-
 }

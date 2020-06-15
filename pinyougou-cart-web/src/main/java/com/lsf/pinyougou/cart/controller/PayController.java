@@ -1,9 +1,9 @@
 package com.lsf.pinyougou.cart.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.lsf.pinyougou.order.service.OrderService;
-import com.lsf.pinyougou.pay.service.WeChatPayService;
 import com.lsf.pinyougou.pojo.TbPayLog;
+import com.lsf.pinyougou.service.interfaces.order.OrderService;
+import com.lsf.pinyougou.service.interfaces.pay.WeChatPayService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

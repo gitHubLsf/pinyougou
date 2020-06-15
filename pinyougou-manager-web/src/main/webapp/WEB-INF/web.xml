@@ -49,10 +49,10 @@
     </servlet-mapping>
 
 
-    <!--    加载 springSecurity 容器-->
+    <!--    加载 spring 容器-->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:spring-*.xml</param-value>
+        <param-value>classpath*:spring-*.xml</param-value>
     </context-param>
     <listener>
         <listener-class>
