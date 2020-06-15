@@ -75,9 +75,9 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into pinyougoudb.tb_seckill_order(seckill_id, money, user_id, seller_id, create_time, pay_time, status,
+        insert into pinyougoudb.tb_seckill_order(id, seckill_id, money, user_id, seller_id, create_time, pay_time, status,
         receiver_address, receiver_mobile, receiver, transaction_id)
-        values (#{seckillId}, #{money}, #{userId}, #{sellerId}, #{createTime}, #{payTime}, #{status},
+        values (#{id}, #{seckillId}, #{money}, #{userId}, #{sellerId}, #{createTime}, #{payTime}, #{status},
         #{receiverAddress}, #{receiverMobile}, #{receiver}, #{transactionId})
     </insert>
 

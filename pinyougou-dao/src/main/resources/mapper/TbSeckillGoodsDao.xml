@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsf.pinyougou.dao.TbSeckillGoodsDao">
+    <resultMap type="com.lsf.pinyougou.pojo.TbSeckillGoods" id="TbSeckillGoodsMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="goodsId" column="goods_id" jdbcType="INTEGER"/>
+        <result property="itemId" column="item_id" jdbcType="INTEGER"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="smallPic" column="small_pic" jdbcType="VARCHAR"/>
+        <result property="price" column="price" jdbcType="NUMERIC"/>
+        <result property="costPrice" column="cost_price" jdbcType="NUMERIC"/>
+        <result property="sellerId" column="seller_id" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="checkTime" column="check_time" jdbcType="TIMESTAMP"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="startTime" column="start_time" jdbcType="TIMESTAMP"/>
+        <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
+        <result property="num" column="num" jdbcType="INTEGER"/>
+        <result property="stockCount" column="stock_count" jdbcType="INTEGER"/>
+        <result property="introduction" column="introduction" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TbSeckillGoodsMap">
+        select
+          id, goods_id, item_id, title, small_pic, price, cost_price, seller_id, create_time, check_time, status, start_time, end_time, num, stock_count, introduction
+        from pinyougoudb.tb_seckill_goods
+        where id = #{id}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TbSeckillGoodsMap">
+        select
+        id, goods_id, item_id, title, small_pic, price, cost_price, seller_id, create_time, check_time, status,
+        start_time, end_time, num, stock_count, introduction
+        from pinyougoudb.tb_seckill_goods
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="goodsId != null">
+                and goods_id = #{goodsId}
+            </if>
+            <if test="itemId != null">
+                and item_id = #{itemId}
+            </if>
+            <if test="title != null and title != ''">
+                and title = #{title}
+            </if>
+            <if test="smallPic != null and smallPic != ''">
+                and small_pic = #{smallPic}
+            </if>
+            <if test="price != null">
+                and price = #{price}
+            </if>
+            <if test="costPrice != null">
+                and cost_price = #{costPrice}
+            </if>
+            <if test="sellerId != null and sellerId != ''">
+                and seller_id = #{sellerId}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="checkTime != null">
+                and check_time = #{checkTime}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="startTime != null">
+                and start_time = #{startTime}
+            </if>
+            <if test="endTime != null">
+                and end_time = #{endTime}
+            </if>
+            <if test="num != null">
+                and num = #{num}
+            </if>
+            <if test="stockCount != null">
+                and stock_count = #{stockCount}
+            </if>
+            <if test="introduction != null and introduction != ''">
+                and introduction = #{introduction}
+            </if>
+        </where>
+    </select>
+
+<!--    返回正在参与秒杀的商品-->
+    <select id="findList" resultMap="TbSeckillGoodsMap">
+        select
+            id, goods_id, item_id, title, small_pic, price, cost_price, seller_id, create_time, check_time, status,
+            start_time, end_time, num, stock_count, introduction
+        from
+            pinyougoudb.tb_seckill_goods
+        where
+            status = #{status}
+        and
+            CURRENT_TIMESTAMP() between start_time and end_time
+        and
+            stock_count > 0
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into pinyougoudb.tb_seckill_goods(goods_id, item_id, title, small_pic, price, cost_price, seller_id, create_time, check_time, status, start_time, end_time, num, stock_count, introduction)
+        values (#{goodsId}, #{itemId}, #{title}, #{smallPic}, #{price}, #{costPrice}, #{sellerId}, #{createTime}, #{checkTime}, #{status}, #{startTime}, #{endTime}, #{num}, #{stockCount}, #{introduction})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update pinyougoudb.tb_seckill_goods
+        <set>
+            <if test="goodsId != null">
+                goods_id = #{goodsId},
+            </if>
+            <if test="itemId != null">
+                item_id = #{itemId},
+            </if>
+            <if test="title != null and title != ''">
+                title = #{title},
+            </if>
+            <if test="smallPic != null and smallPic != ''">
+                small_pic = #{smallPic},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="costPrice != null">
+                cost_price = #{costPrice},
+            </if>
+            <if test="sellerId != null and sellerId != ''">
+                seller_id = #{sellerId},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="checkTime != null">
+                check_time = #{checkTime},
+            </if>
+            <if test="status != null and status != ''">
+                status = #{status},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime},
+            </if>
+            <if test="num != null">
+                num = #{num},
+            </if>
+            <if test="stockCount != null">
+                stock_count = #{stockCount},
+            </if>
+            <if test="introduction != null and introduction != ''">
+                introduction = #{introduction},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from pinyougoudb.tb_seckill_goods where id = #{id}
+    </delete>
+
+</mapper>

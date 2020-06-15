@@ -8,6 +8,9 @@ import java.util.Date;
 import java.io.Serializable;
 
 
+/**
+ * 秒杀订单表
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

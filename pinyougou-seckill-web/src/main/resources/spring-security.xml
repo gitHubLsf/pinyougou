@@ -9,11 +9,12 @@
     <http pattern="/css/**" security="none" />
     <http pattern="/js/**" security="none" />
     <http pattern="/plugins/**" security="none" />
+    <http pattern="/img/**" security="none" />
 
 <!--    购物车前台首页不拦截-->
-    <http pattern="/**.html" security="none" />
+    <http pattern="/*.html" security="none" />
 
-    <http pattern="/**.do" security="none" />
+    <http pattern="/*/*.do" security="none" />
 
     <!--   entry-point-ref  入口点引用 -->
     <http use-expressions="false" entry-point-ref="casProcessingFilterEntryPoint">
