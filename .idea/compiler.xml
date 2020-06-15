@@ -13,8 +13,10 @@
         <module name="pinyougou-user-web" />
         <module name="pinyougou-page-web" />
         <module name="pinyougou-content-service" />
+        <module name="pinyougou-seckill-web" />
         <module name="pinyougou-solr-util" />
         <module name="pinyougou-common" />
+        <module name="pinyougou-seckill-service" />
         <module name="pinyougou-manager-web" />
         <module name="pinyougou-order-service" />
         <module name="pinyougou-pojo" />
@@ -52,6 +54,8 @@
       <module name="pinyougou-search-interface" target="1.7" />
       <module name="pinyougou-search-service" target="1.7" />
       <module name="pinyougou-search-web" target="1.7" />
+      <module name="pinyougou-seckill-service" target="1.7" />
+      <module name="pinyougou-seckill-web" target="1.7" />
       <module name="pinyougou-sellergoods-interface" target="1.7" />
       <module name="pinyougou-sellergoods-service" target="1.7" />
       <module name="pinyougou-service-interface" target="1.7" />
