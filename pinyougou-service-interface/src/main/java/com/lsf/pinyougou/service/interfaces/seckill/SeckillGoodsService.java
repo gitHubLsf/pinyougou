@@ -48,6 +48,12 @@ public interface SeckillGoodsService {
 
 
 	/**
+	 * 当服务启动时，主动往缓存中添加秒杀商品
+	 */
+	void preCache();
+
+
+	/**
 	 * 返回正在参与秒杀的商品
 	 * 条件：商品审核通过
 	 * 		剩余库存 > 0
@@ -55,4 +61,12 @@ public interface SeckillGoodsService {
 	 * 		当前时间 <= 截止时间
 	 */
 	List<TbSeckillGoods> findList();
+
+
+	/**
+	 * 从缓存中查询某个参与秒杀的商品
+	 *
+	 * @param id	秒杀商品 ID
+	 */
+	TbSeckillGoods findOneFromCache(Long id);
 }

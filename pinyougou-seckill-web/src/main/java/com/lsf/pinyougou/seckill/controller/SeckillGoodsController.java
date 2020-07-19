@@ -29,6 +29,17 @@ public class SeckillGoodsController {
 
 
     /**
+     * 查询某个正在参与秒杀的商品
+     *
+     * @param id 秒杀商品 ID
+     */
+    @RequestMapping("/findOneFromCache.do")
+    public TbSeckillGoods findOneFromCache(Long id) {
+        return seckillGoodsService.findOneFromCache(id);
+    }
+
+
+    /**
      * 返回全部列表
      */
     @RequestMapping("/findAll.do")

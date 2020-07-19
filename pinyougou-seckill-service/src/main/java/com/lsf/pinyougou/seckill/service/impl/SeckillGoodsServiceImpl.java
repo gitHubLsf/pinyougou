@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import vo.PageResult;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 
@@ -79,6 +80,27 @@ public class SeckillGoodsServiceImpl implements SeckillGoodsService {
 
 
 	/**
+	 * 当服务启动后，主动往缓存中填入商品
+	 */
+	@PostConstruct
+	public void preCache() {
+		TbSeckillGoods tbSeckillGoods = new TbSeckillGoods();
+		tbSeckillGoods.setStatus("1");	// 商品审核通过
+
+		// 剩余库存 > 0
+		// 前时间 >= 开始时间
+		// 当前时间 <= 截止时间
+		// 以上三个条件在 sql 语句中设置
+		List<TbSeckillGoods> list = tbSeckillGoodsDao.findList(tbSeckillGoods);
+
+		// 遍历数据库查询结果，将其放入缓存
+		for (TbSeckillGoods seckillGoods : list) {
+			redisTemplate.boundHashOps("seckillGoods").put(seckillGoods.getId(), seckillGoods);
+		}
+	}
+
+
+	/**
 	 * 返回正在参与秒杀的商品
 	 * 条件：商品审核通过
 	 * 		剩余库存 > 0
@@ -107,14 +129,20 @@ public class SeckillGoodsServiceImpl implements SeckillGoodsService {
 			for (TbSeckillGoods seckillGoods : seckillGoodsList) {
 				redisTemplate.boundHashOps("seckillGoods").put(seckillGoods.getId(), seckillGoods);
 			}
-
-			System.out.println("get from db");
-		} else {
-			// 缓存中有
-			System.out.println("get from cache");
 		}
 
 		return seckillGoodsList;
+	}
+
+
+	/**
+	 * 从缓存中查询某个参与秒杀的商品
+	 *
+	 * @param id	秒杀商品 ID
+	 */
+	public TbSeckillGoods findOneFromCache(Long id) {
+		// 因为已经预先缓存了所有参与秒杀的商品，所以此处直接从缓存中查询
+		return (TbSeckillGoods)redisTemplate.boundHashOps("seckillGoods").get(id);
 	}
 
 
